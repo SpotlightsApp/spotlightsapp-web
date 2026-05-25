@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/*  Spotlight design tokens                                           */
+/*  Wellfound-referenced layout/feel, amber-themed brand.             */
+/*  Accessibility: #F5A623 (accent) is used only as a FILL with dark  */
+/*  text on top, or for large/graphical elements. For text/links on   */
+/*  white we use --accent-strong (#B45309) which passes WCAG AA.      */
+/* ------------------------------------------------------------------ */
+:root {
+  --background: #ffffff;
+  --surface: #fafafa;
+  --surface-2: #f4f4f3;
+  --foreground: #1a1a1a;
+  --muted: #f4f4f3;
+  --muted-foreground: #6b6b6b;
+  --border: #e7e7e4;
+  --input: #e0e0dc;
+
+  --accent: #f5a623;          /* brand amber — fills only (dark text on top) */
+  --accent-hover: #e0900f;
+  --accent-strong: #b45309;   /* amber for text/links on white (AA safe) */
+  --accent-soft: #fff7ec;     /* tinted background */
+  --accent-foreground: #1a1a1a;
+
+  --success: #15803d;
+  --destructive: #dc2626;
+
+  --ring: #f5a623;
+
+  --radius: 0.75rem;          /* 12px cards/buttons */
+  --radius-small: 0.5rem;
+  --radius-large: 1rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-success: var(--success);
+  --color-destructive: var(--destructive);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-accent), ui-monospace, monospace;
+
+  --radius-sm: var(--radius-small);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius-large);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Tight, wellfound-style display headings */
+.font-display {
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-weight: 600;
+}
+
+/* Respect reduced motion globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Marquee for the hero keyword chips */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+.animate-marquee-left {
+  animation: marquee-left 40s linear infinite;
+}
+.animate-marquee-right {
+  animation: marquee-right 50s linear infinite;
+}
+.marquee-pause:hover .animate-marquee-left,
+.marquee-pause:hover .animate-marquee-right {
+  animation-play-state: paused;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Hero background motion (wellfound-style drifting color washes)    */
+/* ------------------------------------------------------------------ */
+@keyframes blob-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(6%, -5%) scale(1.12); }
+  66% { transform: translate(-5%, 4%) scale(0.95); }
+}
+@keyframes blob-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-7%, 6%) scale(1.15); }
+}
+@keyframes blob-drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  50% { transform: translate(5%, 7%) scale(0.9); }
+}
+.animate-blob-a { animation: blob-drift-a 20s ease-in-out infinite; }
+.animate-blob-b { animation: blob-drift-b 26s ease-in-out infinite; }
+.animate-blob-c { animation: blob-drift-c 23s ease-in-out infinite; }
+
+/* Slowly rotating conic aurora ring */
+@keyframes aurora-spin {
+  to { transform: rotate(360deg); }
+}
+.animate-aurora { animation: aurora-spin 40s linear infinite; }
+
+/* Faint drifting dot grid */
+@keyframes grid-pan {
+  from { background-position: 0 0; }
+  to { background-position: 40px 40px; }
+}
+.hero-dot-grid {
+  background-image: radial-gradient(rgba(26, 26, 26, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: grid-pan 12s linear infinite;
+}
