@@ -1,4 +1,4 @@
-# Spotlight
+# Spotlights
 
 A careers platform connecting Thailand's university students and new grads with
 internships, jobs, and employers — **Handshake-style functionality with a
