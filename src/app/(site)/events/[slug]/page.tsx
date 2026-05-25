@@ -1,0 +1,112 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { MapPin, Users, Clock, CalendarDays, ArrowLeft } from "lucide-react";
+import { Container } from "@/components/ui/container";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { RegisterButton } from "@/components/events/register-button";
+import { getEventBySlug } from "@/lib/data";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const e = getEventBySlug(slug);
+  return { title: e ? `${e.title} — Spotlight` : "Event" };
+}
+
+function formatLong(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Asia/Bangkok",
+  });
+}
+function formatTime(iso: string) {
+  return new Date(iso).toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Bangkok",
+  });
+}
+
+export default async function EventDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const event = getEventBySlug(slug);
+  if (!event) notFound();
+
+  const details = [
+    { icon: CalendarDays, label: formatLong(event.date) },
+    {
+      icon: Clock,
+      label: `${formatTime(event.date)} · ${Math.round(event.durationMins / 60)}h`,
+    },
+    { icon: MapPin, label: event.location },
+    { icon: Users, label: `${event.attendees} attending` },
+  ];
+
+  return (
+    <Container className="py-8 sm:py-12">
+      <Link
+        href="/events"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="h-4 w-4" /> All events
+      </Link>
+
+      <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div>
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="accent" size="md">
+              {event.kind}
+            </Badge>
+            <Badge variant="outline" size="md">
+              {event.mode}
+            </Badge>
+          </div>
+          <h1 className="font-display mt-4 text-3xl text-foreground sm:text-4xl">
+            {event.title}
+          </h1>
+          <p className="mt-2 text-lg text-muted-foreground">
+            Hosted by {event.host}
+          </p>
+          <section className="mt-8">
+            <h2 className="text-lg font-semibold">About this event</h2>
+            <p className="mt-3 leading-relaxed text-muted-foreground">
+              {event.description}
+            </p>
+          </section>
+        </div>
+
+        <aside className="lg:sticky lg:top-24 lg:self-start">
+          <Card className="p-6">
+            <dl className="space-y-4">
+              {details.map((d) => (
+                <div key={d.label} className="flex items-start gap-3 text-sm">
+                  <d.icon className="mt-0.5 h-5 w-5 shrink-0 text-accent-strong" />
+                  <dd className="text-foreground">{d.label}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-6">
+              <RegisterButton />
+            </div>
+            <p className="mt-3 text-center text-xs text-muted-foreground">
+              Free for Spotlight members
+            </p>
+          </Card>
+        </aside>
+      </div>
+    </Container>
+  );
+}
