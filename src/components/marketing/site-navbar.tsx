@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
@@ -26,11 +27,19 @@ export function SiteNavbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Solid/blurred chrome appears once scrolled or when the mobile menu is open.
+  const solid = scrolled || open;
+
   return (
-    <header
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] as const }}
       className={cn(
-        "sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md transition-shadow",
-        scrolled ? "border-b border-border shadow-sm" : "border-b border-transparent",
+        "fixed inset-x-0 top-0 z-50 w-full transition-all duration-300",
+        solid
+          ? "border-b border-border bg-background/80 shadow-sm backdrop-blur-md"
+          : "border-b border-transparent bg-transparent",
       )}
     >
       <Container className="flex h-16 items-center justify-between">
@@ -41,7 +50,7 @@ export function SiteNavbar() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
+                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
               >
                 {l.label}
               </Link>
@@ -63,7 +72,7 @@ export function SiteNavbar() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground hover:bg-surface-2 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground hover:bg-foreground/5 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -93,6 +102,6 @@ export function SiteNavbar() {
           </Container>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 }

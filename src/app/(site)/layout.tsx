@@ -9,7 +9,8 @@ export default function SiteLayout({
   return (
     <>
       <SiteNavbar />
-      <main className="flex-1">{children}</main>
+      {/* Offset for the fixed navbar (h-16) on inner pages */}
+      <main className="flex-1 pt-16">{children}</main>
       <SiteFooter />
     </>
   );
