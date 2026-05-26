@@ -96,7 +96,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-accent-soft/60 via-background to-background">
       <HeroBackground />
-      <Container className="relative pt-16 pb-12 sm:pt-24 sm:pb-16">
+      <Container className="relative pt-28 pb-12 sm:pt-36 sm:pb-16">
         <div className="mx-auto max-w-3xl text-center">
           <motion.span
             custom={0}
@@ -116,7 +116,7 @@ export function Hero() {
             animate="show"
             className="font-display mt-6 text-5xl text-foreground sm:text-6xl lg:text-7xl"
           >
-            Find what&apos;s <span className="text-accent-strong">next</span>.
+            Find what&apos;s <span className="text-shimmer-amber">next</span>.
           </motion.h1>
 
           <motion.p

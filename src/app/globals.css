@@ -152,3 +152,34 @@ body {
   background-size: 40px 40px;
   animation: grid-pan 12s linear infinite;
 }
+
+/* Flowing tracer lines connecting the hero's floating pills */
+@keyframes tracer-flow {
+  to { stroke-dashoffset: -16; }
+}
+.tracer-line {
+  stroke-dasharray: 2 5;
+  animation: tracer-flow 1.4s linear infinite;
+}
+
+/* Amber gradient text with a moving shine — used on the hero word "next" */
+@keyframes text-shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+.text-shimmer-amber {
+  background-image: linear-gradient(
+    110deg,
+    #b45309 0%,
+    #f5a623 35%,
+    #ffd27a 50%,
+    #f5a623 65%,
+    #b45309 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 5s linear infinite;
+}
