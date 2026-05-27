@@ -1,0 +1,119 @@
+"use client";
+
+import { useState } from "react";
+import { Loader2, Check, GraduationCap, Building2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
+
+type Status = "idle" | "loading" | "success" | "already" | "error";
+type Role = "student" | "employer";
+
+export function WaitlistForm() {
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState<Role>("student");
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      setErrorMsg("Please enter a valid email address.");
+      setStatus("error");
+      return;
+    }
+    setStatus("loading");
+
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("waitlist")
+      .insert({ email: email.trim().toLowerCase(), role, source: "landing" });
+
+    if (!error) {
+      setStatus("success");
+    } else if (error.code === "23505") {
+      setStatus("already"); // duplicate email
+    } else {
+      console.error("waitlist insert failed:", error);
+      setErrorMsg("Something went wrong — please try again.");
+      setStatus("error");
+    }
+  }
+
+  if (status === "success" || status === "already") {
+    return (
+      <div className="mx-auto flex max-w-md items-center justify-center gap-3 rounded-full border border-white/20 bg-white/10 px-6 py-4 text-white">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
+          <Check className="h-4 w-4" />
+        </span>
+        <p className="text-sm font-medium">
+          {status === "success"
+            ? "You're on the list! We'll be in touch as we roll out."
+            : "You're already on the list — see you at launch!"}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={onSubmit} className="mx-auto max-w-md">
+      {/* Audience toggle */}
+      <div className="mb-3 flex justify-center gap-2">
+        {(
+          [
+            { key: "student", label: "I'm a student", icon: GraduationCap },
+            { key: "employer", label: "I'm hiring", icon: Building2 },
+          ] as const
+        ).map((opt) => (
+          <button
+            key={opt.key}
+            type="button"
+            onClick={() => setRole(opt.key)}
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors cursor-pointer",
+              role === opt.key
+                ? "bg-accent text-accent-foreground"
+                : "bg-white/10 text-white/80 hover:bg-white/20",
+            )}
+          >
+            <opt.icon className="h-4 w-4" />
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (status === "error") setStatus("idle");
+          }}
+          placeholder="you@university.ac.th"
+          aria-label="Email address"
+          className="h-12 flex-1 rounded-full border border-white/15 bg-white px-5 text-sm text-foreground outline-none placeholder:text-muted-foreground/70 focus-visible:ring-2 focus-visible:ring-accent"
+        />
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover disabled:opacity-60 cursor-pointer"
+        >
+          {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
+          Join the waitlist
+        </button>
+      </div>
+
+      <p
+        className={cn(
+          "mt-3 text-center text-sm",
+          status === "error" ? "text-red-300" : "text-white/50",
+        )}
+      >
+        {status === "error"
+          ? errorMsg
+          : "Be among the first students and employers on Spotlight. No spam."}
+      </p>
+    </form>
+  );
+}
