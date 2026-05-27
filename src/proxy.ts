@@ -31,6 +31,18 @@ export async function proxy(request: NextRequest) {
   // If Supabase isn't configured yet, leave routing open (gating inactive).
   if (!url || !key) return response;
 
+  // Supabase sometimes drops the auth `code` on the Site URL root instead of
+  // our /auth/callback (when emailRedirectTo isn't allow-listed). Funnel any
+  // stray code to the callback handler so confirmation still completes.
+  if (
+    request.nextUrl.pathname !== "/auth/callback" &&
+    request.nextUrl.searchParams.has("code")
+  ) {
+    const cbUrl = request.nextUrl.clone();
+    cbUrl.pathname = "/auth/callback";
+    return NextResponse.redirect(cbUrl);
+  }
+
   const supabase = createServerClient(url, key, {
     cookies: {
       getAll() {
