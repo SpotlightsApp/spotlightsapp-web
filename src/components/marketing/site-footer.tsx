@@ -1,47 +1,53 @@
+"use client";
+
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
 import { Container } from "@/components/ui/container";
-
-const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
-  {
-    title: "For students",
-    links: [
-      { label: "Find jobs", href: "/jobs" },
-      { label: "Internships", href: "/jobs?type=Internship" },
-      { label: "Companies", href: "/companies" },
-      { label: "Career events", href: "/events" },
-    ],
-  },
-  {
-    title: "For employers",
-    links: [
-      { label: "Post a job", href: "/employers" },
-      { label: "Find talent", href: "/employers" },
-      { label: "Campus events", href: "/employers" },
-      { label: "Pricing", href: "/employers" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { label: "Career guides", href: "#" },
-      { label: "Resume tips", href: "#" },
-      { label: "Salary insights", href: "#" },
-      { label: "Help center", href: "#" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "#" },
-      { label: "Universities", href: "#" },
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
-    ],
-  },
-];
+import { useI18n } from "@/lib/i18n/provider";
 
 export function SiteFooter() {
+  const { t } = useI18n();
+  const L = t.footer.links;
+
+  const columns = [
+    {
+      title: t.footer.studentsTitle,
+      links: [
+        { label: L.findJobs, href: "/jobs" },
+        { label: L.internships, href: "/jobs?type=Internship" },
+        { label: L.companies, href: "/companies" },
+        { label: L.careerEvents, href: "/events" },
+      ],
+    },
+    {
+      title: t.footer.employersTitle,
+      links: [
+        { label: L.postJob, href: "/employers" },
+        { label: L.findTalent, href: "/employers" },
+        { label: L.campusEvents, href: "/employers" },
+        { label: L.pricing, href: "/employers" },
+      ],
+    },
+    {
+      title: t.footer.resourcesTitle,
+      links: [
+        { label: L.careerGuides, href: "#" },
+        { label: L.resumeTips, href: "#" },
+        { label: L.salaryInsights, href: "#" },
+        { label: L.helpCenter, href: "#" },
+      ],
+    },
+    {
+      title: t.footer.companyTitle,
+      links: [
+        { label: L.about, href: "#" },
+        { label: L.universities, href: "#" },
+        { label: L.privacy, href: "#" },
+        { label: L.terms, href: "#" },
+      ],
+    },
+  ];
+
   return (
     <footer className="mt-auto border-t border-border bg-surface">
       <Container className="py-14">
@@ -49,10 +55,10 @@ export function SiteFooter() {
           <div className="col-span-2 md:col-span-1">
             <Logo />
             <p className="mt-4 max-w-[15rem] text-sm text-muted-foreground">
-              Where Thailand&apos;s students and new grads find what&apos;s next.
+              {t.footer.tagline}
             </p>
           </div>
-          {COLUMNS.map((col) => (
+          {columns.map((col) => (
             <div key={col.title}>
               <h3 className="text-sm font-semibold text-foreground">
                 {col.title}
@@ -73,16 +79,16 @@ export function SiteFooter() {
           ))}
         </div>
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} Spotlight. Made in Bangkok 🇹🇭</p>
+          <p>© {new Date().getFullYear()} {t.footer.madeIn}</p>
           <div className="flex gap-5">
             <Link href="#" className="hover:text-foreground">
-              Privacy
+              {L.privacy}
             </Link>
             <Link href="#" className="hover:text-foreground">
-              Terms
+              {L.terms}
             </Link>
             <Link href="#" className="hover:text-foreground">
-              Contact
+              {L.contact}
             </Link>
           </div>
         </div>

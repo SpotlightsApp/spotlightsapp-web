@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { Loader2, Check, GraduationCap, Building2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
 type Status = "idle" | "loading" | "success" | "already" | "error";
 type Role = "student" | "employer";
 
 export function WaitlistForm() {
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<Role>("student");
   const [status, setStatus] = useState<Status>("idle");
@@ -17,7 +19,7 @@ export function WaitlistForm() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      setErrorMsg("Please enter a valid email address.");
+      setErrorMsg(t.waitlist.invalid);
       setStatus("error");
       return;
     }
@@ -34,7 +36,7 @@ export function WaitlistForm() {
       setStatus("already"); // duplicate email
     } else {
       console.error("waitlist insert failed:", error);
-      setErrorMsg("Something went wrong — please try again.");
+      setErrorMsg(t.waitlist.serverError);
       setStatus("error");
     }
   }
@@ -46,9 +48,7 @@ export function WaitlistForm() {
           <Check className="h-4 w-4" />
         </span>
         <p className="text-sm font-medium">
-          {status === "success"
-            ? "You're on the list! We'll be in touch as we roll out."
-            : "You're already on the list — see you at launch!"}
+          {status === "success" ? t.waitlist.success : t.waitlist.already}
         </p>
       </div>
     );
@@ -60,8 +60,8 @@ export function WaitlistForm() {
       <div className="mb-3 flex justify-center gap-2">
         {(
           [
-            { key: "student", label: "I'm a student", icon: GraduationCap },
-            { key: "employer", label: "I'm hiring", icon: Building2 },
+            { key: "student", label: t.waitlist.student, icon: GraduationCap },
+            { key: "employer", label: t.waitlist.hiring, icon: Building2 },
           ] as const
         ).map((opt) => (
           <button
@@ -90,7 +90,7 @@ export function WaitlistForm() {
             setEmail(e.target.value);
             if (status === "error") setStatus("idle");
           }}
-          placeholder="you@university.ac.th"
+          placeholder={t.waitlist.placeholder}
           aria-label="Email address"
           className="h-12 flex-1 rounded-full border border-white/15 bg-white px-5 text-sm text-foreground outline-none placeholder:text-muted-foreground/70 focus-visible:ring-2 focus-visible:ring-accent"
         />
@@ -100,7 +100,7 @@ export function WaitlistForm() {
           className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover disabled:opacity-60 cursor-pointer"
         >
           {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
-          Join the waitlist
+          {t.waitlist.submit}
         </button>
       </div>
 
@@ -110,9 +110,7 @@ export function WaitlistForm() {
           status === "error" ? "text-red-300" : "text-white/50",
         )}
       >
-        {status === "error"
-          ? errorMsg
-          : "Be among the first students and employers on Spotlight. No spam."}
+        {status === "error" ? errorMsg : t.waitlist.helper}
       </p>
     </form>
   );

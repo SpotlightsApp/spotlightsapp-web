@@ -1,8 +1,12 @@
+"use client";
+
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/marketing/reveal";
 import { WaitlistForm } from "@/components/marketing/waitlist-form";
+import { useI18n } from "@/lib/i18n/provider";
 
 export function Waitlist() {
+  const { t } = useI18n();
   return (
     <section id="waitlist" className="scroll-mt-24 py-20">
       <Container>
@@ -17,14 +21,13 @@ export function Waitlist() {
               className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-accent/20 blur-3xl"
             />
             <span className="relative text-sm font-semibold uppercase tracking-wider text-accent">
-              Launching soon
+              {t.waitlist.eyebrow}
             </span>
             <h2 className="font-display relative mt-3 text-3xl text-white sm:text-4xl">
-              Be first in the spotlight
+              {t.waitlist.heading}
             </h2>
             <p className="relative mx-auto mt-4 max-w-lg text-white/70">
-              We&apos;re building Thailand&apos;s home for early-career talent.
-              Join the waitlist and we&apos;ll get you in as we roll out.
+              {t.waitlist.subhead}
             </p>
             <div className="relative mt-8">
               <WaitlistForm />

@@ -8,6 +8,7 @@ import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HeroBackground } from "@/components/marketing/hero-background";
+import { useI18n } from "@/lib/i18n/provider";
 
 const CHIPS_TOP = [
   "Frontend Developer",
@@ -76,6 +77,7 @@ function ChipRow({
 }
 
 export function Hero() {
+  const { t } = useI18n();
   const router = useRouter();
   const [audience, setAudience] = useState("student");
   const [q, setQ] = useState("");
@@ -106,7 +108,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3.5 py-1.5 text-sm font-medium text-muted-foreground backdrop-blur"
           >
             <span className="inline-block h-2 w-2 rounded-full bg-accent" />
-            Thailand&apos;s home for early-career talent
+            {t.hero.badge}
           </motion.span>
 
           <motion.h1
@@ -116,7 +118,9 @@ export function Hero() {
             animate="show"
             className="font-display mt-6 text-5xl text-foreground sm:text-6xl lg:text-7xl"
           >
-            Find what&apos;s <span className="text-shimmer-amber">next</span>.
+            {t.hero.titlePre}
+            <span className="text-shimmer-amber">{t.hero.titleHighlight}</span>
+            {t.hero.titlePost}
           </motion.h1>
 
           <motion.p
@@ -126,8 +130,7 @@ export function Hero() {
             animate="show"
             className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground"
           >
-            Where Thailand&apos;s students and new grads connect with internships,
-            jobs, and the companies building the region&apos;s future.
+            {t.hero.subhead}
           </motion.p>
 
           {/* Audience toggle */}
@@ -142,11 +145,11 @@ export function Hero() {
               <TabsList>
                 <TabsTrigger value="student">
                   <GraduationCap className="h-4 w-4" />
-                  I&apos;m a student
+                  {t.hero.student}
                 </TabsTrigger>
                 <TabsTrigger value="employer">
                   <Building2 className="h-4 w-4" />
-                  I&apos;m hiring
+                  {t.hero.hiring}
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -168,8 +171,8 @@ export function Hero() {
                 onChange={(e) => setQ(e.target.value)}
                 placeholder={
                   audience === "student"
-                    ? "Job title, skill, or company"
-                    : "What role are you hiring for?"
+                    ? t.hero.searchStudent
+                    : t.hero.searchEmployer
                 }
                 aria-label="Search query"
                 className="h-11 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground/70"
@@ -181,13 +184,13 @@ export function Hero() {
               <input
                 value={loc}
                 onChange={(e) => setLoc(e.target.value)}
-                placeholder="Location (e.g. Bangkok)"
+                placeholder={t.hero.location}
                 aria-label="Location"
                 className="h-11 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground/70"
               />
             </div>
             <Button type="submit" pill size="lg" className="sm:px-7">
-              Search
+              {t.hero.search}
             </Button>
           </motion.form>
 
@@ -198,10 +201,13 @@ export function Hero() {
             animate="show"
             className="mt-4 text-sm text-muted-foreground"
           >
-            Popular:{" "}
-            <span className="text-foreground">Software Internship</span> ·{" "}
-            <span className="text-foreground">Data Analyst</span> ·{" "}
-            <span className="text-foreground">New Grad</span>
+            {t.hero.popular}{" "}
+            {t.hero.popularItems.map((item, i) => (
+              <span key={item}>
+                <span className="text-foreground">{item}</span>
+                {i < t.hero.popularItems.length - 1 ? " · " : ""}
+              </span>
+            ))}
           </motion.p>
         </div>
       </Container>

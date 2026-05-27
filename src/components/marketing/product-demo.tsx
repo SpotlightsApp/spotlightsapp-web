@@ -6,61 +6,39 @@ import { Search, FileText, LayoutDashboard, Building2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Reveal } from "@/components/marketing/reveal";
+import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
-const FEATURES = [
-  {
-    key: "jobs",
-    label: "Find jobs",
-    icon: Search,
-    path: "/jobs",
-    video: "/demo/jobs.mp4",
-    poster: "/demo/jobs.png",
-    blurb: "Search and filter internships and new-grad roles built for students.",
-  },
-  {
-    key: "detail",
-    label: "Role details",
-    icon: FileText,
-    path: "/jobs/frontend-engineer-intern",
-    video: "/demo/job-detail.mp4",
-    poster: "/demo/job-detail.png",
-    blurb: "See the full role, salary in THB, and apply in a single click.",
-  },
-  {
-    key: "dashboard",
-    label: "Your dashboard",
-    icon: LayoutDashboard,
-    path: "/dashboard",
-    video: "/demo/dashboard.mp4",
-    poster: "/demo/dashboard.png",
-    blurb: "Track applications, saved jobs, and recommendations in one place.",
-  },
-  {
-    key: "company",
-    label: "Companies",
-    icon: Building2,
-    path: "/companies/agoda",
-    video: "/demo/company.mp4",
-    poster: "/demo/company.png",
-    blurb: "Explore companies hiring in Thailand and all of their open roles.",
-  },
+type FeatureKey = "jobs" | "detail" | "dashboard" | "company";
+
+const FEATURES: {
+  key: FeatureKey;
+  icon: typeof Search;
+  path: string;
+  video: string;
+  poster: string;
+}[] = [
+  { key: "jobs", icon: Search, path: "/jobs", video: "/demo/jobs.mp4", poster: "/demo/jobs.png" },
+  { key: "detail", icon: FileText, path: "/jobs/frontend-engineer-intern", video: "/demo/job-detail.mp4", poster: "/demo/job-detail.png" },
+  { key: "dashboard", icon: LayoutDashboard, path: "/dashboard", video: "/demo/dashboard.mp4", poster: "/demo/dashboard.png" },
+  { key: "company", icon: Building2, path: "/companies/agoda", video: "/demo/company.mp4", poster: "/demo/company.png" },
 ];
 
 const DWELL_MS = 6500;
 
 export function ProductDemo() {
+  const { t } = useI18n();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const active = FEATURES[index];
 
   useEffect(() => {
     if (paused) return;
-    const t = setTimeout(
+    const timer = setTimeout(
       () => setIndex((i) => (i + 1) % FEATURES.length),
       DWELL_MS,
     );
-    return () => clearTimeout(t);
+    return () => clearTimeout(timer);
   }, [index, paused]);
 
   return (
@@ -73,14 +51,12 @@ export function ProductDemo() {
       <Container className="relative">
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-accent-strong">
-            Our product
+            {t.demo.eyebrow}
           </span>
           <h2 className="font-display mt-3 text-3xl text-foreground sm:text-4xl">
-            Your whole job search, in one place
+            {t.demo.heading}
           </h2>
-          <p className="mt-3 text-muted-foreground">
-            From discovery to offer — here&apos;s how Spotlight works for students.
-          </p>
+          <p className="mt-3 text-muted-foreground">{t.demo.subhead}</p>
         </Reveal>
 
         {/* Feature tabs */}
@@ -101,7 +77,7 @@ export function ProductDemo() {
                   )}
                 >
                   <f.icon className="h-4 w-4" />
-                  {f.label}
+                  {t.demo.tabs[f.key]}
                   {isActive && !paused && (
                     <motion.span
                       key={index}
@@ -169,7 +145,7 @@ export function ProductDemo() {
 
             {/* caption */}
             <p className="mt-5 text-center text-sm text-muted-foreground">
-              {active.blurb}
+              {t.demo.blurbs[active.key]}
             </p>
           </div>
         </Reveal>

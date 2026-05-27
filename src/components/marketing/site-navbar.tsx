@@ -7,18 +7,21 @@ import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { LanguageToggle } from "@/components/ui/language-toggle";
+import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
-const NAV_LINKS = [
-  { label: "Find jobs", href: "/jobs" },
-  { label: "Companies", href: "/companies" },
-  { label: "Events", href: "/events" },
-  { label: "For employers", href: "/employers" },
-];
-
 export function SiteNavbar() {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const navLinks = [
+    { label: t.nav.findJobs, href: "/jobs" },
+    { label: t.nav.companies, href: "/companies" },
+    { label: t.nav.events, href: "/events" },
+    { label: t.nav.forEmployers, href: "/employers" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -27,7 +30,6 @@ export function SiteNavbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Solid/blurred chrome appears once scrolled or when the mobile menu is open.
   const solid = scrolled || open;
 
   return (
@@ -46,7 +48,7 @@ export function SiteNavbar() {
         <div className="flex items-center gap-8">
           <Logo />
           <nav className="hidden items-center gap-1 md:flex">
-            {NAV_LINKS.map((l) => (
+            {navLinks.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -59,29 +61,33 @@ export function SiteNavbar() {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
+          <LanguageToggle className="mr-1" />
           <Button asChild variant="ghost" size="sm">
-            <Link href="/login">Log in</Link>
+            <Link href="/login">{t.nav.login}</Link>
           </Button>
           <Button asChild size="sm">
-            <Link href="/signup">Sign up</Link>
+            <Link href="/signup">{t.nav.signup}</Link>
           </Button>
         </div>
 
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground hover:bg-foreground/5 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageToggle />
+          <button
+            type="button"
+            aria-label={t.nav.menu}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground hover:bg-foreground/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </Container>
 
       {open && (
         <div className="border-t border-border bg-background md:hidden">
           <Container className="flex flex-col gap-1 py-4">
-            {NAV_LINKS.map((l) => (
+            {navLinks.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -93,10 +99,10 @@ export function SiteNavbar() {
             ))}
             <div className="mt-2 flex flex-col gap-2">
               <Button asChild variant="outline" className="w-full">
-                <Link href="/login">Log in</Link>
+                <Link href="/login">{t.nav.login}</Link>
               </Button>
               <Button asChild className="w-full">
-                <Link href="/signup">Sign up</Link>
+                <Link href="/signup">{t.nav.signup}</Link>
               </Button>
             </div>
           </Container>
