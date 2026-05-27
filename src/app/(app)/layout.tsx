@@ -1,27 +1,13 @@
 import { AppNavbar } from "@/components/app/app-navbar";
-import { createClient } from "@/lib/supabase/server";
-import { getStudent } from "@/lib/data";
+import { getDisplayName } from "@/lib/user";
 
 export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Access is enforced by middleware; here we just read the user for display.
-  let name = getStudent().name;
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      name =
-        (user.user_metadata?.full_name as string | undefined) ||
-        user.email?.split("@")[0] ||
-        name;
-    }
-  }
-
+  // Access is enforced by the proxy; here we just read the user for display.
+  const name = await getDisplayName();
   return (
     <>
       <AppNavbar name={name} />

@@ -9,13 +9,15 @@ import { getStudent } from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
 import { fill } from "@/lib/i18n/dictionaries";
 import { getInitials } from "@/lib/utils";
+import { getDisplayName } from "@/lib/user";
 
 export const metadata: Metadata = { title: "My profile — Spotlight" };
 
 export default async function ProfilePage() {
   const s = getStudent();
   const t = await getDict();
-  const initials = getInitials(s.name);
+  const name = await getDisplayName();
+  const initials = getInitials(name);
 
   return (
     <Container className="py-10">
@@ -36,7 +38,7 @@ export default async function ProfilePage() {
                 </Button>
               </div>
               <h1 className="mt-4 font-display text-2xl text-foreground">
-                {s.name}
+                {name}
               </h1>
               <p className="mt-1 text-muted-foreground">{s.headline}</p>
               <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">

@@ -15,6 +15,7 @@ import {
 } from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
 import { fill } from "@/lib/i18n/dictionaries";
+import { getDisplayName } from "@/lib/user";
 
 export const metadata: Metadata = { title: "Dashboard — Spotlight" };
 
@@ -25,6 +26,7 @@ export default async function DashboardPage() {
   const recommended = getJobs({ types: student.openTo }).slice(0, 4);
   const events = getUpcomingEvents(2);
   const t = await getDict();
+  const name = await getDisplayName();
 
   const stats = [
     { icon: Send, label: t.dashboard.applications, value: applied.length },
@@ -36,7 +38,7 @@ export default async function DashboardPage() {
     <Container className="py-10">
       <header>
         <h1 className="font-display text-3xl text-foreground sm:text-4xl">
-          {fill(t.dashboard.welcome, { name: student.name.split(" ")[0] })}
+          {fill(t.dashboard.welcome, { name: name.split(" ")[0] })}
         </h1>
         <p className="mt-2 text-muted-foreground">{t.dashboard.sub}</p>
       </header>
