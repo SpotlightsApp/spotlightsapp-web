@@ -152,6 +152,72 @@ export const en = {
     },
     madeIn: "Spotlight. Made in Bangkok 🇹🇭",
   },
+  heroChips: {
+    floats: ["Internship", "Software", "UX Designer", "New Grad", "Remote", "Startups", "Bangkok", "Data Analyst", "Fintech", "Hiring now"],
+    marqueeTop: ["Frontend Developer", "Data Analyst", "UX Designer", "Bangkok", "Product Manager", "Chulalongkorn", "Machine Learning", "Internship", "Fintech", "Backend Engineer"],
+    marqueeBottom: ["Chiang Mai", "New Grad", "Marketing", "Thammasat", "Remote", "Data Scientist", "DevOps", "Mahidol", "Growth", "Full-Stack"],
+  },
+  appNav: { home: "Home", jobs: "Jobs", companies: "Companies", events: "Events", profile: "My profile", logout: "Log out", menu: "Menu" },
+  auth: {
+    loginTitle: "Welcome back", loginSub: "Log in to pick up where you left off.", loginSubmit: "Log in",
+    signupTitle: "Create your account", signupSub: "Start your career journey on Spotlight.", signupSubmit: "Create account",
+    google: "Continue with Google (coming soon)", or: "OR", name: "Full name", email: "University Email", password: "Password",
+    acThError: "Please use your university email address ending in .ac.th",
+    confirm: "Check your university email to confirm your account.",
+    haveAccount: "Already have an account? ", noAccount: "New to Spotlight? ", loginLink: "Log in", createLink: "Create one",
+    panelTitle: "Find what's next.",
+    panelBullets: ["One profile, hundreds of roles", "Internships & new-grad jobs from top Thai companies", "Apply in one click, track everything"],
+    panelFooter: "Built for students across Thailand.",
+  },
+  enums: {
+    jobType: { "Internship": "Internship", "Full-time": "Full-time", "Part-time": "Part-time", "Contract": "Contract", "New grad": "New grad" },
+    workMode: { "On-site": "On-site", "Hybrid": "Hybrid", "Remote": "Remote" },
+    industry: { "Software": "Software", "Fintech": "Fintech", "E-commerce": "E-commerce", "Consulting": "Consulting", "Marketing": "Marketing", "Design": "Design", "Data & AI": "Data & AI", "Hospitality": "Hospitality", "Healthcare": "Healthcare", "Energy": "Energy" },
+    eventKind: { "Career fair": "Career fair", "Info session": "Info session", "Workshop": "Workshop", "Networking": "Networking" },
+  },
+  jobsPage: {
+    heading: "Find your next role", sub: "Internships, new-grad roles and full-time jobs from Thailand's leading companies.",
+    searchPlaceholder: "Search jobs, companies, skills", jobType: "Job type", workMode: "Work mode", industry: "Industry",
+    filters: "Filters", clear: "Clear filters", sortRecent: "Most recent", sortSalary: "Highest salary",
+    results: "{n} roles found", noResultsTitle: "No roles match your filters", noResultsBody: "Try clearing some filters or searching for something else.",
+  },
+  jobCard: { applied: "{n} applied", today: "Today", daysAgo: "{n}d ago" },
+  jobDetail: {
+    back: "Back to jobs", estComp: "Estimated compensation", applyNow: "Apply now", appSent: "Application sent", save: "Save", saved: "Saved",
+    about: "About the role", responsibilities: "What you'll do", requirements: "What we're looking for", skills: "Skills",
+    type: "Type", workMode: "Work mode", location: "Location", posted: "Posted", applicants: "Applicants",
+    today: "Today", daysAgo: "{n} days ago", aboutCompany: "About {name}", viewCompany: "View company →", similar: "Similar roles",
+  },
+  companiesPage: { heading: "Companies on Spotlight", sub: "Discover the teams building Thailand's future — and the roles they're hiring for.", searchPlaceholder: "Search companies", all: "All", count: "{n} companies" },
+  companyProfile: { back: "All companies", hiring: "Actively hiring", about: "About", openRoles: "Open roles", noRoles: "No open roles right now — check back soon.", facts: "Company facts", perks: "Perks", employees: "{size} employees", founded: "Founded {year}", openRolesShort: "{n} open roles" },
+  eventsPage: { heading: "Career events & fairs", sub: "Meet recruiters, learn from industry talks, and level up your job search — online and across Thailand." },
+  eventCard: { going: "{n} going" },
+  eventDetail: { back: "All events", hostedBy: "Hosted by {host}", about: "About this event", register: "Register to attend", registered: "You're registered", free: "Free for Spotlight members", attending: "{n} attending" },
+  dashboard: {
+    welcome: "Welcome back, {name} 👋", sub: "Here's what's happening with your job search.",
+    applications: "Applications", savedJobs: "Saved jobs", profileViews: "Profile views",
+    recommended: "Recommended for you", seeAll: "See all", yourApplications: "Your applications", noApplications: "You haven't applied to anything yet.",
+    profileStrength: "Profile strength", completion: "Completion", profileHint: "Add a portfolio link and 2 more skills to reach 100%.", completeProfile: "Complete profile", upcomingEvents: "Upcoming events",
+  },
+  profile: { edit: "Edit profile", about: "About", education: "Education", skills: "Skills", openTo: "Open to", profileStrength: "Profile strength", completion: "Completion", expected: "Expected {year}", classOf: "Class of {year}" },
+  notFound: { title: "This page isn't in the spotlight", body: "The page you're looking for doesn't exist or has moved.", home: "Back home", browse: "Browse jobs" },
+  employers: {
+    titlePre: "Hire Thailand's ",
+    titleHighlight: "next generation",
+    titlePost: "",
+    sub: "Spotlight connects your team with ambitious students and new grads from across Thailand, ready to make an impact.",
+    postJob: "Post a job — free",
+    seeProfiles: "See company profiles",
+    features: [
+      { title: "Reach the right students", body: "Post roles in front of students and new grads from Thailand's top universities, filtered by skills and field." },
+      { title: "Hire faster", body: "Source, message and shortlist candidates from one dashboard. No more scattered email threads." },
+      { title: "Run campus events", body: "Host info sessions and career fairs, and connect with hundreds of students in a single afternoon." },
+    ],
+    planHeading: "Everything you need to recruit",
+    planSub: "Get started free while we're in beta.",
+    plan: ["Unlimited job & internship posts", "Searchable candidate database", "Branded company profile", "Event hosting tools", "Applicant tracking"],
+    createAccount: "Create employer account",
+  },
 };
 
 export const th: typeof en = {
@@ -301,8 +367,79 @@ export const th: typeof en = {
     },
     madeIn: "Spotlight สร้างในกรุงเทพฯ 🇹🇭",
   },
+  heroChips: {
+    floats: ["ฝึกงาน", "ซอฟต์แวร์", "นักออกแบบ UX", "จบใหม่", "ทำงานทางไกล", "สตาร์ทอัพ", "กรุงเทพฯ", "นักวิเคราะห์ข้อมูล", "ฟินเทค", "กำลังรับสมัคร"],
+    marqueeTop: ["นักพัฒนา Frontend", "นักวิเคราะห์ข้อมูล", "นักออกแบบ UX", "กรุงเทพฯ", "ผู้จัดการผลิตภัณฑ์", "จุฬาฯ", "แมชชีนเลิร์นนิง", "ฝึกงาน", "ฟินเทค", "วิศวกร Backend"],
+    marqueeBottom: ["เชียงใหม่", "จบใหม่", "การตลาด", "ธรรมศาสตร์", "ทำงานทางไกล", "นักวิทยาศาสตร์ข้อมูล", "DevOps", "มหิดล", "Growth", "Full-Stack"],
+  },
+  appNav: { home: "หน้าหลัก", jobs: "งาน", companies: "บริษัท", events: "อีเวนต์", profile: "โปรไฟล์ของฉัน", logout: "ออกจากระบบ", menu: "เมนู" },
+  auth: {
+    loginTitle: "ยินดีต้อนรับกลับ", loginSub: "เข้าสู่ระบบเพื่อทำต่อจากที่ค้างไว้", loginSubmit: "เข้าสู่ระบบ",
+    signupTitle: "สร้างบัญชีของคุณ", signupSub: "เริ่มต้นเส้นทางอาชีพของคุณบน Spotlight", signupSubmit: "สร้างบัญชี",
+    google: "ดำเนินการต่อด้วย Google (เร็ว ๆ นี้)", or: "หรือ", name: "ชื่อ-นามสกุล", email: "อีเมลมหาวิทยาลัย", password: "รหัสผ่าน",
+    acThError: "กรุณาใช้อีเมลมหาวิทยาลัยที่ลงท้ายด้วย .ac.th",
+    confirm: "ตรวจสอบอีเมลมหาวิทยาลัยของคุณเพื่อยืนยันบัญชี",
+    haveAccount: "มีบัญชีอยู่แล้ว? ", noAccount: "เพิ่งเริ่มใช้ Spotlight? ", loginLink: "เข้าสู่ระบบ", createLink: "สร้างบัญชี",
+    panelTitle: "ค้นหาก้าวต่อไปของคุณ",
+    panelBullets: ["โปรไฟล์เดียว งานนับร้อย", "งานฝึกงานและงานจบใหม่จากบริษัทชั้นนำของไทย", "สมัครในคลิกเดียว ติดตามได้ทุกอย่าง"],
+    panelFooter: "สร้างเพื่อนักศึกษาทั่วประเทศไทย",
+  },
+  enums: {
+    jobType: { "Internship": "ฝึกงาน", "Full-time": "งานประจำ", "Part-time": "งานพาร์ทไทม์", "Contract": "สัญญาจ้าง", "New grad": "จบใหม่" },
+    workMode: { "On-site": "ทำงานที่ออฟฟิศ", "Hybrid": "ไฮบริด", "Remote": "ทำงานทางไกล" },
+    industry: { "Software": "ซอฟต์แวร์", "Fintech": "ฟินเทค", "E-commerce": "อีคอมเมิร์ซ", "Consulting": "ที่ปรึกษา", "Marketing": "การตลาด", "Design": "ดีไซน์", "Data & AI": "ข้อมูลและ AI", "Hospitality": "งานบริการ", "Healthcare": "สุขภาพ", "Energy": "พลังงาน" },
+    eventKind: { "Career fair": "มหกรรมหางาน", "Info session": "เซสชันแนะนำ", "Workshop": "เวิร์กช็อป", "Networking": "เน็ตเวิร์กกิ้ง" },
+  },
+  jobsPage: {
+    heading: "ค้นหางานที่ใช่สำหรับคุณ", sub: "งานฝึกงาน งานจบใหม่ และงานประจำจากบริษัทชั้นนำของไทย",
+    searchPlaceholder: "ค้นหางาน บริษัท ทักษะ", jobType: "ประเภทงาน", workMode: "รูปแบบการทำงาน", industry: "อุตสาหกรรม",
+    filters: "ตัวกรอง", clear: "ล้างตัวกรอง", sortRecent: "ล่าสุด", sortSalary: "เงินเดือนสูงสุด",
+    results: "พบ {n} ตำแหน่ง", noResultsTitle: "ไม่พบตำแหน่งที่ตรงกับตัวกรอง", noResultsBody: "ลองล้างตัวกรองหรือค้นหาคำอื่น",
+  },
+  jobCard: { applied: "สมัครแล้ว {n} คน", today: "วันนี้", daysAgo: "{n} วันก่อน" },
+  jobDetail: {
+    back: "กลับไปหน้างาน", estComp: "ค่าตอบแทนโดยประมาณ", applyNow: "สมัครเลย", appSent: "ส่งใบสมัครแล้ว", save: "บันทึก", saved: "บันทึกแล้ว",
+    about: "เกี่ยวกับตำแหน่งนี้", responsibilities: "สิ่งที่คุณจะได้ทำ", requirements: "คุณสมบัติที่เรามองหา", skills: "ทักษะ",
+    type: "ประเภท", workMode: "รูปแบบการทำงาน", location: "สถานที่", posted: "ประกาศเมื่อ", applicants: "ผู้สมัคร",
+    today: "วันนี้", daysAgo: "{n} วันก่อน", aboutCompany: "เกี่ยวกับ {name}", viewCompany: "ดูบริษัท →", similar: "ตำแหน่งที่คล้ายกัน",
+  },
+  companiesPage: { heading: "บริษัทบน Spotlight", sub: "ค้นพบทีมที่กำลังสร้างอนาคตของไทย — และตำแหน่งที่พวกเขากำลังรับสมัคร", searchPlaceholder: "ค้นหาบริษัท", all: "ทั้งหมด", count: "{n} บริษัท" },
+  companyProfile: { back: "บริษัททั้งหมด", hiring: "กำลังรับสมัคร", about: "เกี่ยวกับ", openRoles: "ตำแหน่งที่เปิดรับ", noRoles: "ยังไม่มีตำแหน่งเปิดรับในขณะนี้ — กลับมาดูใหม่เร็ว ๆ นี้", facts: "ข้อมูลบริษัท", perks: "สวัสดิการ", employees: "พนักงาน {size} คน", founded: "ก่อตั้งปี {year}", openRolesShort: "{n} ตำแหน่งเปิดรับ" },
+  eventsPage: { heading: "อีเวนต์และมหกรรมอาชีพ", sub: "พบกับผู้สรรหา เรียนรู้จากคนในวงการ และยกระดับการหางานของคุณ — ทั้งออนไลน์และทั่วไทย" },
+  eventCard: { going: "{n} คนเข้าร่วม" },
+  eventDetail: { back: "อีเวนต์ทั้งหมด", hostedBy: "จัดโดย {host}", about: "เกี่ยวกับอีเวนต์นี้", register: "ลงทะเบียนเข้าร่วม", registered: "คุณลงทะเบียนแล้ว", free: "ฟรีสำหรับสมาชิก Spotlight", attending: "{n} คนเข้าร่วม" },
+  dashboard: {
+    welcome: "ยินดีต้อนรับกลับ {name} 👋", sub: "นี่คือความเคลื่อนไหวการหางานของคุณ",
+    applications: "ใบสมัคร", savedJobs: "งานที่บันทึก", profileViews: "การเข้าชมโปรไฟล์",
+    recommended: "แนะนำสำหรับคุณ", seeAll: "ดูทั้งหมด", yourApplications: "ใบสมัครของคุณ", noApplications: "คุณยังไม่ได้สมัครงานใด ๆ",
+    profileStrength: "ความสมบูรณ์ของโปรไฟล์", completion: "ความคืบหน้า", profileHint: "เพิ่มลิงก์ผลงานและทักษะอีก 2 อย่างเพื่อให้ถึง 100%", completeProfile: "กรอกโปรไฟล์ให้ครบ", upcomingEvents: "อีเวนต์ที่กำลังจะมาถึง",
+  },
+  profile: { edit: "แก้ไขโปรไฟล์", about: "เกี่ยวกับ", education: "การศึกษา", skills: "ทักษะ", openTo: "เปิดรับ", profileStrength: "ความสมบูรณ์ของโปรไฟล์", completion: "ความคืบหน้า", expected: "คาดว่าจบปี {year}", classOf: "รุ่นปี {year}" },
+  notFound: { title: "หน้านี้ไม่ได้อยู่ในสปอตไลต์", body: "หน้าที่คุณกำลังหาไม่มีอยู่หรือถูกย้ายไปแล้ว", home: "กลับหน้าหลัก", browse: "ดูงาน" },
+  employers: {
+    titlePre: "จ้าง",
+    titleHighlight: "คนรุ่นใหม่",
+    titlePost: "ของไทย",
+    sub: "Spotlight เชื่อมต่อทีมของคุณกับนักศึกษาและบัณฑิตจบใหม่ที่มีไฟทั่วประเทศไทย พร้อมสร้างผลงาน",
+    postJob: "ประกาศงาน — ฟรี",
+    seeProfiles: "ดูโปรไฟล์บริษัท",
+    features: [
+      { title: "เข้าถึงนักศึกษาที่ใช่", body: "ประกาศงานให้นักศึกษาและบัณฑิตจบใหม่จากมหาวิทยาลัยชั้นนำของไทยเห็น กรองตามทักษะและสาขา" },
+      { title: "จ้างได้เร็วขึ้น", body: "ค้นหา พูดคุย และคัดเลือกผู้สมัครจากแดชบอร์ดเดียว ไม่ต้องวุ่นกับอีเมลกระจัดกระจาย" },
+      { title: "จัดอีเวนต์ในมหาวิทยาลัย", body: "จัดเซสชันแนะนำและมหกรรมหางาน เชื่อมต่อกับนักศึกษาหลายร้อยคนในบ่ายเดียว" },
+    ],
+    planHeading: "ทุกอย่างที่คุณต้องใช้ในการสรรหา",
+    planSub: "เริ่มใช้ฟรีในช่วงเบต้า",
+    plan: ["ประกาศงานและฝึกงานไม่จำกัด", "ฐานข้อมูลผู้สมัครที่ค้นหาได้", "โปรไฟล์บริษัทแบรนด์ของคุณ", "เครื่องมือจัดอีเวนต์", "ระบบติดตามผู้สมัคร"],
+    createAccount: "สร้างบัญชีผู้ว่าจ้าง",
+  },
 };
 
 export type Dict = typeof en;
 export const dictionaries = { en, th };
 export type Locale = keyof typeof dictionaries;
+
+/** Fill {n}/{name}/etc. placeholders in a translation template. */
+export function fill(template: string, vars: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? `{${k}}`));
+}

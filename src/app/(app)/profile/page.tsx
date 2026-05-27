@@ -6,11 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getStudent } from "@/lib/data";
+import { getDict } from "@/lib/i18n/server";
+import { fill } from "@/lib/i18n/dictionaries";
 
 export const metadata: Metadata = { title: "My profile — Spotlight" };
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
   const s = getStudent();
+  const t = await getDict();
   const initials = s.name
     .split(" ")
     .slice(0, 2)
@@ -32,7 +35,7 @@ export default function ProfilePage() {
                   </AvatarFallback>
                 </Avatar>
                 <Button variant="outline" size="sm">
-                  <Pencil className="h-4 w-4" /> Edit profile
+                  <Pencil className="h-4 w-4" /> {t.profile.edit}
                 </Button>
               </div>
               <h1 className="mt-4 font-display text-2xl text-foreground">
@@ -50,19 +53,19 @@ export default function ProfilePage() {
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Briefcase className="h-4 w-4" />
-                  Class of {s.gradYear}
+                  {fill(t.profile.classOf, { year: s.gradYear })}
                 </span>
               </div>
             </div>
           </Card>
 
           <Card className="p-6">
-            <h2 className="font-semibold">About</h2>
+            <h2 className="font-semibold">{t.profile.about}</h2>
             <p className="mt-3 leading-relaxed text-muted-foreground">{s.about}</p>
           </Card>
 
           <Card className="p-6">
-            <h2 className="font-semibold">Education</h2>
+            <h2 className="font-semibold">{t.profile.education}</h2>
             <div className="mt-4 flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent-strong">
                 <GraduationCap className="h-5 w-5" />
@@ -70,14 +73,14 @@ export default function ProfilePage() {
               <div>
                 <div className="font-medium">{s.university}</div>
                 <div className="text-sm text-muted-foreground">
-                  {s.major} · Expected {s.gradYear}
+                  {s.major} · {fill(t.profile.expected, { year: s.gradYear })}
                 </div>
               </div>
             </div>
           </Card>
 
           <Card className="p-6">
-            <h2 className="font-semibold">Skills</h2>
+            <h2 className="font-semibold">{t.profile.skills}</h2>
             <div className="mt-4 flex flex-wrap gap-2">
               {s.skills.map((skill) => (
                 <Badge key={skill} variant="neutral" size="md">
@@ -91,19 +94,19 @@ export default function ProfilePage() {
         {/* Sidebar */}
         <aside className="space-y-6">
           <Card className="p-6">
-            <h3 className="font-semibold">Open to</h3>
+            <h3 className="font-semibold">{t.profile.openTo}</h3>
             <div className="mt-3 flex flex-wrap gap-2">
-              {s.openTo.map((t) => (
-                <Badge key={t} variant="accent" size="md">
-                  {t}
+              {s.openTo.map((ot) => (
+                <Badge key={ot} variant="accent" size="md">
+                  {t.enums.jobType[ot]}
                 </Badge>
               ))}
             </div>
           </Card>
           <Card className="p-6">
-            <h3 className="font-semibold">Profile strength</h3>
+            <h3 className="font-semibold">{t.profile.profileStrength}</h3>
             <div className="mt-4 flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Completion</span>
+              <span className="text-muted-foreground">{t.profile.completion}</span>
               <span className="font-semibold text-accent-strong">
                 {s.profileCompletion}%
               </span>

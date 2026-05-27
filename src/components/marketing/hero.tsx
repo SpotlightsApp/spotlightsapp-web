@@ -10,31 +10,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HeroBackground } from "@/components/marketing/hero-background";
 import { useI18n } from "@/lib/i18n/provider";
 
-const CHIPS_TOP = [
-  "Frontend Developer",
-  "Data Analyst",
-  "UX Designer",
-  "Bangkok",
-  "Product Manager",
-  "Chulalongkorn",
-  "Machine Learning",
-  "Internship",
-  "Fintech",
-  "Backend Engineer",
-];
-const CHIPS_BOTTOM = [
-  "Chiang Mai",
-  "New Grad",
-  "Marketing",
-  "Thammasat",
-  "Remote",
-  "Data Scientist",
-  "DevOps",
-  "Mahidol",
-  "Growth",
-  "Full-Stack",
-];
-
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   show: (i: number) => ({
@@ -214,9 +189,8 @@ export function Hero() {
 
       {/* Floating keyword chips — the signature motif */}
       <div className="marquee-pause relative mt-6 space-y-3 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
-        <ChipRow items={CHIPS_TOP} direction="left" />
-        <ChipRow items={CHIPS_BOTTOM} direction="right" />
-      </div>
+        <ChipRow items={t.heroChips.marqueeTop ?? []} direction="left" />
+        <ChipRow items={t.heroChips.marqueeBottom ?? []} direction="right" />      </div>
     </section>
   );
 }

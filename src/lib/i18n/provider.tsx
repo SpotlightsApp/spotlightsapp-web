@@ -1,9 +1,10 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { useRouter } from "next/navigation";
 import { dictionaries, type Dict, type Locale } from "@/lib/i18n/dictionaries";
 
-const STORAGE_KEY = "spotlight.locale";
+const COOKIE = "spotlight.locale";
 
 type I18nValue = {
   locale: Locale;
@@ -13,23 +14,21 @@ type I18nValue = {
 
 const I18nContext = createContext<I18nValue | null>(null);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  // Render English first (matches SSR); switch after mount to avoid hydration
-  // mismatch. A previously-chosen locale is restored from localStorage.
-  const [locale, setLocaleState] = useState<Locale>("en");
-
-  useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "th" || stored === "en") {
-      setLocaleState(stored);
-      document.documentElement.lang = stored;
-    }
-  }, []);
+export function LanguageProvider({
+  initialLocale,
+  children,
+}: {
+  initialLocale: Locale;
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
 
   const setLocale = (l: Locale) => {
-    setLocaleState(l);
-    localStorage.setItem(STORAGE_KEY, l);
+    setLocaleState(l); // instant update for client components
     document.documentElement.lang = l;
+    document.cookie = `${COOKIE}=${l}; path=/; max-age=31536000; samesite=lax`;
+    router.refresh(); // re-render server components in the new locale
   };
 
   return (

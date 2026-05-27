@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { MapPin, Users } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useI18n } from "@/lib/i18n/provider";
+import { fill } from "@/lib/i18n/dictionaries";
 import type { CareerEvent } from "@/lib/types";
 
 function formatDate(iso: string) {
@@ -20,6 +24,7 @@ function formatDate(iso: string) {
 }
 
 export function EventCard({ event }: { event: CareerEvent }) {
+  const { t } = useI18n();
   const { day, month, time } = formatDate(event.date);
   return (
     <Card interactive className="group relative flex gap-4 p-5">
@@ -34,8 +39,8 @@ export function EventCard({ event }: { event: CareerEvent }) {
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-1.5">
-          <Badge variant="outline">{event.kind}</Badge>
-          <Badge variant="neutral">{event.mode}</Badge>
+          <Badge variant="outline">{t.enums.eventKind[event.kind]}</Badge>
+          <Badge variant="neutral">{t.enums.workMode[event.mode]}</Badge>
         </div>
         <h3 className="mt-2 truncate font-semibold tracking-tight group-hover:text-accent-strong">
           {event.title}
@@ -49,7 +54,7 @@ export function EventCard({ event }: { event: CareerEvent }) {
           <span>{time}</span>
           <span className="flex items-center gap-1">
             <Users className="h-3.5 w-3.5" />
-            {event.attendees} going
+            {fill(t.eventCard.going, { n: event.attendees })}
           </span>
         </div>
       </div>

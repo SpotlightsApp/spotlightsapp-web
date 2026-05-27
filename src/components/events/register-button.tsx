@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/lib/i18n/provider";
 
 /** Frontend-only RSVP. Wire to Supabase (event_rsvps) later. */
 export function RegisterButton() {
+  const { t } = useI18n();
   const [registered, setRegistered] = useState(false);
   return (
     <Button
@@ -16,10 +18,10 @@ export function RegisterButton() {
     >
       {registered ? (
         <>
-          <Check className="h-5 w-5" /> You&apos;re registered
+          <Check className="h-5 w-5" /> {t.eventDetail.registered}
         </>
       ) : (
-        "Register to attend"
+        t.eventDetail.register
       )}
     </Button>
   );

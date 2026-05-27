@@ -16,6 +16,8 @@ import { Card } from "@/components/ui/card";
 import { LogoMark } from "@/components/ui/logo-mark";
 import { JobCard } from "@/components/cards/job-card";
 import { getCompanyBySlug, getJobsByCompany } from "@/lib/data";
+import { getDict } from "@/lib/i18n/server";
+import { fill } from "@/lib/i18n/dictionaries";
 
 export async function generateMetadata({
   params,
@@ -36,12 +38,13 @@ export default async function CompanyPage({
   const company = getCompanyBySlug(slug);
   if (!company) notFound();
   const jobs = getJobsByCompany(company.id);
+  const t = await getDict();
 
   const facts = [
     { icon: MapPin, label: company.location },
-    { icon: Users, label: `${company.size} employees` },
-    { icon: Calendar, label: `Founded ${company.founded}` },
-    { icon: Briefcase, label: `${company.openRoles} open roles` },
+    { icon: Users, label: fill(t.companyProfile.employees, { size: company.size }) },
+    { icon: Calendar, label: fill(t.companyProfile.founded, { year: company.founded }) },
+    { icon: Briefcase, label: fill(t.companyProfile.openRolesShort, { n: company.openRoles }) },
   ];
 
   return (
@@ -52,7 +55,7 @@ export default async function CompanyPage({
             href="/companies"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
           >
-            <ArrowLeft className="h-4 w-4" /> All companies
+            <ArrowLeft className="h-4 w-4" /> {t.companyProfile.back}
           </Link>
           <div className="mt-6 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
             <LogoMark name={company.name} className="h-20 w-20 text-2xl" />
@@ -61,7 +64,7 @@ export default async function CompanyPage({
                 <h1 className="font-display text-4xl text-foreground">
                   {company.name}
                 </h1>
-                {company.hiring && <Badge variant="success" size="md">Actively hiring</Badge>}
+                {company.hiring && <Badge variant="success" size="md">{t.companyProfile.hiring}</Badge>}
               </div>
               <p className="mt-2 max-w-xl text-muted-foreground">{company.tagline}</p>
               <a
@@ -81,7 +84,7 @@ export default async function CompanyPage({
       <Container className="grid gap-8 py-12 lg:grid-cols-[1fr_320px]">
         <div>
           <section>
-            <h2 className="text-lg font-semibold">About</h2>
+            <h2 className="text-lg font-semibold">{t.companyProfile.about}</h2>
             <p className="mt-3 leading-relaxed text-muted-foreground">
               {company.about}
             </p>
@@ -89,7 +92,7 @@ export default async function CompanyPage({
 
           <section className="mt-10">
             <h2 className="text-lg font-semibold">
-              Open roles{" "}
+              {t.companyProfile.openRoles}{" "}
               <span className="text-muted-foreground">({jobs.length})</span>
             </h2>
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
@@ -99,7 +102,7 @@ export default async function CompanyPage({
             </div>
             {jobs.length === 0 && (
               <p className="mt-4 text-sm text-muted-foreground">
-                No open roles right now — check back soon.
+                {t.companyProfile.noRoles}
               </p>
             )}
           </section>
@@ -108,7 +111,7 @@ export default async function CompanyPage({
         <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
           <Card className="p-6">
             <h3 className="text-sm font-semibold text-muted-foreground">
-              Company facts
+              {t.companyProfile.facts}
             </h3>
             <ul className="mt-4 space-y-3">
               {facts.map((f) => (
@@ -120,7 +123,7 @@ export default async function CompanyPage({
             </ul>
           </Card>
           <Card className="p-6">
-            <h3 className="text-sm font-semibold text-muted-foreground">Perks</h3>
+            <h3 className="text-sm font-semibold text-muted-foreground">{t.companyProfile.perks}</h3>
             <ul className="mt-4 space-y-2">
               {company.perks.map((p) => (
                 <li key={p} className="flex items-center gap-2 text-sm">

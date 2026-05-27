@@ -3,10 +3,13 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { CompanyCard } from "@/components/cards/company-card";
+import { useI18n } from "@/lib/i18n/provider";
+import { fill } from "@/lib/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 import type { Company, Industry } from "@/lib/types";
 
 export function CompaniesBrowser({ companies }: { companies: Company[] }) {
+  const { t } = useI18n();
   const [q, setQ] = useState("");
   const [industry, setIndustry] = useState<Industry | "All">("All");
 
@@ -32,8 +35,8 @@ export function CompaniesBrowser({ companies }: { companies: Company[] }) {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search companies"
-          aria-label="Search companies"
+          placeholder={t.companiesPage.searchPlaceholder}
+          aria-label={t.companiesPage.searchPlaceholder}
           className="h-11 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground/70"
         />
       </div>
@@ -51,13 +54,13 @@ export function CompaniesBrowser({ companies }: { companies: Company[] }) {
                 : "border-border text-muted-foreground hover:text-foreground",
             )}
           >
-            {ind}
+            {ind === "All" ? t.companiesPage.all : t.enums.industry[ind]}
           </button>
         ))}
       </div>
 
       <p className="mt-5 text-sm text-muted-foreground">
-        {results.length} {results.length === 1 ? "company" : "companies"}
+        {fill(t.companiesPage.count, { n: results.length })}
       </p>
 
       <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

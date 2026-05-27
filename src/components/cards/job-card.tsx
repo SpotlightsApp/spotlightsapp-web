@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { MapPin, Clock, Users } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LogoMark } from "@/components/ui/logo-mark";
 import { formatTHB } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/provider";
+import { fill } from "@/lib/i18n/dictionaries";
 import type { JobWithCompany } from "@/lib/data";
 
 const TYPE_VARIANT: Record<string, "accent" | "neutral" | "success"> = {
@@ -12,6 +16,7 @@ const TYPE_VARIANT: Record<string, "accent" | "neutral" | "success"> = {
 };
 
 export function JobCard({ job }: { job: JobWithCompany }) {
+  const { t } = useI18n();
   return (
     <Card interactive className="group relative flex flex-col p-5">
       <Link
@@ -32,8 +37,10 @@ export function JobCard({ job }: { job: JobWithCompany }) {
       </div>
 
       <div className="mt-3 flex flex-wrap gap-1.5">
-        <Badge variant={TYPE_VARIANT[job.type] ?? "neutral"}>{job.type}</Badge>
-        <Badge variant="outline">{job.workMode}</Badge>
+        <Badge variant={TYPE_VARIANT[job.type] ?? "neutral"}>
+          {t.enums.jobType[job.type]}
+        </Badge>
+        <Badge variant="outline">{t.enums.workMode[job.workMode]}</Badge>
       </div>
 
       <dl className="mt-4 space-y-1.5 text-sm text-muted-foreground">
@@ -60,11 +67,13 @@ export function JobCard({ job }: { job: JobWithCompany }) {
       <div className="mt-4 flex items-center gap-4 border-t border-border pt-3 text-xs text-muted-foreground">
         <span className="flex items-center gap-1">
           <Clock className="h-3.5 w-3.5" />
-          {job.postedDaysAgo === 0 ? "Today" : `${job.postedDaysAgo}d ago`}
+          {job.postedDaysAgo === 0
+            ? t.jobCard.today
+            : fill(t.jobCard.daysAgo, { n: job.postedDaysAgo })}
         </span>
         <span className="flex items-center gap-1">
           <Users className="h-3.5 w-3.5" />
-          {job.applicants} applied
+          {fill(t.jobCard.applied, { n: job.applicants })}
         </span>
       </div>
     </Card>

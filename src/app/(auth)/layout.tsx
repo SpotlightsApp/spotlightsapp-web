@@ -1,18 +1,14 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
+import { getDict } from "@/lib/i18n/server";
 
-const BULLETS = [
-  "One profile, hundreds of roles",
-  "Internships & new-grad jobs from top Thai companies",
-  "Apply in one click, track everything",
-];
-
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const t = await getDict();
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
       {/* Brand panel */}
@@ -43,10 +39,10 @@ export default function AuthLayout({
 
         <div className="relative">
           <h2 className="font-display text-4xl text-white">
-            Find what&apos;s next.
+            {t.auth.panelTitle}
           </h2>
           <ul className="mt-8 space-y-4">
-            {BULLETS.map((b) => (
+            {t.auth.panelBullets.map((b) => (
               <li key={b} className="flex items-center gap-3 text-white/80">
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent text-foreground">
                   <Check className="h-4 w-4" />
@@ -57,9 +53,7 @@ export default function AuthLayout({
           </ul>
         </div>
 
-        <p className="relative text-sm text-white/50">
-          Join 12,000+ students across Thailand.
-        </p>
+        <p className="relative text-sm text-white/50">{t.auth.panelFooter}</p>
       </div>
 
       {/* Form panel */}

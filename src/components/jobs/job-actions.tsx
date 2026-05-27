@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Bookmark, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
 /**
@@ -10,6 +11,7 @@ import { cn } from "@/lib/utils";
  * Wire to Supabase (insert into applications / saved_jobs) later.
  */
 export function JobActions({ title }: { title: string }) {
+  const { t } = useI18n();
   const [applied, setApplied] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -23,10 +25,10 @@ export function JobActions({ title }: { title: string }) {
       >
         {applied ? (
           <>
-            <Check className="h-5 w-5" /> Application sent
+            <Check className="h-5 w-5" /> {t.jobDetail.appSent}
           </>
         ) : (
-          "Apply now"
+          t.jobDetail.applyNow
         )}
       </Button>
       <Button
@@ -38,7 +40,7 @@ export function JobActions({ title }: { title: string }) {
         className={cn(saved && "border-accent bg-accent-soft text-accent-strong")}
       >
         <Bookmark className={cn("h-5 w-5", saved && "fill-current")} />
-        {saved ? "Saved" : "Save"}
+        {saved ? t.jobDetail.saved : t.jobDetail.save}
       </Button>
     </div>
   );

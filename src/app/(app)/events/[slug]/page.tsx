@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { RegisterButton } from "@/components/events/register-button";
 import { getEventBySlug } from "@/lib/data";
+import { getDict } from "@/lib/i18n/server";
+import { fill } from "@/lib/i18n/dictionaries";
 
 export async function generateMetadata({
   params,
@@ -44,6 +46,7 @@ export default async function EventDetailPage({
   const { slug } = await params;
   const event = getEventBySlug(slug);
   if (!event) notFound();
+  const t = await getDict();
 
   const details = [
     { icon: CalendarDays, label: formatLong(event.date) },
@@ -52,7 +55,7 @@ export default async function EventDetailPage({
       label: `${formatTime(event.date)} · ${Math.round(event.durationMins / 60)}h`,
     },
     { icon: MapPin, label: event.location },
-    { icon: Users, label: `${event.attendees} attending` },
+    { icon: Users, label: fill(t.eventDetail.attending, { n: event.attendees }) },
   ];
 
   return (
@@ -61,27 +64,27 @@ export default async function EventDetailPage({
         href="/events"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
       >
-        <ArrowLeft className="h-4 w-4" /> All events
+        <ArrowLeft className="h-4 w-4" /> {t.eventDetail.back}
       </Link>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
         <div>
           <div className="flex flex-wrap gap-2">
             <Badge variant="accent" size="md">
-              {event.kind}
+              {t.enums.eventKind[event.kind]}
             </Badge>
             <Badge variant="outline" size="md">
-              {event.mode}
+              {t.enums.workMode[event.mode]}
             </Badge>
           </div>
           <h1 className="font-display mt-4 text-3xl text-foreground sm:text-4xl">
             {event.title}
           </h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            Hosted by {event.host}
+            {fill(t.eventDetail.hostedBy, { host: event.host })}
           </p>
           <section className="mt-8">
-            <h2 className="text-lg font-semibold">About this event</h2>
+            <h2 className="text-lg font-semibold">{t.eventDetail.about}</h2>
             <p className="mt-3 leading-relaxed text-muted-foreground">
               {event.description}
             </p>
@@ -102,7 +105,7 @@ export default async function EventDetailPage({
               <RegisterButton />
             </div>
             <p className="mt-3 text-center text-xs text-muted-foreground">
-              Free for Spotlight members
+              {t.eventDetail.free}
             </p>
           </Card>
         </aside>

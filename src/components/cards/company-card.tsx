@@ -1,11 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { MapPin, Briefcase } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LogoMark } from "@/components/ui/logo-mark";
+import { useI18n } from "@/lib/i18n/provider";
+import { fill } from "@/lib/i18n/dictionaries";
 import type { Company } from "@/lib/types";
 
 export function CompanyCard({ company }: { company: Company }) {
+  const { t } = useI18n();
   return (
     <Card interactive className="group relative flex flex-col p-5">
       <Link
@@ -20,7 +25,7 @@ export function CompanyCard({ company }: { company: Company }) {
             {company.name}
           </h3>
           <Badge variant="neutral" className="mt-1">
-            {company.industry}
+            {t.enums.industry[company.industry]}
           </Badge>
         </div>
       </div>
@@ -34,7 +39,7 @@ export function CompanyCard({ company }: { company: Company }) {
         </span>
         <span className="flex items-center gap-1 font-medium text-accent-strong">
           <Briefcase className="h-3.5 w-3.5" />
-          {company.openRoles} open roles
+          {fill(t.companyProfile.openRolesShort, { n: company.openRoles })}
         </span>
       </div>
     </Card>

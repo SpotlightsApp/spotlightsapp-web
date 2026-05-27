@@ -6,11 +6,14 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/lib/supabase/client";
+import { useI18n } from "@/lib/i18n/provider";
 
 export function AuthForm({ mode }: { mode: "login" | "signup" }) {
+  const { t } = useI18n();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [confirming, setConfirming] = useState(false);
   const isSignup = mode === "signup";
   const supabase = createClient();
 
@@ -18,14 +21,16 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setConfirming(false);
 
     const form = e.currentTarget;
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-    const password = (form.elements.namedItem("password") as HTMLInputElement).value;
+    const password = (form.elements.namedItem("password") as HTMLInputElement)
+      .value;
 
     // University email verification — your core moat
     if (isSignup && !email.endsWith(".ac.th")) {
-      setError("Please use your university email address ending in .ac.th");
+      setError(t.auth.acThError);
       setLoading(false);
       return;
     }
@@ -35,32 +40,24 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          data: { full_name: name },
-        },
+        options: { data: { full_name: name } },
       });
-
       if (error) {
         setError(error.message);
         setLoading(false);
         return;
       }
-
-      // Show confirmation message instead of redirecting
-      setError("Check your university email to confirm your account.");
+      setConfirming(true);
       setLoading(false);
       return;
     }
 
-    // Login
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-
     if (error) {
       setError(error.message);
       setLoading(false);
       return;
     }
-
     router.push("/dashboard");
     router.refresh();
   }
@@ -68,12 +65,10 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   return (
     <div>
       <h1 className="font-display text-3xl text-foreground">
-        {isSignup ? "Create your account" : "Welcome back"}
+        {isSignup ? t.auth.signupTitle : t.auth.loginTitle}
       </h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        {isSignup
-          ? "Start your career journey on Spotlight."
-          : "Log in to pick up where you left off."}
+        {isSignup ? t.auth.signupSub : t.auth.loginSub}
       </p>
 
       <Button
@@ -88,12 +83,12 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           <path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84Z" />
           <path fill="#EA4335" d="M12 4.75c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 1.46 14.97.5 12 .5A11 11 0 0 0 2.18 7.06L5.84 9.9C6.71 7.3 9.14 4.75 12 4.75Z" />
         </svg>
-        Continue with Google (coming soon)
+        {t.auth.google}
       </Button>
 
       <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground">
         <span className="h-px flex-1 bg-border" />
-        OR
+        {t.auth.or}
         <span className="h-px flex-1 bg-border" />
       </div>
 
@@ -101,49 +96,40 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         {isSignup && (
           <div>
             <label htmlFor="name" className="mb-1.5 block text-sm font-medium">
-              Full name
+              {t.auth.name}
             </label>
             <Input id="name" name="name" placeholder="Praewa Saetang" required />
           </div>
         )}
         <div>
           <label htmlFor="email" className="mb-1.5 block text-sm font-medium">
-            University Email
+            {t.auth.email}
           </label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="you@university.ac.th"
-            required
-          />
+          <Input id="email" name="email" type="email" placeholder="you@university.ac.th" required />
         </div>
         <div>
           <label htmlFor="password" className="mb-1.5 block text-sm font-medium">
-            Password
+            {t.auth.password}
           </label>
           <Input id="password" name="password" type="password" placeholder="••••••••" required />
         </div>
 
-        {error && (
-          <p className={`text-sm ${error.includes("Check your") ? "text-green-600" : "text-red-500"}`}>
-            {error}
-          </p>
-        )}
+        {confirming && <p className="text-sm text-green-600">{t.auth.confirm}</p>}
+        {error && <p className="text-sm text-red-500">{error}</p>}
 
         <Button type="submit" className="w-full" disabled={loading}>
           {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-          {isSignup ? "Create account" : "Log in"}
+          {isSignup ? t.auth.signupSubmit : t.auth.loginSubmit}
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        {isSignup ? "Already have an account? " : "New to Spotlight? "}
+        {isSignup ? t.auth.haveAccount : t.auth.noAccount}
         <Link
           href={isSignup ? "/login" : "/signup"}
           className="font-medium text-accent-strong hover:underline"
         >
-          {isSignup ? "Log in" : "Create one"}
+          {isSignup ? t.auth.loginLink : t.auth.createLink}
         </Link>
       </p>
     </div>

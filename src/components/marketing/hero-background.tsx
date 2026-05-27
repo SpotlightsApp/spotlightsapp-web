@@ -21,6 +21,7 @@ import {
   Globe2,
 } from "lucide-react";
 import { SparklesCore } from "@/components/ui/sparkles";
+import { useI18n } from "@/lib/i18n/provider";
 
 /**
  * Animated hero backdrop — wellfound-referenced + "Spotlight" gold dust:
@@ -70,6 +71,7 @@ const LINKS: [number, number][] = [
 
 export function HeroBackground() {
   const reduce = useReducedMotion();
+  const { t } = useI18n();
 
   // Pointer-driven parallax (normalized -0.5..0.5, smoothed with springs)
   const mx = useMotionValue(0);
@@ -173,7 +175,7 @@ export function HeroBackground() {
       </motion.svg>
 
       {/* Wandering role/city pills (desktop only, sit behind content) */}
-      {NODES.map((n) => (
+      {NODES.map((n, i) => (
         <div
           key={n.label}
           className="absolute hidden -translate-x-1/2 -translate-y-1/2 lg:block"
@@ -202,8 +204,7 @@ export function HeroBackground() {
           >
             <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/80 px-3.5 py-1.5 text-sm font-medium text-muted-foreground shadow-sm backdrop-blur">
               <n.icon className="h-3.5 w-3.5 text-accent-strong" />
-              {n.label}
-            </span>
+              {t.heroChips.floats?.[i] ?? n.label}            </span>
           </motion.div>
         </div>
       ))}

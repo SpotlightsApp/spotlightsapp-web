@@ -17,6 +17,8 @@ import { LogoMark } from "@/components/ui/logo-mark";
 import { JobCard } from "@/components/cards/job-card";
 import { JobActions } from "@/components/jobs/job-actions";
 import { getJobBySlug, getRelatedJobs } from "@/lib/data";
+import { getDict } from "@/lib/i18n/server";
+import { fill } from "@/lib/i18n/dictionaries";
 import { formatTHB } from "@/lib/utils";
 
 export async function generateMetadata({
@@ -38,17 +40,21 @@ export default async function JobDetailPage({
   const job = getJobBySlug(slug);
   if (!job) notFound();
   const related = getRelatedJobs(job);
+  const t = await getDict();
 
   const overview = [
-    { icon: Briefcase, label: "Type", value: job.type },
-    { icon: Building2, label: "Work mode", value: job.workMode },
-    { icon: MapPin, label: "Location", value: job.location },
+    { icon: Briefcase, label: t.jobDetail.type, value: t.enums.jobType[job.type] },
+    { icon: Building2, label: t.jobDetail.workMode, value: t.enums.workMode[job.workMode] },
+    { icon: MapPin, label: t.jobDetail.location, value: job.location },
     {
       icon: Clock,
-      label: "Posted",
-      value: job.postedDaysAgo === 0 ? "Today" : `${job.postedDaysAgo} days ago`,
+      label: t.jobDetail.posted,
+      value:
+        job.postedDaysAgo === 0
+          ? t.jobDetail.today
+          : fill(t.jobDetail.daysAgo, { n: job.postedDaysAgo }),
     },
-    { icon: Users, label: "Applicants", value: `${job.applicants}` },
+    { icon: Users, label: t.jobDetail.applicants, value: `${job.applicants}` },
   ];
 
   return (
@@ -57,7 +63,7 @@ export default async function JobDetailPage({
         href="/jobs"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
       >
-        <ArrowLeft className="h-4 w-4" /> Back to jobs
+        <ArrowLeft className="h-4 w-4" /> {t.jobDetail.back}
       </Link>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_340px]">
@@ -77,10 +83,10 @@ export default async function JobDetailPage({
               </Link>
               <div className="mt-3 flex flex-wrap gap-2">
                 <Badge variant="accent" size="md">
-                  {job.type}
+                  {t.enums.jobType[job.type]}
                 </Badge>
                 <Badge variant="outline" size="md">
-                  {job.workMode}
+                  {t.enums.workMode[job.workMode]}
                 </Badge>
                 <Badge variant="neutral" size="md">
                   {formatTHB(job.salaryMin, job.salaryMax, job.salaryPeriod)}
@@ -91,14 +97,14 @@ export default async function JobDetailPage({
 
           <div className="mt-8 space-y-8">
             <section>
-              <h2 className="text-lg font-semibold">About the role</h2>
+              <h2 className="text-lg font-semibold">{t.jobDetail.about}</h2>
               <p className="mt-3 leading-relaxed text-muted-foreground">
                 {job.description}
               </p>
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold">What you&apos;ll do</h2>
+              <h2 className="text-lg font-semibold">{t.jobDetail.responsibilities}</h2>
               <ul className="mt-3 space-y-2">
                 {job.responsibilities.map((r) => (
                   <li key={r} className="flex gap-3 text-muted-foreground">
@@ -110,7 +116,7 @@ export default async function JobDetailPage({
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold">What we&apos;re looking for</h2>
+              <h2 className="text-lg font-semibold">{t.jobDetail.requirements}</h2>
               <ul className="mt-3 space-y-2">
                 {job.requirements.map((r) => (
                   <li key={r} className="flex gap-3 text-muted-foreground">
@@ -122,7 +128,7 @@ export default async function JobDetailPage({
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold">Skills</h2>
+              <h2 className="text-lg font-semibold">{t.jobDetail.skills}</h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {job.skills.map((s) => (
                   <Badge key={s} variant="neutral" size="md">
@@ -140,7 +146,7 @@ export default async function JobDetailPage({
             <div className="text-2xl font-semibold">
               {formatTHB(job.salaryMin, job.salaryMax, job.salaryPeriod)}
             </div>
-            <p className="text-sm text-muted-foreground">Estimated compensation</p>
+            <p className="text-sm text-muted-foreground">{t.jobDetail.estComp}</p>
             <div className="my-5">
               <JobActions title={job.title} />
             </div>
@@ -159,7 +165,7 @@ export default async function JobDetailPage({
 
           <Card className="mt-5 p-6">
             <h3 className="text-sm font-semibold text-muted-foreground">
-              About {job.company.name}
+              {fill(t.jobDetail.aboutCompany, { name: job.company.name })}
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
               {job.company.tagline}
@@ -168,7 +174,7 @@ export default async function JobDetailPage({
               href={`/companies/${job.company.slug}`}
               className="mt-3 inline-block text-sm font-medium text-accent-strong hover:underline"
             >
-              View company →
+              {t.jobDetail.viewCompany}
             </Link>
           </Card>
         </aside>
@@ -176,7 +182,7 @@ export default async function JobDetailPage({
 
       {related.length > 0 && (
         <section className="mt-16">
-          <h2 className="font-display text-2xl text-foreground">Similar roles</h2>
+          <h2 className="font-display text-2xl text-foreground">{t.jobDetail.similar}</h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((j) => (
               <JobCard key={j.id} job={j} />
