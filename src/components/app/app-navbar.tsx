@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, X, LogOut } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { Container } from "@/components/ui/container";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
 const LINKS = [
@@ -18,12 +19,19 @@ const LINKS = [
 
 export function AppNavbar({ name }: { name: string }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const initials = name
     .split(" ")
     .slice(0, 2)
     .map((w) => w[0])
     .join("");
+
+  async function handleLogout() {
+    await createClient().auth.signOut();
+    router.push("/");
+    router.refresh();
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -67,6 +75,15 @@ export function AppNavbar({ name }: { name: string }) {
           </Link>
           <button
             type="button"
+            onClick={handleLogout}
+            aria-label="Log out"
+            title="Log out"
+            className="hidden h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground md:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
             className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground hover:bg-surface-2 md:hidden"
@@ -89,6 +106,17 @@ export function AppNavbar({ name }: { name: string }) {
                 {l.label}
               </Link>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                handleLogout();
+              }}
+              className="flex items-center gap-2 rounded-md px-3 py-3 text-left text-sm font-medium text-foreground hover:bg-surface-2"
+            >
+              <LogOut className="h-4 w-4" />
+              Log out
+            </button>
           </Container>
         </div>
       )}
