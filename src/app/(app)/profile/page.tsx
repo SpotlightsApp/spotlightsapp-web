@@ -8,17 +8,14 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getStudent } from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
 import { fill } from "@/lib/i18n/dictionaries";
+import { getInitials } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "My profile — Spotlight" };
 
 export default async function ProfilePage() {
   const s = getStudent();
   const t = await getDict();
-  const initials = s.name
-    .split(" ")
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("");
+  const initials = getInitials(s.name);
 
   return (
     <Container className="py-10">

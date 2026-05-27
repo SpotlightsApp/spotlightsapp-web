@@ -55,20 +55,29 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
+  // Redirect helper that preserves any session cookies refreshed above.
+  const redirectTo = (apply: (u: URL) => void) => {
+    const url = request.nextUrl.clone();
+    apply(url);
+    const redirect = NextResponse.redirect(url);
+    response.cookies.getAll().forEach((c) => redirect.cookies.set(c));
+    return redirect;
+  };
+
   // Gate the product behind login.
   if (!user && isProtected(pathname)) {
-    const loginUrl = request.nextUrl.clone();
-    loginUrl.pathname = "/login";
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
+    return redirectTo((u) => {
+      u.pathname = "/login";
+      u.searchParams.set("redirect", pathname);
+    });
   }
 
   // Logged-in users shouldn't see the auth screens.
   if (user && (pathname === "/login" || pathname === "/signup")) {
-    const dashUrl = request.nextUrl.clone();
-    dashUrl.pathname = "/dashboard";
-    dashUrl.search = "";
-    return NextResponse.redirect(dashUrl);
+    return redirectTo((u) => {
+      u.pathname = "/dashboard";
+      u.search = "";
+    });
   }
 
   return response;

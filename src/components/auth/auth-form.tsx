@@ -58,7 +58,13 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       setLoading(false);
       return;
     }
-    router.push("/dashboard");
+    // Return to the gated page the proxy bounced us from, if it's a safe path.
+    const target = new URLSearchParams(window.location.search).get("redirect");
+    const dest =
+      target && target.startsWith("/") && !target.startsWith("//")
+        ? target
+        : "/dashboard";
+    router.push(dest);
     router.refresh();
   }
 

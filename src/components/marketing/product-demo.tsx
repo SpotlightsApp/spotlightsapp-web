@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Search, FileText, LayoutDashboard, Building2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { BorderBeam } from "@/components/ui/border-beam";
@@ -27,6 +27,7 @@ const DWELL_MS = 6500;
 
 export function ProductDemo() {
   const { t, locale } = useI18n();
+  const reduce = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const active = FEATURES[index];
@@ -36,13 +37,13 @@ export function ProductDemo() {
   const posterSrc = `/demo/${active.file}${suffix}.png`;
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || reduce) return;
     const timer = setTimeout(
       () => setIndex((i) => (i + 1) % FEATURES.length),
       DWELL_MS,
     );
     return () => clearTimeout(timer);
-  }, [index, paused]);
+  }, [index, paused, reduce]);
 
   return (
     <section className="relative overflow-hidden py-20 sm:py-28">

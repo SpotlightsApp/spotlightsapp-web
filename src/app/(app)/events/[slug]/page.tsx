@@ -7,8 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { RegisterButton } from "@/components/events/register-button";
 import { getEventBySlug } from "@/lib/data";
-import { getDict } from "@/lib/i18n/server";
+import { getDict, getLocale } from "@/lib/i18n/server";
 import { fill } from "@/lib/i18n/dictionaries";
+import { eventDateLong, eventTime } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -20,24 +21,6 @@ export async function generateMetadata({
   return { title: e ? `${e.title} — Spotlight` : "Event" };
 }
 
-function formatLong(iso: string) {
-  const d = new Date(iso);
-  return d.toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "Asia/Bangkok",
-  });
-}
-function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Asia/Bangkok",
-  });
-}
-
 export default async function EventDetailPage({
   params,
 }: {
@@ -47,12 +30,13 @@ export default async function EventDetailPage({
   const event = getEventBySlug(slug);
   if (!event) notFound();
   const t = await getDict();
+  const locale = await getLocale();
 
   const details = [
-    { icon: CalendarDays, label: formatLong(event.date) },
+    { icon: CalendarDays, label: eventDateLong(event.date, locale) },
     {
       icon: Clock,
-      label: `${formatTime(event.date)} · ${Math.round(event.durationMins / 60)}h`,
+      label: `${eventTime(event.date, locale)} · ${Math.round(event.durationMins / 60)}h`,
     },
     { icon: MapPin, label: event.location },
     { icon: Users, label: fill(t.eventDetail.attending, { n: event.attendees }) },

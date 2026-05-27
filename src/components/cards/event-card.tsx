@@ -6,26 +6,12 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/lib/i18n/provider";
 import { fill } from "@/lib/i18n/dictionaries";
+import { eventDateBadge } from "@/lib/utils";
 import type { CareerEvent } from "@/lib/types";
 
-function formatDate(iso: string) {
-  const d = new Date(iso);
-  return {
-    day: d.toLocaleDateString("en-GB", { day: "2-digit", timeZone: "Asia/Bangkok" }),
-    month: d
-      .toLocaleDateString("en-GB", { month: "short", timeZone: "Asia/Bangkok" })
-      .toUpperCase(),
-    time: d.toLocaleTimeString("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZone: "Asia/Bangkok",
-    }),
-  };
-}
-
 export function EventCard({ event }: { event: CareerEvent }) {
-  const { t } = useI18n();
-  const { day, month, time } = formatDate(event.date);
+  const { t, locale } = useI18n();
+  const { day, month, time } = eventDateBadge(event.date, locale);
   return (
     <Card interactive className="group relative flex gap-4 p-5">
       <Link
