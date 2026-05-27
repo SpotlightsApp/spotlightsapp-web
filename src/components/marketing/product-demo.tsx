@@ -15,22 +15,25 @@ const FEATURES: {
   key: FeatureKey;
   icon: typeof Search;
   path: string;
-  video: string;
-  poster: string;
+  file: string; // base filename for the recorded clip
 }[] = [
-  { key: "jobs", icon: Search, path: "/jobs", video: "/demo/jobs.mp4", poster: "/demo/jobs.png" },
-  { key: "detail", icon: FileText, path: "/jobs/frontend-engineer-intern", video: "/demo/job-detail.mp4", poster: "/demo/job-detail.png" },
-  { key: "dashboard", icon: LayoutDashboard, path: "/dashboard", video: "/demo/dashboard.mp4", poster: "/demo/dashboard.png" },
-  { key: "company", icon: Building2, path: "/companies/agoda", video: "/demo/company.mp4", poster: "/demo/company.png" },
+  { key: "jobs", icon: Search, path: "/jobs", file: "jobs" },
+  { key: "detail", icon: FileText, path: "/jobs/frontend-engineer-intern", file: "job-detail" },
+  { key: "dashboard", icon: LayoutDashboard, path: "/dashboard", file: "dashboard" },
+  { key: "company", icon: Building2, path: "/companies/agoda", file: "company" },
 ];
 
 const DWELL_MS = 6500;
 
 export function ProductDemo() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const active = FEATURES[index];
+  // Localized playthroughs: foo.mp4 (en) / foo-th.mp4 (th)
+  const suffix = locale === "th" ? "-th" : "";
+  const videoSrc = `/demo/${active.file}${suffix}.mp4`;
+  const posterSrc = `/demo/${active.file}${suffix}.png`;
 
   useEffect(() => {
     if (paused) return;
@@ -125,10 +128,10 @@ export function ProductDemo() {
               <div className="relative aspect-[1280/800] bg-surface">
                 <AnimatePresence mode="sync">
                   <motion.video
-                    key={active.key}
+                    key={`${active.key}-${locale}`}
                     className="absolute inset-0 h-full w-full object-cover object-top"
-                    src={active.video}
-                    poster={active.poster}
+                    src={videoSrc}
+                    poster={posterSrc}
                     autoPlay
                     muted
                     loop
