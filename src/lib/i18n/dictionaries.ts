@@ -161,7 +161,7 @@ export const en = {
   auth: {
     loginTitle: "Welcome back", loginSub: "Log in to pick up where you left off.", loginSubmit: "Log in",
     signupTitle: "Create your account", signupSub: "Start your career journey on Spotlight.", signupSubmit: "Create account",
-    google: "Continue with Google (coming soon)", or: "OR", name: "Full name", email: "University Email", password: "Password",
+    google: "Continue with Google (coming soon)", or: "OR", name: "Full name", email: "Email", password: "Password",
     acThError: "Please use your university email address ending in .ac.th",
     confirm: "Check your university email to confirm your account.",
     haveAccount: "Already have an account? ", noAccount: "New to Spotlight? ", loginLink: "Log in", createLink: "Create one",
@@ -376,7 +376,7 @@ export const th: typeof en = {
   auth: {
     loginTitle: "ยินดีต้อนรับกลับ", loginSub: "เข้าสู่ระบบเพื่อทำต่อจากที่ค้างไว้", loginSubmit: "เข้าสู่ระบบ",
     signupTitle: "สร้างบัญชีของคุณ", signupSub: "เริ่มต้นเส้นทางอาชีพของคุณบน Spotlight", signupSubmit: "สร้างบัญชี",
-    google: "ดำเนินการต่อด้วย Google (เร็ว ๆ นี้)", or: "หรือ", name: "ชื่อ-นามสกุล", email: "อีเมลมหาวิทยาลัย", password: "รหัสผ่าน",
+    google: "ดำเนินการต่อด้วย Google (เร็ว ๆ นี้)", or: "หรือ", name: "ชื่อ-นามสกุล", email: "อีเมล", password: "รหัสผ่าน",
     acThError: "กรุณาใช้อีเมลมหาวิทยาลัยที่ลงท้ายด้วย .ac.th",
     confirm: "ตรวจสอบอีเมลมหาวิทยาลัยของคุณเพื่อยืนยันบัญชี",
     haveAccount: "มีบัญชีอยู่แล้ว? ", noAccount: "เพิ่งเริ่มใช้ Spotlight? ", loginLink: "เข้าสู่ระบบ", createLink: "สร้างบัญชี",

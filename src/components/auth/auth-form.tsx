@@ -28,25 +28,31 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     const password = (form.elements.namedItem("password") as HTMLInputElement)
       .value;
 
-    // University email verification — your core moat
-    if (isSignup && !email.endsWith(".ac.th")) {
-      setError(t.auth.acThError);
-      setLoading(false);
-      return;
-    }
+    // NOTE: university (.ac.th) email gating is disabled for testing so any
+    // real email can sign up. Re-enable before launch.
 
     if (isSignup) {
       const name = (form.elements.namedItem("name") as HTMLInputElement).value;
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { full_name: name } },
+        options: {
+          data: { full_name: name },
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
       });
       if (error) {
         setError(error.message);
         setLoading(false);
         return;
       }
+      // If email confirmation is OFF, Supabase returns a session — log straight in.
+      if (data.session) {
+        router.push("/dashboard");
+        router.refresh();
+        return;
+      }
+      // Otherwise wait for the emailed confirmation link (→ /auth/callback).
       setConfirming(true);
       setLoading(false);
       return;
@@ -111,7 +117,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           <label htmlFor="email" className="mb-1.5 block text-sm font-medium">
             {t.auth.email}
           </label>
-          <Input id="email" name="email" type="email" placeholder="you@university.ac.th" required />
+          <Input id="email" name="email" type="email" placeholder="you@example.com" required />
         </div>
         <div>
           <label htmlFor="password" className="mb-1.5 block text-sm font-medium">
