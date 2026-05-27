@@ -8,9 +8,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // amber fill, dark text on top (AA-safe), subtle lift on hover
         primary:
-          "bg-accent text-accent-foreground shadow-sm hover:bg-accent-hover hover:shadow-md",
+          "bg-[#209CEE] text-white shadow-sm hover:bg-[#1a87cf] hover:shadow-md",
         secondary:
           "bg-foreground text-white hover:bg-foreground/90 shadow-sm",
         outline:

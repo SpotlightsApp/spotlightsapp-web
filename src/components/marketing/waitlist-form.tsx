@@ -71,7 +71,7 @@ export function WaitlistForm() {
             className={cn(
               "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors cursor-pointer",
               role === opt.key
-                ? "bg-accent text-accent-foreground"
+                ? "bg-[#209CEE] text-white"
                 : "bg-white/10 text-white/80 hover:bg-white/20",
             )}
           >
@@ -97,7 +97,7 @@ export function WaitlistForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover disabled:opacity-60 cursor-pointer"
+          className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#209CEE] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#1a87cf] disabled:opacity-60 cursor-pointer"
         >
           {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
           {t.waitlist.submit}

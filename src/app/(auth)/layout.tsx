@@ -23,14 +23,12 @@ export default async function AuthLayout({
         />
         <Link href="/" className="relative inline-flex">
           <span className="inline-flex items-center gap-2">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-accent">
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-                <path
-                  d="M12 3.5l3.2 6.3 6.3.6-4.7 4.2 1.4 6.2L12 17.9 5.8 20.8l1.4-6.2L2.5 10.4l6.3-.6L12 3.5z"
-                  fill="#1a1a1a"
-                />
-              </svg>
-            </span>
+            <img
+              src="/favicon-32x32.png"
+              alt=""
+              aria-hidden
+              className="h-8 w-8"
+            />
             <span className="text-lg font-semibold tracking-tight text-white">
               Spotlight
             </span>
