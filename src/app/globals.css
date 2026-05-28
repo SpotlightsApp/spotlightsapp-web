@@ -2,10 +2,10 @@
 
 /* ------------------------------------------------------------------ */
 /*  Spotlight design tokens                                           */
-/*  Wellfound-referenced layout/feel, amber-themed brand.             */
-/*  Accessibility: #F5A623 (accent) is used only as a FILL with dark  */
+/*  Wellfound-referenced layout/feel, blue-themed brand.              */
+/*  Accessibility: #209CEE (accent) is used only as a FILL with dark  */
 /*  text on top, or for large/graphical elements. For text/links on   */
-/*  white we use --accent-strong (#B45309) which passes WCAG AA.      */
+/*  white we use --accent-strong (#1366a0) which passes WCAG AA.      */
 /* ------------------------------------------------------------------ */
 :root {
   --background: #ffffff;
@@ -17,16 +17,16 @@
   --border: #e7e7e4;
   --input: #e0e0dc;
 
-  --accent: #f5a623;          /* brand amber — fills only (dark text on top) */
-  --accent-hover: #e0900f;
-  --accent-strong: #b45309;   /* amber for text/links on white (AA safe) */
-  --accent-soft: #fff7ec;     /* tinted background */
-  --accent-foreground: #1a1a1a;
+  --accent: #209cee;          /* brand blue — fills only (dark text on top) */
+  --accent-hover: #1a87cf;
+  --accent-strong: #1366a0;   /* blue for text/links on white (AA safe) */
+  --accent-soft: #e0f3fd;     /* tinted background */
+  --accent-foreground: #ffffff;
 
   --success: #15803d;
   --destructive: #dc2626;
 
-  --ring: #f5a623;
+  --ring: #209cee;
 
   --radius: 0.75rem;          /* 12px cards/buttons */
   --radius-small: 0.5rem;

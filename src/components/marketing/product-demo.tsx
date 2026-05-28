@@ -47,7 +47,7 @@ export function ProductDemo() {
 
   return (
     <section className="relative overflow-hidden py-20 sm:py-28">
-      {/* soft amber wash behind the frame */}
+      {/* soft blue wash behind the frame */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/3 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-accent/15 blur-[130px]"
@@ -108,8 +108,8 @@ export function ProductDemo() {
               <BorderBeam
                 size={260}
                 duration={10}
-                colorFrom="#F5A623"
-                colorTo="#FB7185"
+                colorFrom="#209CEE"
+                colorTo="#bde8fb"
               />
 
               {/* browser chrome */}

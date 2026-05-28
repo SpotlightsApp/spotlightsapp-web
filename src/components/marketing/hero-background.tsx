@@ -26,7 +26,7 @@ import { useI18n } from "@/lib/i18n/provider";
 /**
  * Animated hero backdrop — wellfound-referenced + "Spotlight" gold dust:
  *  - tsParticles gold sparkles (on-brand "spotlight" specks)
- *  - drifting soft color washes (amber + soft pink/blue) with mouse parallax
+ *  - drifting soft color washes (blue + soft pink/blue) with mouse parallax
  *  - a slowly rotating conic aurora ring (parallax)
  *  - a faint panning dot grid
  *  - wandering role/city pills, kept in the left/right edge bands so they never
@@ -112,7 +112,7 @@ export function HeroBackground() {
           className="animate-aurora h-full w-full rounded-full opacity-30 blur-3xl"
           style={{
             background:
-              "conic-gradient(from 0deg, #f5a62366, #ffd8dc66, #d7e9ff55, #fff7ec00, #f5a62366)",
+              "conic-gradient(from 0deg, #209cee66, #ffd8dc66, #d7e9ff55, #e0f3fd00, #209cee66)",
           }}
         />
       </motion.div>
@@ -137,7 +137,7 @@ export function HeroBackground() {
           <SparklesCore
             id="hero-sparkles"
             background="transparent"
-            particleColor="#F5A623"
+            particleColor="#209CEE"
             minSize={0.5}
             maxSize={1.3}
             particleDensity={220}
@@ -164,7 +164,7 @@ export function HeroBackground() {
             y1={NODES[a].y}
             x2={NODES[b].x}
             y2={NODES[b].y}
-            stroke="#f5a623"
+            stroke="#209cee"
             strokeOpacity={0.4}
             strokeWidth={1.2}
             strokeLinecap="round"
