@@ -5,7 +5,7 @@ import { getCompanies } from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
-  title: "Companies hiring in Thailand — Spotlight",
+  title: "Companies hiring in Thailand — Spotlights",
 };
 
 export default async function CompaniesPage() {

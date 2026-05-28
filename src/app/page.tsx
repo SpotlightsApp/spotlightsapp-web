@@ -12,12 +12,12 @@ export default function HomePage() {
     <>
       <SiteNavbar />
       <main className="flex-1">
+        <Waitlist />
         <Hero />
         <ProductDemo />
         <StatStrip />
         <Positioning />
         <HowItWorks />
-        <Waitlist />
       </main>
       <SiteFooter />
     </>

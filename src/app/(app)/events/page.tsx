@@ -5,7 +5,7 @@ import { getEvents } from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
-  title: "Career events & fairs — Spotlight",
+  title: "Career events & fairs — Spotlights",
 };
 
 export default async function EventsPage() {

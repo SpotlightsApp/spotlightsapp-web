@@ -1,4 +1,4 @@
--- Spotlight waitlist capture.
+-- Spotlights waitlist capture.
 -- Run this once in the Supabase SQL editor (Dashboard → SQL → New query).
 --
 -- RLS is enabled with an INSERT-only policy for anonymous visitors, and NO
@@ -8,10 +8,14 @@
 create table if not exists public.waitlist (
   id         uuid primary key default gen_random_uuid(),
   email      text not null unique,
-  role       text not null default 'student' check (role in ('student', 'employer')),
+  name       text,
   source     text,
   created_at timestamptz not null default now()
 );
+
+-- If you ran an earlier version of this file, apply these in the SQL editor:
+--   alter table public.waitlist add column if not exists name text;
+--   alter table public.waitlist drop column if exists role;
 
 alter table public.waitlist enable row level security;
 

@@ -5,13 +5,13 @@ import { LogoMark } from "@/components/ui/logo-mark";
 const QUOTES = [
   {
     quote:
-      "I found my summer internship at Agoda through Spotlight in two weeks. The filters actually understood what a CS student wants.",
+      "I found my summer internship at Agoda through Spotlights in two weeks. The filters actually understood what a CS student wants.",
     name: "Nattapong R.",
     detail: "Computer Engineering, Chulalongkorn",
   },
   {
     quote:
-      "As a fresh grad, applying felt impossible until Spotlight. One profile, dozens of new-grad roles, and recruiters messaged me first.",
+      "As a fresh grad, applying felt impossible until Spotlights. One profile, dozens of new-grad roles, and recruiters messaged me first.",
     name: "Mali T.",
     detail: "Business Analytics, Thammasat",
   },

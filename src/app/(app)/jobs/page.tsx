@@ -6,7 +6,7 @@ import { getDict } from "@/lib/i18n/server";
 import type { Industry, JobType } from "@/lib/types";
 
 export const metadata: Metadata = {
-  title: "Browse jobs & internships — Spotlight",
+  title: "Browse jobs & internships — Spotlights",
 };
 
 export default async function JobsPage({

@@ -30,7 +30,7 @@ export default async function AuthLayout({
               className="h-8 w-8"
             />
             <span className="text-lg font-semibold tracking-tight text-white">
-              Spotlight
+              Spotlights
             </span>
           </span>
         </Link>

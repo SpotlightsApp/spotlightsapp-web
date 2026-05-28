@@ -17,7 +17,7 @@ import { getDict } from "@/lib/i18n/server";
 import { fill } from "@/lib/i18n/dictionaries";
 import { getDisplayName } from "@/lib/user";
 
-export const metadata: Metadata = { title: "Dashboard — Spotlight" };
+export const metadata: Metadata = { title: "Dashboard — Spotlights" };
 
 export default async function DashboardPage() {
   const student = getStudent();

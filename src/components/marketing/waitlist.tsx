@@ -26,9 +26,6 @@ export function Waitlist() {
             <h2 className="font-display relative mt-3 text-3xl text-white sm:text-4xl">
               {t.waitlist.heading}
             </h2>
-            <p className="relative mx-auto mt-4 max-w-lg text-white/70">
-              {t.waitlist.subhead}
-            </p>
             <div className="relative mt-8">
               <WaitlistForm />
             </div>

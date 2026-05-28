@@ -28,7 +28,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const job = getJobBySlug(slug);
-  return { title: job ? `${job.title} at ${job.company.name} — Spotlight` : "Job" };
+  return { title: job ? `${job.title} at ${job.company.name} — Spotlights` : "Job" };
 }
 
 export default async function JobDetailPage({

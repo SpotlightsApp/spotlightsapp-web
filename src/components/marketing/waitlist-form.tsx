@@ -1,18 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, Check, GraduationCap, Building2 } from "lucide-react";
+import { Loader2, Check } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
 type Status = "idle" | "loading" | "success" | "already" | "error";
-type Role = "student" | "employer";
 
 export function WaitlistForm() {
   const { t } = useI18n();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState<Role>("student");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -28,7 +27,11 @@ export function WaitlistForm() {
     const supabase = createClient();
     const { error } = await supabase
       .from("waitlist")
-      .insert({ email: email.trim().toLowerCase(), role, source: "landing" });
+      .insert({
+        email: email.trim().toLowerCase(),
+        name: name.trim(),
+        source: "landing",
+      });
 
     if (!error) {
       setStatus("success");
@@ -56,62 +59,43 @@ export function WaitlistForm() {
 
   return (
     <form onSubmit={onSubmit} className="mx-auto max-w-md">
-      {/* Audience toggle */}
-      <div className="mb-3 flex justify-center gap-2">
-        {(
-          [
-            { key: "student", label: t.waitlist.student, icon: GraduationCap },
-            { key: "employer", label: t.waitlist.hiring, icon: Building2 },
-          ] as const
-        ).map((opt) => (
-          <button
-            key={opt.key}
-            type="button"
-            onClick={() => setRole(opt.key)}
-            className={cn(
-              "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors cursor-pointer",
-              role === opt.key
-                ? "bg-[#209CEE] text-white"
-                : "bg-white/10 text-white/80 hover:bg-white/20",
-            )}
-          >
-            <opt.icon className="h-4 w-4" />
-            {opt.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="flex flex-col gap-2 sm:flex-row">
+      <div className="flex flex-col gap-2">
         <input
-          type="email"
+          type="text"
           required
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            if (status === "error") setStatus("idle");
-          }}
-          placeholder={t.waitlist.placeholder}
-          aria-label="Email address"
-          className="h-12 flex-1 rounded-full border border-white/15 bg-white px-5 text-sm text-foreground outline-none placeholder:text-muted-foreground/70 focus-visible:ring-2 focus-visible:ring-accent"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder={t.waitlist.namePlaceholder}
+          aria-label="Name"
+          className="h-12 w-full rounded-full border border-white/15 bg-white px-5 text-sm text-foreground outline-none placeholder:text-muted-foreground/70 focus-visible:ring-2 focus-visible:ring-accent"
         />
-        <button
-          type="submit"
-          disabled={status === "loading"}
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#209CEE] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#1a87cf] disabled:opacity-60 cursor-pointer"
-        >
-          {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
-          {t.waitlist.submit}
-        </button>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (status === "error") setStatus("idle");
+            }}
+            placeholder={t.waitlist.placeholder}
+            aria-label="Email address"
+            className="h-12 flex-1 rounded-full border border-white/15 bg-white px-5 text-sm text-foreground outline-none placeholder:text-muted-foreground/70 focus-visible:ring-2 focus-visible:ring-accent"
+          />
+          <button
+            type="submit"
+            disabled={status === "loading"}
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#209CEE] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#1a87cf] disabled:opacity-60 cursor-pointer"
+          >
+            {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
+            {t.waitlist.submit}
+          </button>
+        </div>
       </div>
 
-      <p
-        className={cn(
-          "mt-3 text-center text-sm",
-          status === "error" ? "text-red-300" : "text-white/50",
-        )}
-      >
-        {status === "error" ? errorMsg : t.waitlist.helper}
-      </p>
+      {status === "error" && (
+        <p className={cn("mt-3 text-center text-sm text-red-300")}>{errorMsg}</p>
+      )}
     </form>
   );
 }

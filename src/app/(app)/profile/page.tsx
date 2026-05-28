@@ -11,7 +11,7 @@ import { fill } from "@/lib/i18n/dictionaries";
 import { getInitials } from "@/lib/utils";
 import { getDisplayName } from "@/lib/user";
 
-export const metadata: Metadata = { title: "My profile — Spotlight" };
+export const metadata: Metadata = { title: "My profile — Spotlights" };
 
 export default async function ProfilePage() {
   const s = getStudent();
