@@ -21,6 +21,7 @@ export function SiteNavbar() {
     { label: t.nav.companies, href: "/companies" },
     { label: t.nav.events, href: "/events" },
     { label: t.nav.forEmployers, href: "/employers" },
+    { label: t.nav.waitlist, href: "/waitlist" },
   ];
 
   useEffect(() => {

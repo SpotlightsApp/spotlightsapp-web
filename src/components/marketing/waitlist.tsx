@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/marketing/reveal";
-import { WaitlistForm } from "@/components/marketing/waitlist-form";
 import { useI18n } from "@/lib/i18n/provider";
 
 export function Waitlist() {
@@ -26,8 +26,13 @@ export function Waitlist() {
             <h2 className="font-display relative mt-3 text-3xl text-white sm:text-4xl">
               {t.waitlist.heading}
             </h2>
-            <div className="relative mt-8">
-              <WaitlistForm />
+            <div className="relative mt-8 flex justify-center">
+              <Link
+                href="/waitlist"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#209CEE] px-8 text-sm font-semibold text-white transition-colors hover:bg-[#1a87cf]"
+              >
+                {t.waitlist.submit}
+              </Link>
             </div>
           </div>
         </Reveal>
