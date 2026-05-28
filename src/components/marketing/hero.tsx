@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Search, MapPin, GraduationCap, Building2 } from "lucide-react";
+import { Search, MapPin, GraduationCap, Building2, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -108,9 +109,25 @@ export function Hero() {
             {t.hero.subhead}
           </motion.p>
 
-          {/* Audience toggle */}
+          {/* Primary CTA — pre-launch we funnel to the waitlist */}
           <motion.div
             custom={3}
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            className="mt-7 flex justify-center"
+          >
+            <Button asChild size="lg" pill>
+              <Link href="/waitlist">
+                {t.waitlist.submit}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </motion.div>
+
+          {/* Audience toggle */}
+          <motion.div
+            custom={4}
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -132,7 +149,7 @@ export function Hero() {
 
           {/* Search bar */}
           <motion.form
-            custom={4}
+            custom={5}
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -170,7 +187,7 @@ export function Hero() {
           </motion.form>
 
           <motion.p
-            custom={5}
+            custom={6}
             variants={fadeUp}
             initial="hidden"
             animate="show"
