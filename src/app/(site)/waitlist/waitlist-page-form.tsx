@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Loader2, Check } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
+import { joinWaitlist } from "./actions";
 
-type Status = "idle" | "loading" | "success" | "already" | "error";
+type Status = "idle" | "success" | "already" | "error";
 
 export function WaitlistPageForm() {
   const { t } = useI18n();
@@ -14,32 +14,21 @@ export function WaitlistPageForm() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [pending, startTransition] = useTransition();
 
-  async function onSubmit(e: React.FormEvent) {
+  function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      setErrorMsg(t.waitlist.invalid);
+    startTransition(async () => {
+      const res = await joinWaitlist({ name, email });
+      if (res.status === "success" || res.status === "already") {
+        setStatus(res.status);
+        return;
+      }
+      setErrorMsg(
+        res.reason === "invalid" ? t.waitlist.invalid : t.waitlist.serverError,
+      );
       setStatus("error");
-      return;
-    }
-    setStatus("loading");
-
-    const supabase = createClient();
-    const { error } = await supabase.from("waitlist").insert({
-      email: email.trim().toLowerCase(),
-      name: name.trim(),
-      source: "waitlist-page",
     });
-
-    if (!error) {
-      setStatus("success");
-    } else if (error.code === "23505") {
-      setStatus("already");
-    } else {
-      console.error("waitlist insert failed:", error);
-      setErrorMsg(t.waitlist.serverError);
-      setStatus("error");
-    }
   }
 
   if (status === "success" || status === "already") {
@@ -80,10 +69,10 @@ export function WaitlistPageForm() {
       />
       <button
         type="submit"
-        disabled={status === "loading"}
+        disabled={pending}
         className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#209CEE] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#1a87cf] disabled:opacity-60 cursor-pointer"
       >
-        {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
+        {pending && <Loader2 className="h-4 w-4 animate-spin" />}
         {t.waitlist.submit}
       </button>
 
