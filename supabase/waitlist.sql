@@ -19,6 +19,11 @@ create table if not exists public.waitlist (
 
 alter table public.waitlist enable row level security;
 
+-- RLS policy permits the action; the table-level GRANT below makes it possible
+-- in the first place. Without the GRANT, inserts fail with 42501 (permission
+-- denied) even when a policy exists.
+grant insert on public.waitlist to anon, authenticated;
+
 -- Allow anyone (anon or logged-in) to add themselves to the waitlist.
 create policy "anyone can join the waitlist"
   on public.waitlist
