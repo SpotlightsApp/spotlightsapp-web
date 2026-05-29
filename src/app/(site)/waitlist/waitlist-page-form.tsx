@@ -21,6 +21,20 @@ export function WaitlistPageForm() {
     startTransition(async () => {
       const res = await joinWaitlist({ name, email });
       if (res.status === "success" || res.status === "already") {
+        if (res.status === "success") {
+          try {
+            await fetch("/api/waitlist-confirm", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: name.trim(),
+                email: email.trim().toLowerCase(),
+              }),
+            });
+          } catch (sendError) {
+            console.error("waitlist confirm email failed:", sendError);
+          }
+        }
         setStatus(res.status);
         return;
       }
