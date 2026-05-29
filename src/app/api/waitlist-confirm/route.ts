@@ -32,12 +32,14 @@ export async function POST(request: Request) {
   const safeName = escapeHtml(name);
 
   const html = `<!doctype html>
-<html>
-  <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #111; line-height: 1.6; padding: 24px;">
-    <p>Hi ${safeName}, thanks for signing up. Stay tuned, you'll be among the first to know when we launch.</p>
-    <p>Thanks,<br />The Spotlights Team.</p>
-  </body>
-</html>`;
+  <html>
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #111; line-height: 1.6; padding: 24px;">
+      <p>Hi ${safeName},</p>
+      <p>We've confirmed your spot on our waitlist.</p>
+      <p>Stay tuned, you'll be among the first to know when we launch.</p>
+      <p>Thanks,<br />The Spotlights Team.</p>
+    </body>
+  </html>`;
 
   const { data, error } = await resend.emails.send({
     from: "Spotlights <noreply@spotlightsapp.com>",
