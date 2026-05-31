@@ -24,10 +24,10 @@ export default async function AuthLayout({
         <Link href="/" className="relative inline-flex">
           <span className="inline-flex items-center gap-2">
             <img
-              src="/favicon-32x32.png"
+              src="/Spotlightslogo.png"
               alt=""
               aria-hidden
-              className="h-8 w-8"
+              style={{ height: "32px", width: "auto" }}
             />
             <span className="text-lg font-semibold tracking-tight text-white">
               Spotlights

@@ -131,7 +131,7 @@ export function WaitlistWelcome({ name }: { name?: string }) {
         <Container style={styles.container}>
           <Section style={styles.header}>
             <Img
-              src={`${ORIGIN}/favicon-32x32.png`}
+              src={`${ORIGIN}/Spotlightslogo.png`}
               alt=""
               width="28"
               height="28"

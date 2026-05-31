@@ -14,10 +14,10 @@ export function Logo({
   const inner = (
     <span className={cn("inline-flex items-center gap-2", className)}>
       <img
-        src="/favicon-32x32.png"
+        src="/Spotlightslogo.png"
         alt=""
         aria-hidden
-        className="h-8 w-8"
+        style={{ height: "32px", width: "auto" }}
       />
       {showWord && (
         <span className="text-lg font-semibold tracking-tight text-foreground">
