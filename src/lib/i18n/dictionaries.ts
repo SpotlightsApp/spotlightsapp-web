@@ -154,7 +154,7 @@ export const en = {
     marqueeTop: ["Frontend Developer", "Data Analyst", "UX Designer", "Bangkok", "Product Manager", "Chulalongkorn", "Machine Learning", "Internship", "Fintech", "Backend Engineer"],
     marqueeBottom: ["Chiang Mai", "New Grad", "Marketing", "Thammasat", "Remote", "Data Scientist", "DevOps", "Mahidol", "Growth", "Full-Stack"],
   },
-  appNav: { home: "Home", jobs: "Jobs", companies: "Companies", events: "Events", profile: "My profile", logout: "Log out", menu: "Menu" },
+  appNav: { home: "Home", explore: "Explore", jobs: "Jobs", inbox: "Inbox", companies: "Companies", events: "Events", profile: "My profile", logout: "Log out", menu: "Menu" },
   auth: {
     loginTitle: "Welcome back", loginSub: "Log in to pick up where you left off.", loginSubmit: "Log in",
     signupTitle: "Create your account", signupSub: "Start your career journey on Spotlights.", signupSubmit: "Create account",
@@ -195,6 +195,7 @@ export const en = {
     applications: "Applications", savedJobs: "Saved jobs", profileViews: "Profile views",
     recommended: "Recommended for you", seeAll: "See all", yourApplications: "Your applications", noApplications: "You haven't applied to anything yet.",
     profileStrength: "Profile strength", completion: "Completion", profileHint: "Add a portfolio link and 2 more skills to reach 100%.", completeProfile: "Complete profile", upcomingEvents: "Upcoming events",
+    emptyState: "Nothing here yet.",
   },
   profile: { edit: "Edit profile", about: "About", education: "Education", skills: "Skills", openTo: "Open to", profileStrength: "Profile strength", completion: "Completion", expected: "Expected {year}", classOf: "Class of {year}" },
   notFound: { title: "This page isn't in the spotlight", body: "The page you're looking for doesn't exist or has moved.", home: "Back home", browse: "Browse jobs" },
@@ -366,7 +367,7 @@ export const th: typeof en = {
     marqueeTop: ["นักพัฒนา Frontend", "นักวิเคราะห์ข้อมูล", "นักออกแบบ UX", "กรุงเทพฯ", "ผู้จัดการผลิตภัณฑ์", "จุฬาฯ", "แมชชีนเลิร์นนิง", "ฝึกงาน", "ฟินเทค", "วิศวกร Backend"],
     marqueeBottom: ["เชียงใหม่", "จบใหม่", "การตลาด", "ธรรมศาสตร์", "ทำงานทางไกล", "นักวิทยาศาสตร์ข้อมูล", "DevOps", "มหิดล", "Growth", "Full-Stack"],
   },
-  appNav: { home: "หน้าหลัก", jobs: "งาน", companies: "บริษัท", events: "อีเวนต์", profile: "โปรไฟล์ของฉัน", logout: "ออกจากระบบ", menu: "เมนู" },
+  appNav: { home: "หน้าหลัก", explore: "สำรวจ", jobs: "งาน", inbox: "กล่องข้อความ", companies: "บริษัท", events: "อีเวนต์", profile: "โปรไฟล์ของฉัน", logout: "ออกจากระบบ", menu: "เมนู" },
   auth: {
     loginTitle: "ยินดีต้อนรับกลับ", loginSub: "เข้าสู่ระบบเพื่อทำต่อจากที่ค้างไว้", loginSubmit: "เข้าสู่ระบบ",
     signupTitle: "สร้างบัญชีของคุณ", signupSub: "เริ่มต้นเส้นทางอาชีพของคุณบน Spotlights", signupSubmit: "สร้างบัญชี",
@@ -407,6 +408,7 @@ export const th: typeof en = {
     applications: "ใบสมัคร", savedJobs: "งานที่บันทึก", profileViews: "การเข้าชมโปรไฟล์",
     recommended: "แนะนำสำหรับคุณ", seeAll: "ดูทั้งหมด", yourApplications: "ใบสมัครของคุณ", noApplications: "คุณยังไม่ได้สมัครงานใด ๆ",
     profileStrength: "ความสมบูรณ์ของโปรไฟล์", completion: "ความคืบหน้า", profileHint: "เพิ่มลิงก์ผลงานและทักษะอีก 2 อย่างเพื่อให้ถึง 100%", completeProfile: "กรอกโปรไฟล์ให้ครบ", upcomingEvents: "อีเวนต์ที่กำลังจะมาถึง",
+    emptyState: "ยังไม่มีอะไรที่นี่",
   },
   profile: { edit: "แก้ไขโปรไฟล์", about: "เกี่ยวกับ", education: "การศึกษา", skills: "ทักษะ", openTo: "เปิดรับ", profileStrength: "ความสมบูรณ์ของโปรไฟล์", completion: "ความคืบหน้า", expected: "คาดว่าจบปี {year}", classOf: "รุ่นปี {year}" },
   notFound: { title: "หน้านี้ไม่ได้อยู่ในสปอตไลต์", body: "หน้าที่คุณกำลังหาไม่มีอยู่หรือถูกย้ายไปแล้ว", home: "กลับหน้าหลัก", browse: "ดูงาน" },

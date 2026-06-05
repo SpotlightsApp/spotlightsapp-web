@@ -1,37 +1,23 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, Send, Bookmark, Eye } from "lucide-react";
+import { Send, Bookmark, Eye } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { JobCard } from "@/components/cards/job-card";
-import { EventCard } from "@/components/cards/event-card";
-import {
-  getStudent,
-  getSavedJobs,
-  getAppliedJobs,
-  getJobs,
-  getUpcomingEvents,
-} from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
 import { fill } from "@/lib/i18n/dictionaries";
 import { getDisplayName } from "@/lib/user";
 
-export const metadata: Metadata = { title: "Dashboard — Spotlights" };
+export const metadata: Metadata = { title: "Explore — Spotlights" };
 
-export default async function DashboardPage() {
-  const student = getStudent();
-  const saved = getSavedJobs();
-  const applied = getAppliedJobs();
-  const recommended = getJobs({ types: student.openTo }).slice(0, 4);
-  const events = getUpcomingEvents(2);
+export default async function ExplorePage() {
   const t = await getDict();
   const name = await getDisplayName();
 
   const stats = [
-    { icon: Send, label: t.dashboard.applications, value: applied.length },
-    { icon: Bookmark, label: t.dashboard.savedJobs, value: saved.length },
-    { icon: Eye, label: t.dashboard.profileViews, value: 38 },
+    { icon: Send, label: t.dashboard.applications, value: 0 },
+    { icon: Bookmark, label: t.dashboard.savedJobs, value: 0 },
+    { icon: Eye, label: t.dashboard.profileViews, value: 0 },
   ];
 
   return (
@@ -58,36 +44,18 @@ export default async function DashboardPage() {
 
           {/* Recommended */}
           <section>
-            <div className="flex items-end justify-between">
-              <h2 className="text-xl font-semibold">{t.dashboard.recommended}</h2>
-              <Link
-                href="/jobs"
-                className="flex items-center gap-1 text-sm font-medium text-accent-strong hover:underline"
-              >
-                {t.dashboard.seeAll} <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="mt-5 grid gap-5 sm:grid-cols-2">
-              {recommended.map((j) => (
-                <JobCard key={j.id} job={j} />
-              ))}
-            </div>
+            <h2 className="text-xl font-semibold">{t.dashboard.recommended}</h2>
+            <p className="mt-3 text-sm text-muted-foreground">
+              {t.dashboard.emptyState}
+            </p>
           </section>
 
           {/* Applications */}
           <section>
             <h2 className="text-xl font-semibold">{t.dashboard.yourApplications}</h2>
-            {applied.length > 0 ? (
-              <div className="mt-5 grid gap-5 sm:grid-cols-2">
-                {applied.map((j) => (
-                  <JobCard key={j.id} job={j} />
-                ))}
-              </div>
-            ) : (
-              <p className="mt-3 text-sm text-muted-foreground">
-                {t.dashboard.noApplications}
-              </p>
-            )}
+            <p className="mt-3 text-sm text-muted-foreground">
+              {t.dashboard.noApplications}
+            </p>
           </section>
         </div>
 
@@ -97,21 +65,16 @@ export default async function DashboardPage() {
             <h3 className="font-semibold">{t.dashboard.profileStrength}</h3>
             <div className="mt-4 flex items-center justify-between text-sm">
               <span className="text-muted-foreground">{t.dashboard.completion}</span>
-              <span className="font-semibold text-accent-strong">
-                {student.profileCompletion}%
-              </span>
+              <span className="font-semibold text-accent-strong">0%</span>
             </div>
             <div
               className="mt-2 h-2 w-full overflow-hidden rounded-full bg-surface-2"
               role="progressbar"
-              aria-valuenow={student.profileCompletion}
+              aria-valuenow={0}
               aria-valuemin={0}
               aria-valuemax={100}
             >
-              <div
-                className="h-full rounded-full bg-accent"
-                style={{ width: `${student.profileCompletion}%` }}
-              />
+              <div className="h-full rounded-full bg-accent" style={{ width: "0%" }} />
             </div>
             <p className="mt-3 text-sm text-muted-foreground">
               {t.dashboard.profileHint}
@@ -124,32 +87,16 @@ export default async function DashboardPage() {
           <Card className="p-6">
             <div className="flex items-center justify-between">
               <h3 className="font-semibold">{t.dashboard.savedJobs}</h3>
-              <span className="text-sm text-muted-foreground">{saved.length}</span>
+              <span className="text-sm text-muted-foreground">0</span>
             </div>
-            <ul className="mt-4 space-y-3">
-              {saved.map((j) => (
-                <li key={j.id}>
-                  <Link
-                    href={`/jobs/${j.slug}`}
-                    className="block rounded-md p-2 text-sm transition-colors hover:bg-surface-2"
-                  >
-                    <span className="font-medium">{j.title}</span>
-                    <span className="block text-muted-foreground">
-                      {j.company.name}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <p className="mt-4 text-sm text-muted-foreground">
+              {t.dashboard.emptyState}
+            </p>
           </Card>
 
           <div>
             <h3 className="mb-4 font-semibold">{t.dashboard.upcomingEvents}</h3>
-            <div className="space-y-4">
-              {events.map((e) => (
-                <EventCard key={e.id} event={e} />
-              ))}
-            </div>
+            <p className="text-sm text-muted-foreground">{t.dashboard.emptyState}</p>
           </div>
         </aside>
       </div>

@@ -14,6 +14,7 @@ const PROTECTED_PREFIXES = [
   "/events",
   "/dashboard",
   "/profile",
+  "/inbox",
 ];
 
 function isProtected(pathname: string) {
