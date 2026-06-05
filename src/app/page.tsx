@@ -1,10 +1,5 @@
 import { SiteNavbar } from "@/components/marketing/site-navbar";
-import { SiteFooter } from "@/components/marketing/site-footer";
 import { Hero } from "@/components/marketing/hero";
-import { ProductDemo } from "@/components/marketing/product-demo";
-import { StatStrip } from "@/components/marketing/stat-strip";
-import { Positioning } from "@/components/marketing/positioning";
-import { HowItWorks } from "@/components/marketing/how-it-works";
 
 export default function HomePage() {
   return (
@@ -12,12 +7,7 @@ export default function HomePage() {
       <SiteNavbar />
       <main className="flex-1">
         <Hero />
-        <ProductDemo />
-        <StatStrip />
-        <Positioning />
-        <HowItWorks />
       </main>
-      <SiteFooter />
     </>
   );
 }
