@@ -15,11 +15,11 @@ export function AppSidebar() {
   const router = useRouter();
 
   const links = [
-    { label: t.appNav.explore, href: "/dashboard", icon: Compass },
     { label: t.appNav.jobs, href: "/jobs", icon: Briefcase },
     { label: t.appNav.inbox, href: "/inbox", icon: Inbox },
     { label: t.appNav.companies, href: "/companies", icon: Building2 },
     { label: t.appNav.events, href: "/events", icon: Calendar },
+    { label: t.appNav.explore, href: "/explore", icon: Compass },
   ];
 
   async function handleLogout() {
