@@ -7,12 +7,16 @@ import { Button } from "@/components/ui/button";
 import { getDict } from "@/lib/i18n/server";
 import { fill } from "@/lib/i18n/dictionaries";
 import { getDisplayName } from "@/lib/user";
+import { loadProfile } from "../profile/actions";
+import { profileCompletion } from "../profile/profile-data";
 
 export const metadata: Metadata = { title: "Jobs — Spotlights" };
 
 export default async function JobsPage() {
   const t = await getDict();
   const name = await getDisplayName();
+  const profile = await loadProfile();
+  const completion = profileCompletion(profile);
 
   const stats = [
     { icon: Send, label: t.dashboard.applications, value: 0 },
@@ -65,16 +69,21 @@ export default async function JobsPage() {
             <h3 className="font-semibold">{t.dashboard.profileStrength}</h3>
             <div className="mt-4 flex items-center justify-between text-sm">
               <span className="text-muted-foreground">{t.dashboard.completion}</span>
-              <span className="font-semibold text-accent-strong">0%</span>
+              <span className="font-semibold text-accent-strong">
+                {completion}%
+              </span>
             </div>
             <div
               className="mt-2 h-2 w-full overflow-hidden rounded-full bg-surface-2"
               role="progressbar"
-              aria-valuenow={0}
+              aria-valuenow={completion}
               aria-valuemin={0}
               aria-valuemax={100}
             >
-              <div className="h-full rounded-full bg-accent" style={{ width: "0%" }} />
+              <div
+                className="h-full rounded-full bg-accent transition-[width]"
+                style={{ width: `${completion}%` }}
+              />
             </div>
             <p className="mt-3 text-sm text-muted-foreground">
               {t.dashboard.profileHint}

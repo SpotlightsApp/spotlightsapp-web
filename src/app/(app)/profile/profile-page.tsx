@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { Check, Loader2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { Button } from "@/components/ui/button";
 import {
   Tabs,
   TabsList,
@@ -18,6 +20,8 @@ import { EducationSection } from "./education-section";
 import { CoursesSection } from "./courses-section";
 import { OrganizationsSection } from "./organizations-section";
 import { LanguagesSection } from "./languages-section";
+import { saveProfile } from "./actions";
+import type { FullProfile } from "./profile-data";
 import type {
   Course,
   Education,
@@ -28,35 +32,73 @@ import type {
   WorkExperience,
 } from "./types";
 
-export function ProfilePage({ defaultName }: { defaultName: string }) {
-  const [identity, setIdentity] = useState<Identity>({
-    name: defaultName,
-    pronouns: "",
-    headline: "",
-    school: "",
-    gradYear: "",
-    location: "",
-  });
-  const [links, setLinks] = useState<ProfileLink[]>([]);
-  const [lookingFor, setLookingFor] = useState<LookingFor>({
-    jobTypes: [],
-    roles: [],
-    industries: [],
-    locations: [],
-  });
-  const [about, setAbout] = useState("");
-  const [skills, setSkills] = useState<string[]>([]);
-  const [work, setWork] = useState<WorkExperience[]>([]);
-  const [education, setEducation] = useState<Education[]>([]);
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [organizations, setOrganizations] = useState<Organization[]>([]);
-  const [languages, setLanguages] = useState<string[]>([]);
+type SaveState = "idle" | "saved" | "error";
+
+export function ProfilePage({ initial }: { initial: FullProfile }) {
+  const [identity, setIdentity] = useState<Identity>(initial.identity);
+  const [links, setLinks] = useState<ProfileLink[]>(initial.links);
+  const [lookingFor, setLookingFor] = useState<LookingFor>(initial.lookingFor);
+  const [about, setAbout] = useState(initial.about);
+  const [skills, setSkills] = useState<string[]>(initial.skills);
+  const [work, setWork] = useState<WorkExperience[]>(initial.work);
+  const [education, setEducation] = useState<Education[]>(initial.education);
+  const [courses, setCourses] = useState<Course[]>(initial.courses);
+  const [organizations, setOrganizations] = useState<Organization[]>(
+    initial.organizations,
+  );
+  const [languages, setLanguages] = useState<string[]>(initial.languages);
+
+  const [saveState, setSaveState] = useState<SaveState>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [pending, startTransition] = useTransition();
+
+  function onSave() {
+    setSaveState("idle");
+    startTransition(async () => {
+      const res = await saveProfile({
+        identity,
+        links,
+        lookingFor,
+        about,
+        skills,
+        work,
+        education,
+        courses,
+        organizations,
+        languages,
+      });
+      if (res.ok) {
+        setSaveState("saved");
+      } else {
+        setErrorMsg(res.error);
+        setSaveState("error");
+      }
+    });
+  }
 
   return (
     <Container className="py-8">
-      <h1 className="font-display text-3xl text-foreground sm:text-4xl">
-        Profile
-      </h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display text-3xl text-foreground sm:text-4xl">
+          Profile
+        </h1>
+        <div className="flex items-center gap-3">
+          {saveState === "saved" && (
+            <span className="flex items-center gap-1 text-sm text-success">
+              <Check className="h-4 w-4" /> Saved
+            </span>
+          )}
+          {saveState === "error" && (
+            <span className="max-w-[16rem] truncate text-sm text-destructive">
+              {errorMsg}
+            </span>
+          )}
+          <Button onClick={onSave} disabled={pending}>
+            {pending && <Loader2 className="h-4 w-4 animate-spin" />}
+            Save changes
+          </Button>
+        </div>
+      </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[300px_1fr]">
         <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
