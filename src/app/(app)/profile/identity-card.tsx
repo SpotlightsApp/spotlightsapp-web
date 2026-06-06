@@ -5,6 +5,7 @@ import { GraduationCap, MapPin, Share2, Pencil, User } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SuggestInput } from "@/components/ui/suggest-input";
 import {
   Dialog,
   DialogContent,
@@ -40,12 +41,18 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
   }
 
   return (
-    <Card className="p-6">
-      <div className="flex h-24 w-24 items-center justify-center rounded-full bg-surface-2 text-muted-foreground">
-        <User className="h-12 w-12" />
+    <Card className="overflow-hidden p-0">
+      {/* Gradient cover */}
+      <div className="relative h-20 bg-gradient-to-r from-accent via-[#3FB1F2] to-[#bde8fb]">
+        <div className="absolute inset-0 opacity-40 [background:radial-gradient(circle_at_20%_120%,white,transparent_60%)]" />
       </div>
 
-      <h1 className="mt-4 text-xl font-semibold leading-tight">
+      <div className="px-6 pb-6">
+        <div className="-mt-12 flex h-24 w-24 items-center justify-center rounded-full border-4 border-background bg-surface-2 text-muted-foreground shadow-sm">
+          <User className="h-12 w-12" />
+        </div>
+
+        <h1 className="mt-4 text-xl font-semibold leading-tight">
         {identity.name || "Your name"}{" "}
         {identity.pronouns ? (
           <span className="text-base font-normal text-muted-foreground">
@@ -106,19 +113,13 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
               />
             </Field>
             <Field label="Pronouns">
-              <Input
+              <SuggestInput
                 value={draft.pronouns}
+                onChange={(v) => setDraft({ ...draft, pronouns: v })}
+                onSelect={(v) => setDraft({ ...draft, pronouns: v })}
+                suggestions={suggest.pronouns}
                 placeholder="e.g. he/him"
-                list="id-pronouns"
-                onChange={(e) =>
-                  setDraft({ ...draft, pronouns: e.target.value })
-                }
               />
-              <datalist id="id-pronouns">
-                {suggest.pronouns.map((p) => (
-                  <option key={p} value={p} />
-                ))}
-              </datalist>
             </Field>
             <Field label="Headline">
               <Input
@@ -131,49 +132,32 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
             </Field>
             <div className="grid grid-cols-2 gap-3">
               <Field label="School">
-                <Input
+                <SuggestInput
                   value={draft.school}
-                  list="id-schools"
-                  onChange={(e) =>
-                    setDraft({ ...draft, school: e.target.value })
-                  }
+                  onChange={(v) => setDraft({ ...draft, school: v })}
+                  onSelect={(v) => setDraft({ ...draft, school: v })}
+                  suggestions={suggest.schools}
+                  placeholder="University"
                 />
-                <datalist id="id-schools">
-                  {suggest.schools.map((s) => (
-                    <option key={s} value={s} />
-                  ))}
-                </datalist>
               </Field>
               <Field label="Grad year">
-                <Input
+                <SuggestInput
                   value={draft.gradYear}
+                  onChange={(v) => setDraft({ ...draft, gradYear: v })}
+                  onSelect={(v) => setDraft({ ...draft, gradYear: v })}
+                  suggestions={gradYears}
                   placeholder="2027"
-                  list="id-gradyears"
-                  onChange={(e) =>
-                    setDraft({ ...draft, gradYear: e.target.value })
-                  }
                 />
-                <datalist id="id-gradyears">
-                  {gradYears.map((y) => (
-                    <option key={y} value={y} />
-                  ))}
-                </datalist>
               </Field>
             </div>
             <Field label="Location">
-              <Input
+              <SuggestInput
                 value={draft.location}
+                onChange={(v) => setDraft({ ...draft, location: v })}
+                onSelect={(v) => setDraft({ ...draft, location: v })}
+                suggestions={suggest.locations}
                 placeholder="Bangkok, Thailand"
-                list="id-locations"
-                onChange={(e) =>
-                  setDraft({ ...draft, location: e.target.value })
-                }
               />
-              <datalist id="id-locations">
-                {suggest.locations.map((l) => (
-                  <option key={l} value={l} />
-                ))}
-              </datalist>
             </Field>
           </div>
           <DialogFooter>
@@ -184,6 +168,7 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      </div>
     </Card>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useTransition } from "react";
+import { motion } from "framer-motion";
 import { Check, Loader2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -33,6 +34,19 @@ import type {
 } from "./types";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] as const },
+  },
+};
 
 export function ProfilePage({ initial }: { initial: FullProfile }) {
   const [identity, setIdentity] = useState<Identity>(initial.identity);
@@ -128,10 +142,19 @@ export function ProfilePage({ initial }: { initial: FullProfile }) {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[300px_1fr]">
-        <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
-          <IdentityCard identity={identity} onChange={setIdentity} />
-          <LinksCard links={links} onChange={setLinks} />
-        </aside>
+        <motion.aside
+          variants={stagger}
+          initial="hidden"
+          animate="show"
+          className="space-y-4 lg:sticky lg:top-20 lg:self-start"
+        >
+          <motion.div variants={fadeUp}>
+            <IdentityCard identity={identity} onChange={setIdentity} />
+          </motion.div>
+          <motion.div variants={fadeUp}>
+            <LinksCard links={links} onChange={setLinks} />
+          </motion.div>
+        </motion.aside>
 
         <div className="min-w-0">
           <Tabs defaultValue="resume">
@@ -140,18 +163,41 @@ export function ProfilePage({ initial }: { initial: FullProfile }) {
               <TabsTrigger value="viewers">Profile viewers</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="resume" className="mt-6 space-y-5">
-              <LookingForSection value={lookingFor} onChange={setLookingFor} />
-              <AboutSection value={about} onChange={setAbout} />
-              <SkillsSection values={skills} onChange={setSkills} />
-              <WorkExperienceSection entries={work} onChange={setWork} />
-              <EducationSection entries={education} onChange={setEducation} />
-              <CoursesSection entries={courses} onChange={setCourses} />
-              <OrganizationsSection
-                entries={organizations}
-                onChange={setOrganizations}
-              />
-              <LanguagesSection values={languages} onChange={setLanguages} />
+            <TabsContent value="resume" className="mt-6">
+              <motion.div
+                variants={stagger}
+                initial="hidden"
+                animate="show"
+                className="space-y-5"
+              >
+                <motion.div variants={fadeUp}>
+                  <LookingForSection value={lookingFor} onChange={setLookingFor} />
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <AboutSection value={about} onChange={setAbout} />
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <SkillsSection values={skills} onChange={setSkills} />
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <WorkExperienceSection entries={work} onChange={setWork} />
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <EducationSection entries={education} onChange={setEducation} />
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <CoursesSection entries={courses} onChange={setCourses} />
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <OrganizationsSection
+                    entries={organizations}
+                    onChange={setOrganizations}
+                  />
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <LanguagesSection values={languages} onChange={setLanguages} />
+                </motion.div>
+              </motion.div>
             </TabsContent>
 
             <TabsContent value="viewers" className="mt-6">

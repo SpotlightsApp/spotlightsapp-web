@@ -1,15 +1,16 @@
 "use client";
 
-import { useId, useState, type KeyboardEvent } from "react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { SuggestInput } from "@/components/ui/suggest-input";
 
 type ChipInputProps = {
   values: string[];
   onChange: (next: string[]) => void;
   placeholder?: string;
-  /** Optional autocomplete suggestions shown in a dropdown as the user types. */
+  /** Optional autocomplete suggestions shown in a styled dropdown. */
   suggestions?: string[];
 };
 
@@ -20,7 +21,6 @@ export function ChipInput({
   suggestions,
 }: ChipInputProps) {
   const [draft, setDraft] = useState("");
-  const listId = useId();
 
   function addValue(raw: string) {
     const v = raw.trim();
@@ -36,63 +36,52 @@ export function ChipInput({
     onChange(values.filter((x) => x !== v));
   }
 
-  function onKey(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      addValue(draft);
-    }
-  }
-
   // Suggestions not already chosen.
   const available = (suggestions ?? []).filter((s) => !values.includes(s));
 
   return (
     <div className="space-y-3">
       <div className="flex gap-2">
-        <Input
-          value={draft}
-          list={available.length ? listId : undefined}
-          onChange={(e) => {
-            const v = e.target.value;
-            // Picking a suggestion from the datalist adds it instantly.
-            if (available.includes(v)) {
-              addValue(v);
-            } else {
-              setDraft(v);
-            }
-          }}
-          onKeyDown={onKey}
-          placeholder={placeholder ?? "Type and press Enter"}
-        />
-        {available.length > 0 && (
-          <datalist id={listId}>
-            {available.map((s) => (
-              <option key={s} value={s} />
-            ))}
-          </datalist>
-        )}
+        <div className="flex-1">
+          <SuggestInput
+            value={draft}
+            onChange={setDraft}
+            onSelect={addValue}
+            suggestions={available}
+            clearOnSelect
+            placeholder={placeholder ?? "Type and press Enter"}
+          />
+        </div>
         <Button type="button" variant="outline" onClick={() => addValue(draft)}>
           Add
         </Button>
       </div>
+
       {values.length > 0 ? (
         <ul className="flex flex-wrap gap-2">
-          {values.map((v) => (
-            <li
-              key={v}
-              className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-sm text-accent-strong"
-            >
-              {v}
-              <button
-                type="button"
-                onClick={() => remove(v)}
-                aria-label={`Remove ${v}`}
-                className="inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-accent/20 cursor-pointer"
+          <AnimatePresence initial={false}>
+            {values.map((v) => (
+              <motion.li
+                key={v}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.18, ease: [0.21, 0.47, 0.32, 0.98] }}
+                className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-sm text-accent-strong"
               >
-                <X className="h-3 w-3" />
-              </button>
-            </li>
-          ))}
+                {v}
+                <button
+                  type="button"
+                  onClick={() => remove(v)}
+                  aria-label={`Remove ${v}`}
+                  className="inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors hover:bg-accent/25 cursor-pointer"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </motion.li>
+            ))}
+          </AnimatePresence>
         </ul>
       ) : null}
     </div>
