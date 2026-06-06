@@ -27,6 +27,11 @@ create table if not exists public.profiles (
 
 alter table public.profiles enable row level security;
 
+-- Base privilege for the signed-in role. Without this GRANT, every query fails
+-- with 42501 (permission denied) BEFORE RLS is even evaluated — the policies
+-- below only narrow what an already-granted role may touch.
+grant select, insert, update on public.profiles to authenticated;
+
 -- Owners can read / create / update their own profile. No delete policy
 -- (the row is removed via the auth.users cascade).
 drop policy if exists "profiles_select_own" on public.profiles;

@@ -14,19 +14,29 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
+  const [existing, setExisting] = useState(false);
+  const [attemptedEmail, setAttemptedEmail] = useState("");
   const isSignup = mode === "signup";
   const supabase = createClient();
+
+  // Carry the email between signup ↔ login (e.g. "log in instead" prefill).
+  const prefillEmail =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("email") ?? ""
+      : "";
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setConfirming(false);
+    setExisting(false);
 
     const form = e.currentTarget;
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
     const password = (form.elements.namedItem("password") as HTMLInputElement)
       .value;
+    setAttemptedEmail(email);
 
     // NOTE: university (.ac.th) email gating is disabled for testing so any
     // real email can sign up. Re-enable before launch.
@@ -42,11 +52,23 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         },
       });
       if (error) {
-        setError(error.message);
+        // Confirmation OFF: an existing email returns "User already registered".
+        if (/already\s*(registered|exists)/i.test(error.message)) {
+          setExisting(true);
+        } else {
+          setError(error.message);
+        }
         setLoading(false);
         return;
       }
-      // If email confirmation is OFF, Supabase returns a session — log straight in.
+      // Confirmation ON: Supabase obfuscates a duplicate as a user with no
+      // identities (no error, no session). Treat that as "already exists".
+      if (data.user && (data.user.identities?.length ?? 0) === 0) {
+        setExisting(true);
+        setLoading(false);
+        return;
+      }
+      // Confirmation OFF on a NEW user: a session is returned — log straight in.
       if (data.session) {
         router.push("/dashboard");
         router.refresh();
@@ -117,7 +139,14 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           <label htmlFor="email" className="mb-1.5 block text-sm font-medium">
             {t.auth.email}
           </label>
-          <Input id="email" name="email" type="email" placeholder="you@example.com" required />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            defaultValue={prefillEmail}
+            required
+          />
         </div>
         <div>
           <label htmlFor="password" className="mb-1.5 block text-sm font-medium">
@@ -128,6 +157,17 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
 
         {confirming && <p className="text-sm text-green-600">{t.auth.confirm}</p>}
         {error && <p className="text-sm text-red-500">{error}</p>}
+        {existing && (
+          <div className="rounded-md border border-border bg-surface px-3 py-2.5 text-sm">
+            <p className="text-foreground">{t.auth.existing}</p>
+            <Link
+              href={`/login?email=${encodeURIComponent(attemptedEmail)}`}
+              className="mt-1 inline-block font-medium text-accent-strong hover:underline"
+            >
+              {t.auth.goToLogin} →
+            </Link>
+          </div>
+        )}
 
         <Button type="submit" className="w-full" disabled={loading}>
           {loading && <Loader2 className="h-4 w-4 animate-spin" />}
