@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { Inbox } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TABS = ["All", "Unread", "Archived"] as const;
@@ -28,9 +30,11 @@ export function ConversationList() {
             >
               {tab}
               {isActive ? (
-                <span
+                <motion.span
+                  layoutId="inbox-tab-underline"
                   aria-hidden
                   className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-accent"
+                  transition={{ duration: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }}
                 />
               ) : null}
             </button>
@@ -38,9 +42,19 @@ export function ConversationList() {
         })}
       </div>
       <div className="flex flex-1 flex-col overflow-y-auto">
-        <div className="flex flex-1 items-center justify-center px-6 py-12 text-center text-sm text-muted-foreground">
-          No messages yet.
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="flex flex-1 flex-col items-center justify-center gap-3 px-6 py-12 text-center"
+        >
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-surface-2 text-muted-foreground">
+            <Inbox className="h-5 w-5" />
+          </span>
+          <p className="text-sm text-muted-foreground">
+            No messages yet — start a conversation to see it here.
+          </p>
+        </motion.div>
       </div>
     </div>
   );

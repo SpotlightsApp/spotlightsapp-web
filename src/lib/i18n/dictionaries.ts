@@ -192,7 +192,7 @@ export const en = {
   eventCard: { going: "{n} going" },
   eventDetail: { back: "All events", hostedBy: "Hosted by {host}", about: "About this event", register: "Register to attend", registered: "You're registered", free: "Free for Spotlights members", attending: "{n} attending" },
   dashboard: {
-    welcome: "Welcome back, {name} 👋", sub: "Here's what's happening with your job search.",
+    welcome: "Welcome back, {name}", sub: "Here's what's happening with your job search.",
     applications: "Applications", savedJobs: "Saved jobs", profileViews: "Profile views",
     recommended: "Recommended for you", seeAll: "See all", yourApplications: "Your applications", noApplications: "You haven't applied to anything yet.",
     profileStrength: "Profile strength", completion: "Completion", profileHint: "Add a portfolio link and 2 more skills to reach 100%.", completeProfile: "Complete profile", upcomingEvents: "Upcoming events",
@@ -406,7 +406,7 @@ export const th: typeof en = {
   eventCard: { going: "{n} คนเข้าร่วม" },
   eventDetail: { back: "อีเวนต์ทั้งหมด", hostedBy: "จัดโดย {host}", about: "เกี่ยวกับอีเวนต์นี้", register: "ลงทะเบียนเข้าร่วม", registered: "คุณลงทะเบียนแล้ว", free: "ฟรีสำหรับสมาชิก Spotlights", attending: "{n} คนเข้าร่วม" },
   dashboard: {
-    welcome: "ยินดีต้อนรับกลับ {name} 👋", sub: "นี่คือความเคลื่อนไหวการหางานของคุณ",
+    welcome: "ยินดีต้อนรับกลับ {name}", sub: "นี่คือความเคลื่อนไหวการหางานของคุณ",
     applications: "ใบสมัคร", savedJobs: "งานที่บันทึก", profileViews: "การเข้าชมโปรไฟล์",
     recommended: "แนะนำสำหรับคุณ", seeAll: "ดูทั้งหมด", yourApplications: "ใบสมัครของคุณ", noApplications: "คุณยังไม่ได้สมัครงานใด ๆ",
     profileStrength: "ความสมบูรณ์ของโปรไฟล์", completion: "ความคืบหน้า", profileHint: "เพิ่มลิงก์ผลงานและทักษะอีก 2 อย่างเพื่อให้ถึง 100%", completeProfile: "กรอกโปรไฟล์ให้ครบ", upcomingEvents: "อีเวนต์ที่กำลังจะมาถึง",
