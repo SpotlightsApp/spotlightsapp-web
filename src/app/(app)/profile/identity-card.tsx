@@ -13,6 +13,8 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
+import { getSuggestions } from "./suggestions";
+import { useI18n } from "@/lib/i18n/provider";
 import type { Identity } from "./types";
 
 type IdentityCardProps = {
@@ -21,8 +23,11 @@ type IdentityCardProps = {
 };
 
 export function IdentityCard({ identity, onChange }: IdentityCardProps) {
+  const { locale } = useI18n();
+  const suggest = getSuggestions(locale);
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState<Identity>(identity);
+  const gradYears = Array.from({ length: 9 }, (_, i) => `${2024 + i}`);
 
   function openDialog() {
     setDraft(identity);
@@ -104,10 +109,16 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
               <Input
                 value={draft.pronouns}
                 placeholder="e.g. he/him"
+                list="id-pronouns"
                 onChange={(e) =>
                   setDraft({ ...draft, pronouns: e.target.value })
                 }
               />
+              <datalist id="id-pronouns">
+                {suggest.pronouns.map((p) => (
+                  <option key={p} value={p} />
+                ))}
+              </datalist>
             </Field>
             <Field label="Headline">
               <Input
@@ -122,29 +133,47 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
               <Field label="School">
                 <Input
                   value={draft.school}
+                  list="id-schools"
                   onChange={(e) =>
                     setDraft({ ...draft, school: e.target.value })
                   }
                 />
+                <datalist id="id-schools">
+                  {suggest.schools.map((s) => (
+                    <option key={s} value={s} />
+                  ))}
+                </datalist>
               </Field>
               <Field label="Grad year">
                 <Input
                   value={draft.gradYear}
                   placeholder="2027"
+                  list="id-gradyears"
                   onChange={(e) =>
                     setDraft({ ...draft, gradYear: e.target.value })
                   }
                 />
+                <datalist id="id-gradyears">
+                  {gradYears.map((y) => (
+                    <option key={y} value={y} />
+                  ))}
+                </datalist>
               </Field>
             </div>
             <Field label="Location">
               <Input
                 value={draft.location}
                 placeholder="Bangkok, Thailand"
+                list="id-locations"
                 onChange={(e) =>
                   setDraft({ ...draft, location: e.target.value })
                 }
               />
+              <datalist id="id-locations">
+                {suggest.locations.map((l) => (
+                  <option key={l} value={l} />
+                ))}
+              </datalist>
             </Field>
           </div>
           <DialogFooter>

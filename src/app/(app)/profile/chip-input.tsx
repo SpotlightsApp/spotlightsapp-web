@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type KeyboardEvent } from "react";
+import { useId, useState, type KeyboardEvent } from "react";
 import { X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -9,13 +9,21 @@ type ChipInputProps = {
   values: string[];
   onChange: (next: string[]) => void;
   placeholder?: string;
+  /** Optional autocomplete suggestions shown in a dropdown as the user types. */
+  suggestions?: string[];
 };
 
-export function ChipInput({ values, onChange, placeholder }: ChipInputProps) {
+export function ChipInput({
+  values,
+  onChange,
+  placeholder,
+  suggestions,
+}: ChipInputProps) {
   const [draft, setDraft] = useState("");
+  const listId = useId();
 
-  function add() {
-    const v = draft.trim();
+  function addValue(raw: string) {
+    const v = raw.trim();
     if (!v || values.includes(v)) {
       setDraft("");
       return;
@@ -31,20 +39,39 @@ export function ChipInput({ values, onChange, placeholder }: ChipInputProps) {
   function onKey(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
-      add();
+      addValue(draft);
     }
   }
+
+  // Suggestions not already chosen.
+  const available = (suggestions ?? []).filter((s) => !values.includes(s));
 
   return (
     <div className="space-y-3">
       <div className="flex gap-2">
         <Input
           value={draft}
-          onChange={(e) => setDraft(e.target.value)}
+          list={available.length ? listId : undefined}
+          onChange={(e) => {
+            const v = e.target.value;
+            // Picking a suggestion from the datalist adds it instantly.
+            if (available.includes(v)) {
+              addValue(v);
+            } else {
+              setDraft(v);
+            }
+          }}
           onKeyDown={onKey}
           placeholder={placeholder ?? "Type and press Enter"}
         />
-        <Button type="button" variant="outline" onClick={add}>
+        {available.length > 0 && (
+          <datalist id={listId}>
+            {available.map((s) => (
+              <option key={s} value={s} />
+            ))}
+          </datalist>
+        )}
+        <Button type="button" variant="outline" onClick={() => addValue(draft)}>
           Add
         </Button>
       </div>

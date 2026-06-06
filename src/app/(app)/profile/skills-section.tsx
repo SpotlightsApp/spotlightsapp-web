@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { SectionCard } from "./section-card";
 import { ChipInput } from "./chip-input";
+import { getSuggestions } from "./suggestions";
+import { useI18n } from "@/lib/i18n/provider";
 
 type SkillsSectionProps = {
   values: string[];
@@ -19,6 +21,7 @@ type SkillsSectionProps = {
 };
 
 export function SkillsSection({ values, onChange }: SkillsSectionProps) {
+  const { locale } = useI18n();
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState<string[]>(values);
 
@@ -58,6 +61,7 @@ export function SkillsSection({ values, onChange }: SkillsSectionProps) {
             values={draft}
             onChange={setDraft}
             placeholder="e.g. Python, React"
+            suggestions={getSuggestions(locale).skills}
           />
           <DialogFooter>
             <DialogClose asChild>

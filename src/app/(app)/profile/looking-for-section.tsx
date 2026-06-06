@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { SectionCard } from "./section-card";
 import { ChipInput } from "./chip-input";
+import { getSuggestions } from "./suggestions";
+import { useI18n } from "@/lib/i18n/provider";
 import type { LookingFor } from "./types";
 
 type LookingForSectionProps = {
@@ -20,6 +22,8 @@ type LookingForSectionProps = {
 };
 
 export function LookingForSection({ value, onChange }: LookingForSectionProps) {
+  const { locale } = useI18n();
+  const suggest = getSuggestions(locale);
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState<LookingFor>(value);
 
@@ -33,11 +37,15 @@ export function LookingForSection({ value, onChange }: LookingForSectionProps) {
     setOpen(false);
   }
 
-  const groups: { label: string; key: keyof LookingFor }[] = [
-    { label: "Job types", key: "jobTypes" },
-    { label: "Roles", key: "roles" },
-    { label: "Industries", key: "industries" },
-    { label: "Locations", key: "locations" },
+  const groups: {
+    label: string;
+    key: keyof LookingFor;
+    suggestions: string[];
+  }[] = [
+    { label: "Job types", key: "jobTypes", suggestions: suggest.jobTypes },
+    { label: "Roles", key: "roles", suggestions: suggest.roles },
+    { label: "Industries", key: "industries", suggestions: suggest.industries },
+    { label: "Locations", key: "locations", suggestions: suggest.locations },
   ];
 
   const isEmpty = groups.every((g) => value[g.key].length === 0);
@@ -85,6 +93,7 @@ export function LookingForSection({ value, onChange }: LookingForSectionProps) {
                   values={draft[g.key]}
                   onChange={(next) => setDraft({ ...draft, [g.key]: next })}
                   placeholder={`Add a ${g.label.toLowerCase().replace(/s$/, "")}`}
+                  suggestions={g.suggestions}
                 />
               </div>
             ))}

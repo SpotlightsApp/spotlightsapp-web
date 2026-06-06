@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import { Check, Loader2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ import type {
   WorkExperience,
 } from "./types";
 
-type SaveState = "idle" | "saved" | "error";
+type SaveState = "idle" | "saving" | "saved" | "error";
 
 export function ProfilePage({ initial }: { initial: FullProfile }) {
   const [identity, setIdentity] = useState<Identity>(initial.identity);
@@ -52,27 +52,49 @@ export function ProfilePage({ initial }: { initial: FullProfile }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [pending, startTransition] = useTransition();
 
+  const profile: FullProfile = {
+    identity,
+    links,
+    lookingFor,
+    about,
+    skills,
+    work,
+    education,
+    courses,
+    organizations,
+    languages,
+  };
+
+  async function persist(next: FullProfile) {
+    setSaveState("saving");
+    const res = await saveProfile(next);
+    if (res.ok) {
+      setSaveState("saved");
+    } else {
+      setErrorMsg(res.error);
+      setSaveState("error");
+    }
+  }
+
+  // Autosave: debounce any change and persist, so individual section edits stick
+  // without needing the manual button. Skips the initial hydration render.
+  const hydrated = useRef(false);
+  const profileJson = JSON.stringify(profile);
+  useEffect(() => {
+    if (!hydrated.current) {
+      hydrated.current = true;
+      return;
+    }
+    const id = setTimeout(() => {
+      persist(JSON.parse(profileJson) as FullProfile);
+    }, 800);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileJson]);
+
   function onSave() {
-    setSaveState("idle");
-    startTransition(async () => {
-      const res = await saveProfile({
-        identity,
-        links,
-        lookingFor,
-        about,
-        skills,
-        work,
-        education,
-        courses,
-        organizations,
-        languages,
-      });
-      if (res.ok) {
-        setSaveState("saved");
-      } else {
-        setErrorMsg(res.error);
-        setSaveState("error");
-      }
+    startTransition(() => {
+      void persist(profile);
     });
   }
 
@@ -83,6 +105,11 @@ export function ProfilePage({ initial }: { initial: FullProfile }) {
           Profile
         </h1>
         <div className="flex items-center gap-3">
+          {saveState === "saving" && (
+            <span className="flex items-center gap-1 text-sm text-muted-foreground">
+              <Loader2 className="h-4 w-4 animate-spin" /> Saving…
+            </span>
+          )}
           {saveState === "saved" && (
             <span className="flex items-center gap-1 text-sm text-success">
               <Check className="h-4 w-4" /> Saved
@@ -93,7 +120,7 @@ export function ProfilePage({ initial }: { initial: FullProfile }) {
               {errorMsg}
             </span>
           )}
-          <Button onClick={onSave} disabled={pending}>
+          <Button onClick={onSave} disabled={pending || saveState === "saving"}>
             {pending && <Loader2 className="h-4 w-4 animate-spin" />}
             Save changes
           </Button>
