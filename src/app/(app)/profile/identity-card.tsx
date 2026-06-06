@@ -47,7 +47,7 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
         <div className="absolute inset-0 opacity-40 [background:radial-gradient(circle_at_20%_120%,white,transparent_60%)]" />
       </div>
 
-      <div className="px-6 pb-6">
+      <div className="relative z-10 px-6 pb-6">
         <div className="-mt-12 flex h-24 w-24 items-center justify-center rounded-full border-4 border-background bg-surface-2 text-muted-foreground shadow-sm">
           <User className="h-12 w-12" />
         </div>
