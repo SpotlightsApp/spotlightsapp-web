@@ -111,14 +111,17 @@ export async function POST(request: Request) {
         { status: 409 },
       );
     }
+    const e = createdUser.error as {
+      message?: string;
+      details?: string;
+      hint?: string;
+      code?: string;
+    } | null;
     console.error("[auth.admin.createUser] failed:", {
-      message: createdUser.error?.message,
-      // @ts-expect-error - surface any extra fields Supabase attaches for debugging
-      details: createdUser.error?.details,
-      // @ts-expect-error
-      hint: createdUser.error?.hint,
-      // @ts-expect-error
-      code: createdUser.error?.code,
+      message: e?.message,
+      details: e?.details,
+      hint: e?.hint,
+      code: e?.code,
       error: createdUser.error,
     });
     return Response.json({ error: message }, { status: 500 });
@@ -142,11 +145,17 @@ export async function POST(request: Request) {
     .single();
 
   if (companyInsert.error || !companyInsert.data) {
+    const e = companyInsert.error as {
+      message?: string;
+      details?: string;
+      hint?: string;
+      code?: string;
+    } | null;
     console.error("[companies insert] failed:", {
-      message: companyInsert.error?.message,
-      details: companyInsert.error?.details,
-      hint: companyInsert.error?.hint,
-      code: companyInsert.error?.code,
+      message: e?.message,
+      details: e?.details,
+      hint: e?.hint,
+      code: e?.code,
       error: companyInsert.error,
     });
     await supabaseAdmin.auth.admin.deleteUser(userId);
@@ -171,11 +180,17 @@ export async function POST(request: Request) {
   });
 
   if (profileInsert.error) {
+    const e = profileInsert.error as {
+      message?: string;
+      details?: string;
+      hint?: string;
+      code?: string;
+    };
     console.error("[employer_profiles insert] failed:", {
-      message: profileInsert.error.message,
-      details: profileInsert.error.details,
-      hint: profileInsert.error.hint,
-      code: profileInsert.error.code,
+      message: e.message,
+      details: e.details,
+      hint: e.hint,
+      code: e.code,
       error: profileInsert.error,
     });
     await supabaseAdmin.from("companies").delete().eq("id", companyId);
