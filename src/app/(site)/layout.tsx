@@ -9,8 +9,9 @@ export default function SiteLayout({
   return (
     <>
       <SiteNavbar />
-      {/* Offset for the fixed navbar (h-16) on inner pages */}
-      <main className="flex-1 pt-16">{children}</main>
+      {/* No top offset — pages let their hero fill behind the transparent
+          navbar (each page adds its own top padding to clear it). */}
+      <main className="flex-1">{children}</main>
       <SiteFooter />
     </>
   );
