@@ -29,16 +29,6 @@ type Step2Errors = Partial<{
   headquarters: string;
 }>;
 
-const FREE_EMAIL_DOMAINS = new Set([
-  "gmail.com",
-  "yahoo.com",
-  "hotmail.com",
-  "outlook.com",
-  "icloud.com",
-  "aol.com",
-  "proton.me",
-]);
-
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const INDUSTRY_OPTIONS = [
@@ -106,11 +96,6 @@ export function EmployerRegisterForm() {
       errors.workEmail = "Work email is required.";
     } else if (!EMAIL_RE.test(email)) {
       errors.workEmail = "Please enter a valid email address.";
-    } else {
-      const domain = email.split("@")[1] ?? "";
-      if (FREE_EMAIL_DOMAINS.has(domain)) {
-        errors.workEmail = "Please use your company email address.";
-      }
     }
 
     if (!password) {
