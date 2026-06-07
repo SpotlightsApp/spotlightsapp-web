@@ -1,20 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/provider";
+import { rsvpEvent } from "@/app/(app)/events/actions";
 
-/** Frontend-only RSVP. Wire to Supabase (event_rsvps) later. */
-export function RegisterButton() {
+/** RSVP to an event. Persists to Supabase via server action (event_rsvps). */
+export function RegisterButton({
+  eventId,
+  initialRegistered = false,
+}: {
+  eventId: string;
+  initialRegistered?: boolean;
+}) {
   const { t } = useI18n();
-  const [registered, setRegistered] = useState(false);
+  const [registered, setRegistered] = useState(initialRegistered);
+  const [isPending, startTransition] = useTransition();
+
+  const handleRegister = () => {
+    startTransition(async () => {
+      const { registered: next } = await rsvpEvent(eventId);
+      if (next) setRegistered(true);
+    });
+  };
+
   return (
     <Button
       size="lg"
       className="w-full"
-      disabled={registered}
-      onClick={() => setRegistered(true)}
+      disabled={registered || isPending}
+      onClick={handleRegister}
     >
       {registered ? (
         <>

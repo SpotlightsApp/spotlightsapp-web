@@ -60,6 +60,7 @@ export function rowToProfile(row: AnyRow, fallbackName = ""): FullProfile {
       school: str(row.school),
       gradYear: str(row.grad_year),
       location: str(row.location),
+      avatarUrl: str(row.avatar_url) || undefined,
     },
     links: arr<ProfileLink>(row.links),
     lookingFor: {
@@ -87,6 +88,7 @@ export function profileToRow(p: FullProfile, id: string) {
     school: p.identity.school,
     grad_year: p.identity.gradYear,
     location: p.identity.location,
+    avatar_url: p.identity.avatarUrl ?? null,
     about: p.about,
     links: p.links,
     looking_for: p.lookingFor,

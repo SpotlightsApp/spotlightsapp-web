@@ -1,27 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Bookmark, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
+import { applyToJob, toggleSaveJob } from "@/app/(app)/jobs/actions";
 
 /**
- * Apply / Save actions. Frontend-only: state is local and resets on reload.
- * Wire to Supabase (insert into applications / saved_jobs) later.
+ * Apply / Save actions. Persists to Supabase via server actions
+ * (applications / saved_jobs).
  */
-export function JobActions({ title }: { title: string }) {
+export function JobActions({
+  jobId,
+  title,
+  initialApplied = false,
+  initialSaved = false,
+}: {
+  jobId: string;
+  title: string;
+  initialApplied?: boolean;
+  initialSaved?: boolean;
+}) {
   const { t } = useI18n();
-  const [applied, setApplied] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [applied, setApplied] = useState(initialApplied);
+  const [saved, setSaved] = useState(initialSaved);
+  const [isApplying, startApply] = useTransition();
+  const [isSaving, startSave] = useTransition();
+
+  const handleApply = () => {
+    startApply(async () => {
+      const { ok } = await applyToJob(jobId);
+      if (ok) setApplied(true);
+    });
+  };
+
+  const handleSave = () => {
+    startSave(async () => {
+      const { saved: next } = await toggleSaveJob(jobId);
+      setSaved(next);
+    });
+  };
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
       <Button
         size="lg"
         className="flex-1"
-        disabled={applied}
-        onClick={() => setApplied(true)}
+        disabled={applied || isApplying}
+        onClick={handleApply}
       >
         {applied ? (
           <>
@@ -34,7 +61,8 @@ export function JobActions({ title }: { title: string }) {
       <Button
         size="lg"
         variant="outline"
-        onClick={() => setSaved((v) => !v)}
+        onClick={handleSave}
+        disabled={isSaving}
         aria-pressed={saved}
         aria-label={saved ? `Unsave ${title}` : `Save ${title}`}
         className={cn(saved && "border-accent bg-accent-soft text-accent-strong")}

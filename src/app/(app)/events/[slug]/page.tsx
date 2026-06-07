@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { RegisterButton } from "@/components/events/register-button";
 import { getEventBySlug } from "@/lib/data";
+import { getEventRsvp } from "../actions";
 import { getDict, getLocale } from "@/lib/i18n/server";
 import { fill } from "@/lib/i18n/dictionaries";
 import { eventDateLong, eventTime } from "@/lib/utils";
@@ -31,6 +32,7 @@ export default async function EventDetailPage({
   if (!event) notFound();
   const t = await getDict();
   const locale = await getLocale();
+  const rsvp = await getEventRsvp(event.id);
 
   const details = [
     { icon: CalendarDays, label: eventDateLong(event.date, locale) },
@@ -86,7 +88,7 @@ export default async function EventDetailPage({
               ))}
             </dl>
             <div className="mt-6">
-              <RegisterButton />
+              <RegisterButton eventId={event.id} initialRegistered={rsvp.registered} />
             </div>
             <p className="mt-3 text-center text-xs text-muted-foreground">
               {t.eventDetail.free}

@@ -17,6 +17,7 @@ import { CompanyLogo } from "@/components/ui/company-logo";
 import { JobCard } from "@/components/cards/job-card";
 import { JobActions } from "@/components/jobs/job-actions";
 import { getJobBySlug, getRelatedJobs } from "@/lib/data";
+import { getJobActivity } from "../actions";
 import { getDict } from "@/lib/i18n/server";
 import { fill } from "@/lib/i18n/dictionaries";
 import { formatTHB } from "@/lib/utils";
@@ -41,6 +42,7 @@ export default async function JobDetailPage({
   if (!job) notFound();
   const related = await getRelatedJobs(job);
   const t = await getDict();
+  const activity = await getJobActivity(job.id);
 
   const overview = [
     { icon: Briefcase, label: t.jobDetail.type, value: t.enums.jobType[job.type] },
@@ -148,7 +150,12 @@ export default async function JobDetailPage({
             </div>
             <p className="text-sm text-muted-foreground">{t.jobDetail.estComp}</p>
             <div className="my-5">
-              <JobActions title={job.title} />
+              <JobActions
+                jobId={job.id}
+                title={job.title}
+                initialApplied={activity.applied}
+                initialSaved={activity.saved}
+              />
             </div>
             <dl className="space-y-3 border-t border-border pt-5">
               {overview.map((o) => (

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { getSuggestions } from "./suggestions";
 import { useI18n } from "@/lib/i18n/provider";
+import { ImageUpload } from "@/components/upload/image-upload";
 import type { Identity } from "./types";
 
 type IdentityCardProps = {
@@ -48,8 +49,17 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
       </div>
 
       <div className="relative z-10 px-6 pb-6">
-        <div className="-mt-12 flex h-24 w-24 items-center justify-center rounded-full border-4 border-background bg-surface-2 text-muted-foreground shadow-sm">
-          <User className="h-12 w-12" />
+        <div className="-mt-12 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-background bg-surface-2 text-muted-foreground shadow-sm">
+          {identity.avatarUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={identity.avatarUrl}
+              alt={identity.name || "Profile photo"}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <User className="h-12 w-12" />
+          )}
         </div>
 
         <h1 className="mt-4 text-xl font-semibold leading-tight">
@@ -106,6 +116,14 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
             <DialogTitle>Edit profile</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4">
+            <ImageUpload
+              bucket="avatars"
+              pathPrefix=""
+              shape="circle"
+              label="Profile photo"
+              value={draft.avatarUrl}
+              onUploaded={(url) => setDraft({ ...draft, avatarUrl: url })}
+            />
             <Field label="Name">
               <Input
                 value={draft.name}

@@ -5,6 +5,7 @@ export type Identity = {
   school: string;
   gradYear: string;
   location: string;
+  avatarUrl?: string;
 };
 
 export type ProfileLink = {

@@ -14,7 +14,9 @@ import {
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { JobCard } from "@/components/cards/job-card";
 import type { Dict } from "@/lib/i18n/dictionaries";
+import type { JobWithCompany } from "@/lib/types";
 
 const stagger = {
   hidden: {},
@@ -45,14 +47,20 @@ export function DashboardClient({
   name,
   completion,
   d,
+  featuredJobs = [],
+  applications = 0,
+  saved = 0,
 }: {
   name: string;
   completion: number;
   d: Dict["dashboard"];
+  featuredJobs?: JobWithCompany[];
+  applications?: number;
+  saved?: number;
 }) {
   const stats = [
-    { icon: Send, label: d.applications, value: 0 },
-    { icon: Bookmark, label: d.savedJobs, value: 0 },
+    { icon: Send, label: d.applications, value: applications },
+    { icon: Bookmark, label: d.savedJobs, value: saved },
     { icon: Eye, label: d.profileViews, value: 0 },
   ];
 
@@ -103,7 +111,15 @@ export function DashboardClient({
               </Link>
             </div>
             <div className="mt-4">
-              <Empty icon={Sparkles}>{d.emptyState}</Empty>
+              {featuredJobs.length > 0 ? (
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {featuredJobs.map((job) => (
+                    <JobCard key={job.id} job={job} />
+                  ))}
+                </div>
+              ) : (
+                <Empty icon={Sparkles}>{d.emptyState}</Empty>
+              )}
             </div>
           </motion.section>
 

@@ -1,4 +1,6 @@
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
+
+export const dynamic = "force-dynamic";
 
 type RegisterBody = {
   fullName: string;
@@ -35,6 +37,7 @@ function isEmailTakenError(message: string): boolean {
 }
 
 export async function POST(request: Request) {
+  const supabaseAdmin = getSupabaseAdmin();
   let raw: unknown;
   try {
     raw = await request.json();
