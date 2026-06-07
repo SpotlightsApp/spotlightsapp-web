@@ -35,6 +35,7 @@ export interface Company {
   size: string; // e.g. "201–500"
   location: string; // HQ
   website: string;
+  logoUrl?: string;
   hiring: boolean;
   openRoles: number;
   perks: string[];
@@ -71,11 +72,14 @@ export interface CareerEvent {
   kind: "Career fair" | "Info session" | "Workshop" | "Networking";
   mode: WorkMode;
   location: string;
+  imageUrl?: string;
   date: string; // ISO
   durationMins: number;
   attendees: number;
   description: string;
 }
+
+export type JobWithCompany = Job & { company: Company };
 
 export interface University {
   id: string;

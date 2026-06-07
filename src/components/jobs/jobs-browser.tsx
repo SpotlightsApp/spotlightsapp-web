@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/provider";
 import { fill } from "@/lib/i18n/dictionaries";
 import { cn } from "@/lib/utils";
-import type { JobWithCompany } from "@/lib/data";
+import type { JobWithCompany } from "@/lib/types";
 import type { JobType, WorkMode, Industry } from "@/lib/types";
 
 const TYPES: JobType[] = [

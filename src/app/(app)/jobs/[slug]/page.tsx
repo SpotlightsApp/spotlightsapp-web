@@ -13,7 +13,7 @@ import {
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { LogoMark } from "@/components/ui/logo-mark";
+import { CompanyLogo } from "@/components/ui/company-logo";
 import { JobCard } from "@/components/cards/job-card";
 import { JobActions } from "@/components/jobs/job-actions";
 import { getJobBySlug, getRelatedJobs } from "@/lib/data";
@@ -27,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const job = getJobBySlug(slug);
+  const job = await getJobBySlug(slug);
   return { title: job ? `${job.title} at ${job.company.name} · Spotlights` : "Job" };
 }
 
@@ -37,9 +37,9 @@ export default async function JobDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const job = getJobBySlug(slug);
+  const job = await getJobBySlug(slug);
   if (!job) notFound();
-  const related = getRelatedJobs(job);
+  const related = await getRelatedJobs(job);
   const t = await getDict();
 
   const overview = [
@@ -70,7 +70,7 @@ export default async function JobDetailPage({
         {/* Main */}
         <div>
           <div className="flex items-start gap-4">
-            <LogoMark name={job.company.name} className="h-16 w-16 text-lg" />
+            <CompanyLogo name={job.company.name} src={job.company.logoUrl} className="h-16 w-16 text-lg" />
             <div className="min-w-0">
               <h1 className="font-display text-3xl text-foreground sm:text-4xl">
                 {job.title}

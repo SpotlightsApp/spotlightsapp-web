@@ -4,11 +4,11 @@ import Link from "next/link";
 import { MapPin, Clock, Users } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { LogoMark } from "@/components/ui/logo-mark";
+import { CompanyLogo } from "@/components/ui/company-logo";
 import { formatTHB } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 import { fill } from "@/lib/i18n/dictionaries";
-import type { JobWithCompany } from "@/lib/data";
+import type { JobWithCompany } from "@/lib/types";
 
 const TYPE_VARIANT: Record<string, "accent" | "neutral" | "success"> = {
   Internship: "accent",
@@ -25,7 +25,11 @@ export function JobCard({ job }: { job: JobWithCompany }) {
         aria-label={`${job.title} at ${job.company.name}`}
       />
       <div className="flex items-start gap-3">
-        <LogoMark name={job.company.name} className="h-11 w-11 text-sm" />
+        <CompanyLogo
+          name={job.company.name}
+          src={job.company.logoUrl}
+          className="h-11 w-11 text-sm"
+        />
         <div className="min-w-0 flex-1">
           <h3 className="truncate font-semibold leading-tight tracking-tight group-hover:text-accent-strong">
             {job.title}

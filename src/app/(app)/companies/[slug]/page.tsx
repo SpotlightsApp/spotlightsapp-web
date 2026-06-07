@@ -13,7 +13,7 @@ import {
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { LogoMark } from "@/components/ui/logo-mark";
+import { CompanyLogo } from "@/components/ui/company-logo";
 import { JobCard } from "@/components/cards/job-card";
 import { getCompanyBySlug, getJobsByCompany } from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
@@ -25,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const c = getCompanyBySlug(slug);
+  const c = await getCompanyBySlug(slug);
   return { title: c ? `${c.name} · Spotlights` : "Company" };
 }
 
@@ -35,9 +35,9 @@ export default async function CompanyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const company = getCompanyBySlug(slug);
+  const company = await getCompanyBySlug(slug);
   if (!company) notFound();
-  const jobs = getJobsByCompany(company.id);
+  const jobs = await getJobsByCompany(company.id);
   const t = await getDict();
 
   const facts = [
@@ -58,7 +58,7 @@ export default async function CompanyPage({
             <ArrowLeft className="h-4 w-4" /> {t.companyProfile.back}
           </Link>
           <div className="mt-6 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-            <LogoMark name={company.name} className="h-20 w-20 text-2xl" />
+            <CompanyLogo name={company.name} src={company.logoUrl} className="h-20 w-20 text-2xl" />
             <div>
               <div className="flex flex-wrap items-center gap-3">
                 <h1 className="font-display text-4xl text-foreground">

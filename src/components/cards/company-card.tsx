@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MapPin, Briefcase } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { LogoMark } from "@/components/ui/logo-mark";
+import { CompanyLogo } from "@/components/ui/company-logo";
 import { useI18n } from "@/lib/i18n/provider";
 import { fill } from "@/lib/i18n/dictionaries";
 import type { Company } from "@/lib/types";
@@ -19,7 +19,11 @@ export function CompanyCard({ company }: { company: Company }) {
         aria-label={company.name}
       />
       <div className="flex items-center gap-3">
-        <LogoMark name={company.name} className="h-12 w-12 text-base" />
+        <CompanyLogo
+          name={company.name}
+          src={company.logoUrl}
+          className="h-12 w-12 text-base"
+        />
         <div className="min-w-0">
           <h3 className="truncate font-semibold tracking-tight group-hover:text-accent-strong">
             {company.name}
