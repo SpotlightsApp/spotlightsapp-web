@@ -1,7 +1,13 @@
 import { Bell } from "lucide-react";
 import { UserMenu } from "@/components/app/user-menu";
 
-export function AppTopbar({ name }: { name: string }) {
+export function AppTopbar({
+  name,
+  avatarUrl,
+}: {
+  name: string;
+  avatarUrl?: string;
+}) {
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-end gap-2 border-b border-border bg-background/80 px-6 backdrop-blur-md">
       <button
@@ -11,7 +17,7 @@ export function AppTopbar({ name }: { name: string }) {
       >
         <Bell className="h-4 w-4" />
       </button>
-      <UserMenu name={name} />
+      <UserMenu name={name} avatarUrl={avatarUrl} />
     </header>
   );
 }

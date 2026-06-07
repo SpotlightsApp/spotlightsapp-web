@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -14,7 +14,13 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { getInitials } from "@/lib/utils";
 
-export function UserMenu({ name }: { name: string }) {
+export function UserMenu({
+  name,
+  avatarUrl,
+}: {
+  name: string;
+  avatarUrl?: string;
+}) {
   const router = useRouter();
   const initials = getInitials(name);
 
@@ -31,6 +37,7 @@ export function UserMenu({ name }: { name: string }) {
         className="rounded-full transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <Avatar className="h-9 w-9">
+          {avatarUrl && <AvatarImage src={avatarUrl} alt={name} />}
           <AvatarFallback className="bg-accent text-accent-foreground">
             {initials}
           </AvatarFallback>

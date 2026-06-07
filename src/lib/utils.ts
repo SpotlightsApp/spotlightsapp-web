@@ -6,19 +6,22 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/** Format a THB salary range compactly, e.g. "฿18K–25K / mo". */
-export function formatTHB(
+/** Format a USD salary range compactly, e.g. "$120K–180K / yr". */
+export function formatSalary(
   min: number,
   max?: number,
-  period: "mo" | "yr" | "total" = "mo",
+  period: "mo" | "yr" | "total" = "yr",
 ) {
   const fmt = (n: number) =>
     n >= 1000 ? `${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}K` : `${n}`;
   const label = period === "total" ? "" : ` / ${period}`;
   return max && max !== min
-    ? `฿${fmt(min)}–${fmt(max)}${label}`
-    : `฿${fmt(min)}${label}`;
+    ? `$${fmt(min)}–${fmt(max)}${label}`
+    : `$${fmt(min)}${label}`;
 }
+
+/** @deprecated kept as an alias; use formatSalary. */
+export const formatTHB = formatSalary;
 
 /** Up to two uppercase initials from a name (shared by avatars + monograms). */
 export function getInitials(name: string) {
