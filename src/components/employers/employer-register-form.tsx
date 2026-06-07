@@ -68,6 +68,8 @@ export function EmployerRegisterForm() {
   // Form lifecycle
   const [step, setStep] = useState<1 | 2>(1);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // Step 1 state
   const [fullName, setFullName] = useState("");
@@ -136,12 +138,56 @@ export function EmployerRegisterForm() {
     }
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const errors = validateStep2();
     setStep2Errors(errors);
-    if (Object.keys(errors).length === 0) {
-      setSubmitted(true);
+    if (Object.keys(errors).length > 0) return;
+
+    setSubmitError(null);
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/employers/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: fullName.trim(),
+          email: workEmail.trim().toLowerCase(),
+          password,
+          phone: phone.trim() || undefined,
+          companyName: companyName.trim(),
+          website: companyWebsite.trim(),
+          industry,
+          companySize,
+          headquarters: headquarters.trim(),
+          description: companyDescription.trim() || undefined,
+        }),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        return;
+      }
+
+      let message = "Something went wrong. Please try again.";
+      try {
+        const data: unknown = await res.json();
+        if (
+          data &&
+          typeof data === "object" &&
+          "error" in data &&
+          typeof (data as { error: unknown }).error === "string"
+        ) {
+          message = (data as { error: string }).error;
+        }
+      } catch {
+        // keep default message
+      }
+      setSubmitError(message);
+    } catch {
+      setSubmitError("Network error. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -402,11 +448,22 @@ export function EmployerRegisterForm() {
               type="button"
               variant="outline"
               onClick={() => setStep(1)}
+              disabled={submitting}
             >
               Back
             </Button>
-            <Button type="submit">Submit registration</Button>
+            <Button type="submit" disabled={submitting}>
+              {submitting ? "Submitting…" : "Submit registration"}
+            </Button>
           </div>
+          {submitError && (
+            <p
+              role="alert"
+              className="pt-1 text-sm text-destructive"
+            >
+              {submitError}
+            </p>
+          )}
         </form>
       )}
     </div>
