@@ -111,7 +111,16 @@ export async function POST(request: Request) {
         { status: 409 },
       );
     }
-    console.error("supabase createUser failed:", createdUser.error);
+    console.error("[auth.admin.createUser] failed:", {
+      message: createdUser.error?.message,
+      // @ts-expect-error - surface any extra fields Supabase attaches for debugging
+      details: createdUser.error?.details,
+      // @ts-expect-error
+      hint: createdUser.error?.hint,
+      // @ts-expect-error
+      code: createdUser.error?.code,
+      error: createdUser.error,
+    });
     return Response.json({ error: message }, { status: 500 });
   }
 
@@ -133,10 +142,20 @@ export async function POST(request: Request) {
     .single();
 
   if (companyInsert.error || !companyInsert.data) {
-    console.error("companies insert failed:", companyInsert.error);
+    console.error("[companies insert] failed:", {
+      message: companyInsert.error?.message,
+      details: companyInsert.error?.details,
+      hint: companyInsert.error?.hint,
+      code: companyInsert.error?.code,
+      error: companyInsert.error,
+    });
     await supabaseAdmin.auth.admin.deleteUser(userId);
     return Response.json(
-      { error: "Failed to create company. Please try again." },
+      {
+        error:
+          companyInsert.error?.message ??
+          "Failed to create company. Please try again.",
+      },
       { status: 500 },
     );
   }
@@ -152,11 +171,21 @@ export async function POST(request: Request) {
   });
 
   if (profileInsert.error) {
-    console.error("employer_profiles insert failed:", profileInsert.error);
+    console.error("[employer_profiles insert] failed:", {
+      message: profileInsert.error.message,
+      details: profileInsert.error.details,
+      hint: profileInsert.error.hint,
+      code: profileInsert.error.code,
+      error: profileInsert.error,
+    });
     await supabaseAdmin.from("companies").delete().eq("id", companyId);
     await supabaseAdmin.auth.admin.deleteUser(userId);
     return Response.json(
-      { error: "Failed to create employer profile. Please try again." },
+      {
+        error:
+          profileInsert.error.message ??
+          "Failed to create employer profile. Please try again.",
+      },
       { status: 500 },
     );
   }
