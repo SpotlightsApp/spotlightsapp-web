@@ -18,7 +18,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const e = getEventBySlug(slug);
-  return { title: e ? `${e.title} — Spotlights` : "Event" };
+  return { title: e ? `${e.title} · Spotlights` : "Event" };
 }
 
 export default async function EventDetailPage({

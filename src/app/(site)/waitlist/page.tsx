@@ -4,7 +4,7 @@ import { getDict } from "@/lib/i18n/server";
 import { WaitlistPageForm } from "./waitlist-page-form";
 
 export const metadata: Metadata = {
-  title: "Join the waitlist — Spotlights",
+  title: "Join the waitlist · Spotlights",
 };
 
 export default async function WaitlistPage() {

@@ -17,7 +17,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Spotlights — Where Thai talent meets opportunity",
+  title: "Spotlights · Where Thai talent meets opportunity",
   description:
     "Spotlights connects university students and new grads across Thailand with internships, jobs, and employers. Find what's next.",
   icons: {

@@ -5,7 +5,7 @@ import { loadProfile } from "../profile/actions";
 import { profileCompletion } from "../profile/profile-data";
 import { DashboardClient } from "./dashboard-client";
 
-export const metadata: Metadata = { title: "Jobs — Spotlights" };
+export const metadata: Metadata = { title: "Jobs · Spotlights" };
 
 export default async function JobsPage() {
   const t = await getDict();

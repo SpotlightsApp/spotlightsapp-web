@@ -52,7 +52,7 @@ export function ConversationList() {
             <Inbox className="h-5 w-5" />
           </span>
           <p className="text-sm text-muted-foreground">
-            No messages yet — start a conversation to see it here.
+            No messages yet. Start a conversation to see it here.
           </p>
         </motion.div>
       </div>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ConversationList } from "./conversation-list";
 import { EmptyState } from "./empty-state";
 
-export const metadata: Metadata = { title: "Inbox — Spotlights" };
+export const metadata: Metadata = { title: "Inbox · Spotlights" };
 
 export default function InboxPage() {
   return (

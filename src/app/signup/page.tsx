@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export const metadata: Metadata = { title: "Sign up — Spotlights" };
+export const metadata: Metadata = { title: "Sign up · Spotlights" };
 
 export default function SignupChooserPage() {
   return (

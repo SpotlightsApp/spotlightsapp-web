@@ -126,7 +126,7 @@ export function WaitlistWelcome({ name }: { name?: string }) {
   return (
     <Html>
       <Head />
-      <Preview>You&apos;re on the Spotlights waitlist — we&apos;ll be in touch.</Preview>
+      <Preview>You&apos;re on the Spotlights waitlist. We&apos;ll be in touch.</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
@@ -147,7 +147,7 @@ export function WaitlistWelcome({ name }: { name?: string }) {
             </Heading>
 
             <Text style={styles.paragraph}>
-              Thanks for signing up. We&apos;re building Spotlights — Thailand&apos;s
+              Thanks for signing up. We&apos;re building Spotlights, Thailand&apos;s
               home for early-career talent. One profile, every internship and
               new-grad role, and the companies that are actually hiring you next.
             </Text>
@@ -162,7 +162,7 @@ export function WaitlistWelcome({ name }: { name?: string }) {
                 launch.
               </Text>
               <Text style={styles.bulletLast}>
-                ✦ No spam — only launch news and a few product updates.
+                ✦ No spam, only launch news and a few product updates.
               </Text>
             </Section>
 
@@ -173,7 +173,7 @@ export function WaitlistWelcome({ name }: { name?: string }) {
             <Hr style={styles.hr} />
 
             <Text style={styles.paragraph}>
-              Have a friend who&apos;s job-hunting? Forward this email — early
+              Have a friend who&apos;s job-hunting? Forward this email. Early
               access has limited seats.
             </Text>
           </Section>

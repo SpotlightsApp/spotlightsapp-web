@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 
-export const metadata: Metadata = { title: "Events — Spotlights" };
+export const metadata: Metadata = { title: "Events · Spotlights" };
 
 export default function EventsPage() {
   return (

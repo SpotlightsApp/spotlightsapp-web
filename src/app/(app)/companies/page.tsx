@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 
-export const metadata: Metadata = { title: "Companies — Spotlights" };
+export const metadata: Metadata = { title: "Companies · Spotlights" };
 
 export default function CompaniesPage() {
   return (

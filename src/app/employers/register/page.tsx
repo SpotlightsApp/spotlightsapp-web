@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { EmployerRegisterForm } from "@/components/employers/employer-register-form";
 
 export const metadata: Metadata = {
-  title: "Employer registration — Spotlights",
+  title: "Employer registration · Spotlights",
 };
 
 export default function EmployerRegisterPage() {

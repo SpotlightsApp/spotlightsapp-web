@@ -32,7 +32,7 @@ export const en = {
     eyebrow: "Our product",
     heading: "Your whole job search, in one place",
     subhead:
-      "From discovery to offer — here's how Spotlights works for students.",
+      "From discovery to offer, here's how Spotlights works for students.",
     tabs: {
       jobs: "Find jobs",
       detail: "Role details",
@@ -50,33 +50,33 @@ export const en = {
   },
   stats: {
     eyebrow: "The early-career gap",
-    heading: "The problem isn't talent — it's access",
+    heading: "The problem isn't talent, it's access",
     subhead:
       "Thailand graduates more capable students every year than the job market connects them to. Opportunity still depends on who you know.",
     items: [
       { value: "5×", label: "Youth unemployment runs several times Thailand's national rate" },
       { value: "1 in 3", label: "Grads work in jobs that don't require their degree" },
-      { value: "70%", label: "Of roles are filled through personal networks — not open applications" },
+      { value: "70%", label: "Of roles are filled through personal networks, not open applications" },
     ],
     footnote:
       "Directional estimates from Thai labour-market and graduate-employment research.",
   },
   positioning: {
     eyebrow: "Why Spotlights",
-    heading: "Built for students — not the already-employed",
+    heading: "Built for students, not the already-employed",
     subhead:
       "LinkedIn, JobsDB and JobThai were made for people already in the workforce. We're building the opposite: a level playing field for the people just starting out.",
     oldTitle: "Generic job platforms",
     oldWay: [
-      "Built for experienced professionals — students compete against senior hires",
+      "Built for experienced professionals, students compete against senior hires",
       "You need a polished network and résumé just to get seen",
       "Opportunity flows to whoever already has connections",
       "Employers can't filter for early-career potential",
     ],
     spotlightTitle: "The Spotlights way",
     spotlightWay: [
-      "Built only for students and new grads — everyone's at the same stage",
-      "A verified university community (.ac.th) — no gatekeeping",
+      "Built only for students and new grads, everyone's at the same stage",
+      "A verified university community (.ac.th), no gatekeeping",
       "Matched on skills and potential, not who you know",
       "Employers discover talent by what they can do, not years of experience",
     ],
@@ -84,7 +84,7 @@ export const en = {
   how: {
     heading: "Your career, three steps away",
     subhead:
-      "Spotlights makes it simple to go from student to hired — across every field.",
+      "Spotlights makes it simple to go from student to hired, across every field.",
     steps: [
       {
         title: "Build your profile",
@@ -118,9 +118,9 @@ export const en = {
     placeholder: "you@university.ac.th",
     submit: "Join the waitlist",
     invalid: "Please enter a valid email address.",
-    serverError: "Something went wrong — please try again.",
+    serverError: "Something went wrong, please try again.",
     success: "You're on the list! We'll be in touch as we roll out.",
-    already: "You're already on the list — see you at launch!",
+    already: "You're already on the list, see you at launch!",
   },
   footer: {
     tagline: "Where Thailand's students and new grads find what's next.",
@@ -186,9 +186,9 @@ export const en = {
     type: "Type", workMode: "Work mode", location: "Location", posted: "Posted", applicants: "Applicants",
     today: "Today", daysAgo: "{n} days ago", aboutCompany: "About {name}", viewCompany: "View company →", similar: "Similar roles",
   },
-  companiesPage: { heading: "Companies on Spotlights", sub: "Discover the teams building Thailand's future — and the roles they're hiring for.", searchPlaceholder: "Search companies", all: "All", count: "{n} companies" },
-  companyProfile: { back: "All companies", hiring: "Actively hiring", about: "About", openRoles: "Open roles", noRoles: "No open roles right now — check back soon.", facts: "Company facts", perks: "Perks", employees: "{size} employees", founded: "Founded {year}", openRolesShort: "{n} open roles" },
-  eventsPage: { heading: "Career events & fairs", sub: "Meet recruiters, learn from industry talks, and level up your job search — online and across Thailand." },
+  companiesPage: { heading: "Companies on Spotlights", sub: "Discover the teams building Thailand's future, and the roles they're hiring for.", searchPlaceholder: "Search companies", all: "All", count: "{n} companies" },
+  companyProfile: { back: "All companies", hiring: "Actively hiring", about: "About", openRoles: "Open roles", noRoles: "No open roles right now, check back soon.", facts: "Company facts", perks: "Perks", employees: "{size} employees", founded: "Founded {year}", openRolesShort: "{n} open roles" },
+  eventsPage: { heading: "Career events & fairs", sub: "Meet recruiters, learn from industry talks, and level up your job search, online and across Thailand." },
   eventCard: { going: "{n} going" },
   eventDetail: { back: "All events", hostedBy: "Hosted by {host}", about: "About this event", register: "Register to attend", registered: "You're registered", free: "Free for Spotlights members", attending: "{n} attending" },
   dashboard: {
@@ -204,12 +204,12 @@ export const en = {
     titlePre: "Hire Thailand's ",
     titleHighlight: "next generation",
     titlePost: "",
-    sub: "Hire Thailand's best students and new grads — directly. Verified profiles, one streamlined pipeline, no recruiters or noise.",
-    postJob: "Post a job — free",
+    sub: "Hire Thailand's best students and new grads, directly. Verified profiles, one streamlined pipeline, no recruiters or noise.",
+    postJob: "Post a job for free",
     seeProfiles: "See company profiles",
     valueProps: [
       "Access to top, verified student talent",
-      "Streamlined hiring — post, match, message in one place",
+      "Streamlined hiring: post, match, message in one place",
       "Reach candidates before the big job boards",
     ],
     createAccount: "Create employer account",
@@ -246,7 +246,7 @@ export const th: typeof en = {
   demo: {
     eyebrow: "ผลิตภัณฑ์ของเรา",
     heading: "ทุกการหางานของคุณ ในที่เดียว",
-    subhead: "ตั้งแต่ค้นหาจนถึงได้งาน — นี่คือวิธีที่ Spotlights ช่วยนักศึกษา",
+    subhead: "ตั้งแต่ค้นหาจนถึงได้งาน นี่คือวิธีที่ Spotlights ช่วยนักศึกษา",
     tabs: {
       jobs: "หางาน",
       detail: "รายละเอียดงาน",
@@ -262,7 +262,7 @@ export const th: typeof en = {
   },
   stats: {
     eyebrow: "ช่องว่างของการเริ่มต้นอาชีพ",
-    heading: "ปัญหาไม่ใช่ความสามารถ — แต่คือการเข้าถึงโอกาส",
+    heading: "ปัญหาไม่ใช่ความสามารถ แต่คือการเข้าถึงโอกาส",
     subhead:
       "ทุกปีไทยผลิตบัณฑิตที่มีความสามารถมากกว่าที่ตลาดงานจะเชื่อมต่อให้ได้ และโอกาสยังขึ้นอยู่กับว่าคุณรู้จักใคร",
     items: [
@@ -274,20 +274,20 @@ export const th: typeof en = {
   },
   positioning: {
     eyebrow: "ทำไมต้อง Spotlights",
-    heading: "สร้างมาเพื่อนักศึกษา — ไม่ใช่คนที่มีงานทำอยู่แล้ว",
+    heading: "สร้างมาเพื่อนักศึกษา ไม่ใช่คนที่มีงานทำอยู่แล้ว",
     subhead:
       "LinkedIn, JobsDB และ JobThai ถูกสร้างมาเพื่อคนที่อยู่ในตลาดแรงงานอยู่แล้ว เรากำลังสร้างสิ่งที่ตรงกันข้าม: สนามที่เท่าเทียมสำหรับคนที่เพิ่งเริ่มต้น",
     oldTitle: "แพลตฟอร์มหางานทั่วไป",
     oldWay: [
-      "สร้างมาเพื่อมืออาชีพที่มีประสบการณ์ — นักศึกษาต้องแข่งกับคนที่อาวุโสกว่า",
+      "สร้างมาเพื่อมืออาชีพที่มีประสบการณ์ นักศึกษาต้องแข่งกับคนที่อาวุโสกว่า",
       "ต้องมีคอนเนกชันและเรซูเม่ที่ดีเยี่ยมแค่เพื่อให้ถูกมองเห็น",
       "โอกาสไหลไปหาคนที่มีคอนเนกชันอยู่แล้ว",
       "ผู้ว่าจ้างคัดกรองศักยภาพของคนเริ่มต้นอาชีพไม่ได้",
     ],
     spotlightTitle: "แบบฉบับ Spotlights",
     spotlightWay: [
-      "สร้างมาเพื่อนักศึกษาและบัณฑิตจบใหม่เท่านั้น — ทุกคนอยู่ในจุดเริ่มต้นเดียวกัน",
-      "คอมมูนิตี้มหาวิทยาลัยที่ยืนยันตัวตน (.ac.th) — ไม่มีการกีดกัน",
+      "สร้างมาเพื่อนักศึกษาและบัณฑิตจบใหม่เท่านั้น ทุกคนอยู่ในจุดเริ่มต้นเดียวกัน",
+      "คอมมูนิตี้มหาวิทยาลัยที่ยืนยันตัวตน (.ac.th) ไม่มีการกีดกัน",
       "จับคู่ด้วยทักษะและศักยภาพ ไม่ใช่คนที่คุณรู้จัก",
       "ผู้ว่าจ้างค้นพบคนเก่งจากสิ่งที่ทำได้ ไม่ใช่จำนวนปีประสบการณ์",
     ],
@@ -295,7 +295,7 @@ export const th: typeof en = {
   how: {
     heading: "อาชีพของคุณ ห่างแค่สามขั้นตอน",
     subhead:
-      "Spotlights ทำให้การก้าวจากนักศึกษาสู่การได้งานเป็นเรื่องง่าย — ในทุกสาขา",
+      "Spotlights ทำให้การก้าวจากนักศึกษาสู่การได้งานเป็นเรื่องง่าย ในทุกสาขา",
     steps: [
       {
         title: "สร้างโปรไฟล์ของคุณ",
@@ -329,9 +329,9 @@ export const th: typeof en = {
     placeholder: "you@university.ac.th",
     submit: "ลงชื่อรอ",
     invalid: "กรุณากรอกอีเมลที่ถูกต้อง",
-    serverError: "เกิดข้อผิดพลาด — กรุณาลองใหม่อีกครั้ง",
+    serverError: "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
     success: "คุณอยู่ในรายชื่อแล้ว! เราจะติดต่อกลับเมื่อเปิดให้บริการ",
-    already: "คุณอยู่ในรายชื่ออยู่แล้ว — เจอกันตอนเปิดตัว!",
+    already: "คุณอยู่ในรายชื่ออยู่แล้ว เจอกันตอนเปิดตัว!",
   },
   footer: {
     tagline: "ที่ที่นักศึกษาและบัณฑิตจบใหม่ในไทยค้นพบก้าวต่อไป",
@@ -397,9 +397,9 @@ export const th: typeof en = {
     type: "ประเภท", workMode: "รูปแบบการทำงาน", location: "สถานที่", posted: "ประกาศเมื่อ", applicants: "ผู้สมัคร",
     today: "วันนี้", daysAgo: "{n} วันก่อน", aboutCompany: "เกี่ยวกับ {name}", viewCompany: "ดูบริษัท →", similar: "ตำแหน่งที่คล้ายกัน",
   },
-  companiesPage: { heading: "บริษัทบน Spotlights", sub: "ค้นพบทีมที่กำลังสร้างอนาคตของไทย — และตำแหน่งที่พวกเขากำลังรับสมัคร", searchPlaceholder: "ค้นหาบริษัท", all: "ทั้งหมด", count: "{n} บริษัท" },
-  companyProfile: { back: "บริษัททั้งหมด", hiring: "กำลังรับสมัคร", about: "เกี่ยวกับ", openRoles: "ตำแหน่งที่เปิดรับ", noRoles: "ยังไม่มีตำแหน่งเปิดรับในขณะนี้ — กลับมาดูใหม่เร็ว ๆ นี้", facts: "ข้อมูลบริษัท", perks: "สวัสดิการ", employees: "พนักงาน {size} คน", founded: "ก่อตั้งปี {year}", openRolesShort: "{n} ตำแหน่งเปิดรับ" },
-  eventsPage: { heading: "อีเวนต์และมหกรรมอาชีพ", sub: "พบกับผู้สรรหา เรียนรู้จากคนในวงการ และยกระดับการหางานของคุณ — ทั้งออนไลน์และทั่วไทย" },
+  companiesPage: { heading: "บริษัทบน Spotlights", sub: "ค้นพบทีมที่กำลังสร้างอนาคตของไทย และตำแหน่งที่พวกเขากำลังรับสมัคร", searchPlaceholder: "ค้นหาบริษัท", all: "ทั้งหมด", count: "{n} บริษัท" },
+  companyProfile: { back: "บริษัททั้งหมด", hiring: "กำลังรับสมัคร", about: "เกี่ยวกับ", openRoles: "ตำแหน่งที่เปิดรับ", noRoles: "ยังไม่มีตำแหน่งเปิดรับในขณะนี้ กลับมาดูใหม่เร็ว ๆ นี้", facts: "ข้อมูลบริษัท", perks: "สวัสดิการ", employees: "พนักงาน {size} คน", founded: "ก่อตั้งปี {year}", openRolesShort: "{n} ตำแหน่งเปิดรับ" },
+  eventsPage: { heading: "อีเวนต์และมหกรรมอาชีพ", sub: "พบกับผู้สรรหา เรียนรู้จากคนในวงการ และยกระดับการหางานของคุณ ทั้งออนไลน์และทั่วไทย" },
   eventCard: { going: "{n} คนเข้าร่วม" },
   eventDetail: { back: "อีเวนต์ทั้งหมด", hostedBy: "จัดโดย {host}", about: "เกี่ยวกับอีเวนต์นี้", register: "ลงทะเบียนเข้าร่วม", registered: "คุณลงทะเบียนแล้ว", free: "ฟรีสำหรับสมาชิก Spotlights", attending: "{n} คนเข้าร่วม" },
   dashboard: {
@@ -415,12 +415,12 @@ export const th: typeof en = {
     titlePre: "จ้าง",
     titleHighlight: "คนรุ่นใหม่",
     titlePost: "ของไทย",
-    sub: "จ้างนักศึกษาและบัณฑิตจบใหม่ที่เก่งที่สุดของไทยโดยตรง — โปรไฟล์ที่ยืนยันตัวตน ขั้นตอนกระชับในที่เดียว ไม่มีตัวกลางหรือความวุ่นวาย",
-    postJob: "ประกาศงาน — ฟรี",
+    sub: "จ้างนักศึกษาและบัณฑิตจบใหม่ที่เก่งที่สุดของไทยโดยตรง โปรไฟล์ที่ยืนยันตัวตน ขั้นตอนกระชับในที่เดียว ไม่มีตัวกลางหรือความวุ่นวาย",
+    postJob: "ประกาศงานฟรี",
     seeProfiles: "ดูโปรไฟล์บริษัท",
     valueProps: [
       "เข้าถึงนักศึกษาเก่ง ๆ ที่ยืนยันตัวตนแล้ว",
-      "จ้างงานครบจบในที่เดียว — ประกาศ จับคู่ พูดคุย",
+      "จ้างงานครบจบในที่เดียว: ประกาศ จับคู่ พูดคุย",
       "เข้าถึงผู้สมัครก่อนเว็บหางานเจ้าใหญ่",
     ],
     createAccount: "สร้างบัญชีผู้ว่าจ้าง",
