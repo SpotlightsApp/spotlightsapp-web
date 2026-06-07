@@ -3,6 +3,6 @@ import { AuthForm } from "@/components/auth/auth-form";
 
 export const metadata: Metadata = { title: "Sign up — Spotlights" };
 
-export default function SignupPage() {
+export default function StudentSignupPage() {
   return <AuthForm mode="signup" />;
 }

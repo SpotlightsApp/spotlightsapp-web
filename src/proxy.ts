@@ -86,7 +86,12 @@ export async function proxy(request: NextRequest) {
   }
 
   // Logged-in users shouldn't see the auth screens.
-  if (user && (pathname === "/login" || pathname === "/signup")) {
+  if (
+    user &&
+    (pathname === "/login" ||
+      pathname === "/signup" ||
+      pathname === "/signup/student")
+  ) {
     return redirectTo((u) => {
       u.pathname = "/dashboard";
       u.search = "";

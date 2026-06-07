@@ -74,7 +74,7 @@ function FieldError({ message }: { message?: string }) {
   return <p className="mt-1.5 text-xs text-destructive">{message}</p>;
 }
 
-export function EmployerRegisterForm({ token }: { token: string }) {
+export function EmployerRegisterForm() {
   // Form lifecycle
   const [step, setStep] = useState<1 | 2>(1);
   const [submitted, setSubmitted] = useState(false);
@@ -212,7 +212,6 @@ export function EmployerRegisterForm({ token }: { token: string }) {
 
       {step === 1 ? (
         <form onSubmit={handleContinue} className="mt-8 space-y-5" noValidate>
-          <input type="hidden" name="inviteToken" value={token} readOnly />
           <div>
             <FieldLabel htmlFor="fullName" required>
               Full name

@@ -32,7 +32,7 @@ export default async function EmployersPage() {
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button asChild size="lg" pill>
-                  <Link href="/signup">{t.employers.postJob}</Link>
+                  <Link href="/employers/register">{t.employers.postJob}</Link>
                 </Button>
                 <Button asChild size="lg" pill variant="outline">
                   <Link href="/companies">{t.employers.seeProfiles}</Link>
@@ -81,7 +81,7 @@ export default async function EmployersPage() {
                 ))}
               </ul>
               <Button asChild size="lg" pill className="mt-8">
-                <Link href="/signup">{t.employers.createAccount}</Link>
+                <Link href="/employers/register">{t.employers.createAccount}</Link>
               </Button>
             </div>
           </Reveal>
