@@ -38,14 +38,15 @@ export const en = {
       detail: "Role details",
       dashboard: "Your dashboard",
       company: "Companies",
+      inbox: "Messages",
     },
     blurbs: {
       jobs: "Search and filter internships and new-grad roles built for students.",
-      detail: "See the full role, salary in THB, and apply in a single click.",
+      detail: "See the full role, salary, and apply in a single click.",
       dashboard:
         "Track applications, saved jobs, and recommendations in one place.",
-      company:
-        "Explore companies hiring in Thailand and all of their open roles.",
+      company: "Explore companies that are hiring and all of their open roles.",
+      inbox: "Message recruiters and peers directly to build your network.",
     },
   },
   stats: {
@@ -252,12 +253,14 @@ export const th: typeof en = {
       detail: "รายละเอียดงาน",
       dashboard: "แดชบอร์ดของคุณ",
       company: "บริษัท",
+      inbox: "ข้อความ",
     },
     blurbs: {
       jobs: "ค้นหาและกรองงานฝึกงานและงานสำหรับบัณฑิตจบใหม่ที่ออกแบบมาเพื่อนักศึกษา",
-      detail: "ดูรายละเอียดงานทั้งหมด เงินเดือนเป็นบาท และสมัครได้ในคลิกเดียว",
+      detail: "ดูรายละเอียดงานทั้งหมด เงินเดือน และสมัครได้ในคลิกเดียว",
       dashboard: "ติดตามใบสมัคร งานที่บันทึกไว้ และคำแนะนำ ได้ในที่เดียว",
-      company: "สำรวจบริษัทที่กำลังรับสมัครในไทยและตำแหน่งงานที่เปิดรับทั้งหมด",
+      company: "สำรวจบริษัทที่กำลังรับสมัครและตำแหน่งงานที่เปิดรับทั้งหมด",
+      inbox: "ส่งข้อความถึงผู้สรรหาและเพื่อน ๆ โดยตรงเพื่อสร้างคอนเนกชัน",
     },
   },
   stats: {

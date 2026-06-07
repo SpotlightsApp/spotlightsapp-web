@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Search, FileText, LayoutDashboard, Building2 } from "lucide-react";
+import { Search, FileText, LayoutDashboard, Building2, MessageSquare } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Reveal } from "@/components/marketing/reveal";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
-type FeatureKey = "jobs" | "detail" | "dashboard" | "company";
+type FeatureKey = "jobs" | "detail" | "dashboard" | "company" | "inbox";
 
 const FEATURES: {
   key: FeatureKey;
@@ -17,10 +17,11 @@ const FEATURES: {
   path: string;
   file: string; // base filename for the recorded clip
 }[] = [
-  { key: "jobs", icon: Search, path: "/jobs", file: "jobs" },
-  { key: "detail", icon: FileText, path: "/jobs/frontend-engineer-intern", file: "job-detail" },
   { key: "dashboard", icon: LayoutDashboard, path: "/dashboard", file: "dashboard" },
-  { key: "company", icon: Building2, path: "/companies/agoda", file: "company" },
+  { key: "jobs", icon: Search, path: "/explore", file: "jobs" },
+  { key: "detail", icon: FileText, path: "/jobs/software-engineer-intern-google", file: "job-detail" },
+  { key: "company", icon: Building2, path: "/companies/google", file: "company" },
+  { key: "inbox", icon: MessageSquare, path: "/inbox", file: "inbox" },
 ];
 
 const DWELL_MS = 6500;
