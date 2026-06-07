@@ -38,8 +38,8 @@ export function SiteNavbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 w-full transition-all duration-300",
         solid
-          ? "border-b border-border bg-background/80 shadow-sm backdrop-blur-md"
-          : "border-b border-transparent bg-transparent",
+          ? "bg-background/80 shadow-[0_6px_24px_-12px_rgba(0,0,0,0.18)] backdrop-blur-md"
+          : "bg-transparent",
       )}
     >
       <Container className="flex h-16 items-center justify-between">

@@ -3,9 +3,9 @@
 /* ------------------------------------------------------------------ */
 /*  Spotlight design tokens                                           */
 /*  Wellfound-referenced layout/feel, blue-themed brand.              */
-/*  Accessibility: #209CEE (accent) is used only as a FILL with dark  */
+/*  Accessibility: #3A78C2 (accent) is used only as a FILL with dark  */
 /*  text on top, or for large/graphical elements. For text/links on   */
-/*  white we use --accent-strong (#1366a0) which passes WCAG AA.      */
+/*  white we use --accent-strong (#235A97) which passes WCAG AA.      */
 /* ------------------------------------------------------------------ */
 :root {
   --background: #ffffff;
@@ -17,10 +17,10 @@
   --border: #e7e7e4;
   --input: #e0e0dc;
 
-  --accent: #209cee;          /* brand blue — fills only (dark text on top) */
-  --accent-hover: #1a87cf;
-  --accent-strong: #1366a0;   /* blue for text/links on white (AA safe) */
-  --accent-soft: #e0f3fd;     /* tinted background */
+  --accent: #3A78C2;          /* brand blue — fills only (dark text on top) */
+  --accent-hover: #316AAD;
+  --accent-strong: #235A97;   /* blue for text/links on white (AA safe) */
+  --accent-soft: #E8EFF8;     /* tinted background */
   --accent-foreground: #ffffff;
 
   --color-yellow: #FFC107;
@@ -28,7 +28,7 @@
   --success: #15803d;
   --destructive: #dc2626;
 
-  --ring: #209cee;
+  --ring: #3A78C2;
 
   --radius: 0.75rem;          /* 12px cards/buttons */
   --radius-small: 0.5rem;

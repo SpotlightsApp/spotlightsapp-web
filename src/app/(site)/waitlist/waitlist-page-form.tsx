@@ -84,7 +84,7 @@ export function WaitlistPageForm() {
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#209CEE] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#1a87cf] disabled:opacity-60 cursor-pointer"
+        className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#3A78C2] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#316AAD] disabled:opacity-60 cursor-pointer"
       >
         {pending && <Loader2 className="h-4 w-4 animate-spin" />}
         {t.waitlist.submit}

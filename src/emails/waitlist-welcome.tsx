@@ -16,8 +16,8 @@ const ORIGIN =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://spotlightsapp.com";
 
 const brand = {
-  blue: "#209CEE",
-  blueDark: "#1366a0",
+  blue: "#3A78C2",
+  blueDark: "#235A97",
   text: "#1a1a1a",
   muted: "#6b6b6b",
   border: "#e7e7e4",

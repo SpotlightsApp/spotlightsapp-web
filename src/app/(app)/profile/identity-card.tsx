@@ -43,7 +43,7 @@ export function IdentityCard({ identity, onChange }: IdentityCardProps) {
   return (
     <Card className="overflow-hidden p-0">
       {/* Gradient cover */}
-      <div className="relative h-20 bg-gradient-to-r from-accent via-[#3FB1F2] to-[#bde8fb]">
+      <div className="relative h-20 bg-gradient-to-r from-accent via-[#6FA3D6] to-[#bde8fb]">
         <div className="absolute inset-0 opacity-40 [background:radial-gradient(circle_at_20%_120%,white,transparent_60%)]" />
       </div>
 

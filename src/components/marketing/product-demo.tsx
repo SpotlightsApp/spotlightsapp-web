@@ -108,7 +108,7 @@ export function ProductDemo() {
               <BorderBeam
                 size={260}
                 duration={10}
-                colorFrom="#209CEE"
+                colorFrom="#3A78C2"
                 colorTo="#bde8fb"
               />
 
