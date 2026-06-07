@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
 export type ConversationSummary = {
@@ -212,6 +213,9 @@ export async function sendMessage(
     .from("conversations")
     .update({ last_message_at: new Date().toISOString() })
     .eq("id", conversationId);
+
+  // Refresh the inbox so the conversation list preview/ordering updates.
+  revalidatePath("/inbox");
 
   return { ok: true };
 }

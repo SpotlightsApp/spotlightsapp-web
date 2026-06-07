@@ -7,12 +7,14 @@ import { createClient } from "@/lib/supabase/server";
  * status 'applied'. A duplicate (unique violation, code 23505) is treated as
  * success since the user has already applied.
  */
-export async function applyToJob(jobId: string): Promise<{ ok: boolean }> {
+export async function applyToJob(
+  jobId: string
+): Promise<{ ok: boolean; error?: string }> {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) return { ok: false };
+  if (!user) return { ok: false, error: "Please sign in to apply." };
 
   const { error } = await supabase
     .from("applications")
@@ -20,7 +22,7 @@ export async function applyToJob(jobId: string): Promise<{ ok: boolean }> {
 
   if (error && error.code !== "23505") {
     console.error("applyToJob failed:", error.message);
-    return { ok: false };
+    return { ok: false, error: "Could not submit your application." };
   }
   return { ok: true };
 }
@@ -31,12 +33,13 @@ export async function applyToJob(jobId: string): Promise<{ ok: boolean }> {
  */
 export async function toggleSaveJob(
   jobId: string
-): Promise<{ saved: boolean }> {
+): Promise<{ ok: boolean; saved: boolean; error?: string }> {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) return { saved: false };
+  if (!user)
+    return { ok: false, saved: false, error: "Please sign in to save jobs." };
 
   const { data: existing, error: selErr } = await supabase
     .from("saved_jobs")
@@ -47,7 +50,7 @@ export async function toggleSaveJob(
 
   if (selErr) {
     console.error("toggleSaveJob select failed:", selErr.message);
-    return { saved: false };
+    return { ok: false, saved: false, error: "Could not update saved jobs." };
   }
 
   if (existing) {
@@ -58,9 +61,10 @@ export async function toggleSaveJob(
       .eq("job_id", jobId);
     if (error) {
       console.error("toggleSaveJob delete failed:", error.message);
-      return { saved: true };
+      // Delete failed, so the row still exists: the job remains saved.
+      return { ok: false, saved: true, error: "Could not unsave this job." };
     }
-    return { saved: false };
+    return { ok: true, saved: false };
   }
 
   const { error } = await supabase
@@ -68,9 +72,10 @@ export async function toggleSaveJob(
     .insert({ user_id: user.id, job_id: jobId });
   if (error && error.code !== "23505") {
     console.error("toggleSaveJob insert failed:", error.message);
-    return { saved: false };
+    // Insert failed, so the job is not saved.
+    return { ok: false, saved: false, error: "Could not save this job." };
   }
-  return { saved: true };
+  return { ok: true, saved: true };
 }
 
 /**
