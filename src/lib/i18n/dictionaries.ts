@@ -34,17 +34,17 @@ export const en = {
     subhead:
       "From discovery to offer, here's how Spotlights works for students.",
     tabs: {
-      jobs: "Find jobs",
-      detail: "Role details",
       dashboard: "Your dashboard",
+      jobs: "Find jobs",
+      events: "Events",
       company: "Companies",
       inbox: "Messages",
     },
     blurbs: {
-      jobs: "Search and filter internships and new-grad roles built for students.",
-      detail: "See the full role, salary, and apply in a single click.",
       dashboard:
         "Track applications, saved jobs, and recommendations in one place.",
+      jobs: "Search roles built for students, then open the full job, salary, and apply in one click.",
+      events: "Browse career fairs and talks, and register in a single tap.",
       company: "Explore companies that are hiring and all of their open roles.",
       inbox: "Message recruiters and peers directly to build your network.",
     },
@@ -249,16 +249,16 @@ export const th: typeof en = {
     heading: "ทุกการหางานของคุณ ในที่เดียว",
     subhead: "ตั้งแต่ค้นหาจนถึงได้งาน นี่คือวิธีที่ Spotlights ช่วยนักศึกษา",
     tabs: {
-      jobs: "หางาน",
-      detail: "รายละเอียดงาน",
       dashboard: "แดชบอร์ดของคุณ",
+      jobs: "หางาน",
+      events: "อีเวนต์",
       company: "บริษัท",
       inbox: "ข้อความ",
     },
     blurbs: {
-      jobs: "ค้นหาและกรองงานฝึกงานและงานสำหรับบัณฑิตจบใหม่ที่ออกแบบมาเพื่อนักศึกษา",
-      detail: "ดูรายละเอียดงานทั้งหมด เงินเดือน และสมัครได้ในคลิกเดียว",
       dashboard: "ติดตามใบสมัคร งานที่บันทึกไว้ และคำแนะนำ ได้ในที่เดียว",
+      jobs: "ค้นหางานที่ออกแบบมาเพื่อนักศึกษา แล้วเปิดดูรายละเอียดงาน เงินเดือน และสมัครได้ในคลิกเดียว",
+      events: "เลือกดูมหกรรมอาชีพและทอล์ก แล้วลงทะเบียนได้ในแตะเดียว",
       company: "สำรวจบริษัทที่กำลังรับสมัครและตำแหน่งงานที่เปิดรับทั้งหมด",
       inbox: "ส่งข้อความถึงผู้สรรหาและเพื่อน ๆ โดยตรงเพื่อสร้างคอนเนกชัน",
     },

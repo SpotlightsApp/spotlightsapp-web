@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Search, FileText, LayoutDashboard, Building2, MessageSquare } from "lucide-react";
+import { Search, CalendarDays, LayoutDashboard, Building2, MessageSquare } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Reveal } from "@/components/marketing/reveal";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
-type FeatureKey = "jobs" | "detail" | "dashboard" | "company" | "inbox";
+type FeatureKey = "dashboard" | "jobs" | "events" | "company" | "inbox";
 
 const FEATURES: {
   key: FeatureKey;
@@ -19,7 +19,7 @@ const FEATURES: {
 }[] = [
   { key: "dashboard", icon: LayoutDashboard, path: "/dashboard", file: "dashboard" },
   { key: "jobs", icon: Search, path: "/explore", file: "jobs" },
-  { key: "detail", icon: FileText, path: "/jobs/software-engineer-intern-google", file: "job-detail" },
+  { key: "events", icon: CalendarDays, path: "/events", file: "events" },
   { key: "company", icon: Building2, path: "/companies/google", file: "company" },
   { key: "inbox", icon: MessageSquare, path: "/inbox", file: "inbox" },
 ];
