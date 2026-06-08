@@ -188,6 +188,27 @@ export function DashboardClient({
             ))}
           </div>
 
+          {/* Applications */}
+          <motion.section variants={fadeUp}>
+            <h2 className="text-xl font-semibold">{d.yourApplications}</h2>
+            <div className="mt-4">
+              {applications.length > 0 ? (
+                <div className="space-y-3">
+                  {applications.map((item) => (
+                    <ApplicationRow
+                      key={item.job.id}
+                      item={item}
+                      statusLabel={d.statusApplied}
+                      locale={locale}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <Empty icon={Briefcase}>{d.noApplications}</Empty>
+              )}
+            </div>
+          </motion.section>
+
           {/* Recommended */}
           <motion.section variants={fadeUp}>
             <div className="flex items-end justify-between">
@@ -208,27 +229,6 @@ export function DashboardClient({
                 </div>
               ) : (
                 <Empty icon={Sparkles}>{d.emptyState}</Empty>
-              )}
-            </div>
-          </motion.section>
-
-          {/* Applications */}
-          <motion.section variants={fadeUp}>
-            <h2 className="text-xl font-semibold">{d.yourApplications}</h2>
-            <div className="mt-4">
-              {applications.length > 0 ? (
-                <div className="space-y-3">
-                  {applications.map((item) => (
-                    <ApplicationRow
-                      key={item.job.id}
-                      item={item}
-                      statusLabel={d.statusApplied}
-                      locale={locale}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <Empty icon={Briefcase}>{d.noApplications}</Empty>
               )}
             </div>
           </motion.section>
