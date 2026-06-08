@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { Search, CalendarDays, LayoutDashboard, Building2, MessageSquare } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { BorderBeam } from "@/components/ui/border-beam";
@@ -30,31 +30,40 @@ export function ProductDemo() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState(0);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  // All clips stay mounted; we only toggle opacity. This way the clip you click
+  // is already decoded and shows instantly (no poster/previous-frame flash).
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const active = FEATURES[index];
-  // Localized playthroughs: foo.mp4 (en) / foo-th.mp4 (th)
   const suffix = locale === "th" ? "-th" : "";
-  const videoSrc = `/demo/${active.file}${suffix}.mp4`;
-  const posterSrc = `/demo/${active.file}${suffix}.png`;
-
-  // Reset the progress bar whenever the clip changes.
-  useEffect(() => setProgress(0), [index, locale]);
 
   const next = () => setIndex((i) => (i + 1) % FEATURES.length);
 
-  // Keep a non-null handle to the current <video> (the exiting clip nulls the
-  // shared ref on unmount; ignore that so pause/resume targets the live clip).
-  const setVideoRef = (el: HTMLVideoElement | null) => {
-    if (el) videoRef.current = el;
-  };
+  // Drive playback: the active clip plays from the start; the rest pause + reset.
+  useEffect(() => {
+    setProgress(0);
+    videoRefs.current.forEach((v, i) => {
+      if (!v) return;
+      if (i === index) {
+        try {
+          v.currentTime = 0;
+        } catch {}
+        if (!reduce) v.play().catch(() => {});
+      } else {
+        v.pause();
+        try {
+          v.currentTime = 0;
+        } catch {}
+      }
+    });
+  }, [index, locale, reduce]);
 
   const handlePause = () => {
     setPaused(true);
-    videoRef.current?.pause();
+    videoRefs.current[index]?.pause();
   };
   const handleResume = () => {
     setPaused(false);
-    videoRef.current?.play().catch(() => {});
+    if (!reduce) videoRefs.current[index]?.play().catch(() => {});
   };
 
   return (
@@ -134,32 +143,42 @@ export function ProductDemo() {
                 </div>
               </div>
 
-              {/* screen — crossfading feature playthroughs */}
+              {/* screen — all clips mounted, only the active one is visible */}
               <div className="relative aspect-[1280/800] bg-surface">
-                <AnimatePresence mode="sync">
-                  <motion.video
-                    key={`${active.key}-${locale}`}
-                    ref={setVideoRef}
-                    className="absolute inset-0 h-full w-full object-cover object-top"
-                    src={videoSrc}
-                    poster={posterSrc}
-                    autoPlay={!reduce}
+                {FEATURES.map((f, i) => (
+                  <video
+                    key={`${f.key}-${locale}`}
+                    ref={(el) => {
+                      videoRefs.current[i] = el;
+                    }}
+                    className={cn(
+                      "absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-500 ease-in-out",
+                      i === index ? "opacity-100" : "opacity-0",
+                    )}
+                    src={`/demo/${f.file}${suffix}.mp4`}
+                    poster={`/demo/${f.file}${suffix}.png`}
                     muted
                     playsInline
                     preload="auto"
-                    onTimeUpdate={(e) => {
-                      const v = e.currentTarget;
-                      if (v.duration) setProgress((v.currentTime / v.duration) * 100);
-                    }}
-                    onEnded={() => {
-                      if (!paused && !reduce) next();
-                    }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    autoPlay={i === 0 && !reduce}
+                    onTimeUpdate={
+                      i === index
+                        ? (e) => {
+                            const v = e.currentTarget;
+                            if (v.duration)
+                              setProgress((v.currentTime / v.duration) * 100);
+                          }
+                        : undefined
+                    }
+                    onEnded={
+                      i === index
+                        ? () => {
+                            if (!paused && !reduce) next();
+                          }
+                        : undefined
+                    }
                   />
-                </AnimatePresence>
+                ))}
               </div>
             </div>
 
