@@ -137,9 +137,17 @@ const FLOWS = {
   },
   inbox: async (p) => {
     await p.goto(`${BASE}/inbox`, { waitUntil: "domcontentloaded" });
-    await sleep(p, 1200);
-    const conv = await moveTo(p, "button:has(img), [role='button']:has-text('Jordan'), a:has-text('Jordan')", 0);
-    if (conv) { await conv.click().catch(() => {}); await sleep(p, 1400); }
+    await sleep(p, 1400);
+    // Target the conversation list item by name (not the topbar avatar button,
+    // whose accessible name is "Open profile menu").
+    const conv = p.getByRole("button", { name: /Jordan/i }).first();
+    const box = await conv.boundingBox().catch(() => null);
+    if (box) {
+      await p.evaluate(([x, y]) => window.__moveCur?.(x, y), [Math.round(box.x + box.width / 2), Math.round(box.y + box.height / 2)]);
+      await sleep(p, 650);
+      await conv.click().catch(() => {});
+      await sleep(p, 1400);
+    }
     const composer = p.locator("textarea, input[type='text']").last();
     const cbox = await composer.boundingBox().catch(() => null);
     if (cbox) {
@@ -191,8 +199,8 @@ async function record(locale, name, fn) {
   ff(["-y", "-ss", String(start), "-i", vpath, "-t", String(dur),
       "-movflags", "+faststart", "-pix_fmt", "yuv420p",
       "-vf", "scale=1280:800", "-c:v", "libx264", "-crf", "23", mp4]);
-  // Poster = a content frame just after the (trimmed) start: no blank/amber flash.
-  ff(["-y", "-ss", "0.6", "-i", mp4, "-frames:v", "1", png]);
+  // Poster = a settled content frame (images decoded): no blank/amber flash.
+  ff(["-y", "-ss", "1.4", "-i", mp4, "-frames:v", "1", png]);
   fs.rmSync(vpath, { force: true });
   console.log(`  ok ${name}${suffix}.mp4 + .png (lead ${start}s, ${dur}s)`);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Search, CalendarDays, LayoutDashboard, Building2, MessageSquare } from "lucide-react";
 import { Container } from "@/components/ui/container";
@@ -24,27 +24,38 @@ const FEATURES: {
   { key: "inbox", icon: MessageSquare, path: "/inbox", file: "inbox" },
 ];
 
-const DWELL_MS = 6500;
-
 export function ProductDemo() {
   const { t, locale } = useI18n();
   const reduce = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const active = FEATURES[index];
   // Localized playthroughs: foo.mp4 (en) / foo-th.mp4 (th)
   const suffix = locale === "th" ? "-th" : "";
   const videoSrc = `/demo/${active.file}${suffix}.mp4`;
   const posterSrc = `/demo/${active.file}${suffix}.png`;
 
-  useEffect(() => {
-    if (paused || reduce) return;
-    const timer = setTimeout(
-      () => setIndex((i) => (i + 1) % FEATURES.length),
-      DWELL_MS,
-    );
-    return () => clearTimeout(timer);
-  }, [index, paused, reduce]);
+  // Reset the progress bar whenever the clip changes.
+  useEffect(() => setProgress(0), [index, locale]);
+
+  const next = () => setIndex((i) => (i + 1) % FEATURES.length);
+
+  // Keep a non-null handle to the current <video> (the exiting clip nulls the
+  // shared ref on unmount; ignore that so pause/resume targets the live clip).
+  const setVideoRef = (el: HTMLVideoElement | null) => {
+    if (el) videoRef.current = el;
+  };
+
+  const handlePause = () => {
+    setPaused(true);
+    videoRef.current?.pause();
+  };
+  const handleResume = () => {
+    setPaused(false);
+    videoRef.current?.play().catch(() => {});
+  };
 
   return (
     <section className="relative overflow-hidden py-20 sm:py-28">
@@ -83,13 +94,10 @@ export function ProductDemo() {
                 >
                   <f.icon className="h-4 w-4" />
                   {t.demo.tabs[f.key]}
-                  {isActive && !paused && (
-                    <motion.span
-                      key={index}
-                      className="absolute bottom-0 left-0 h-0.5 bg-accent"
-                      initial={{ width: "0%" }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: DWELL_MS / 1000, ease: "linear" }}
+                  {isActive && (
+                    <span
+                      className="absolute bottom-0 left-0 h-0.5 bg-accent transition-[width] duration-200 ease-linear"
+                      style={{ width: `${progress}%` }}
                     />
                   )}
                 </button>
@@ -102,8 +110,8 @@ export function ProductDemo() {
         <Reveal delay={0.15}>
           <div
             className="relative mx-auto mt-8 max-w-5xl"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
+            onMouseEnter={handlePause}
+            onMouseLeave={handleResume}
           >
             <div className="relative overflow-hidden rounded-2xl border border-border bg-background shadow-[0_30px_80px_-20px_rgb(0,0,0,0.25)]">
               <BorderBeam
@@ -131,18 +139,25 @@ export function ProductDemo() {
                 <AnimatePresence mode="sync">
                   <motion.video
                     key={`${active.key}-${locale}`}
+                    ref={setVideoRef}
                     className="absolute inset-0 h-full w-full object-cover object-top"
                     src={videoSrc}
                     poster={posterSrc}
-                    autoPlay
+                    autoPlay={!reduce}
                     muted
-                    loop
                     playsInline
-                    preload="metadata"
-                    initial={{ opacity: 0, scale: 1.01 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    preload="auto"
+                    onTimeUpdate={(e) => {
+                      const v = e.currentTarget;
+                      if (v.duration) setProgress((v.currentTime / v.duration) * 100);
+                    }}
+                    onEnded={() => {
+                      if (!paused && !reduce) next();
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
                   />
                 </AnimatePresence>
               </div>
