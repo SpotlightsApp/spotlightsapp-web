@@ -53,11 +53,11 @@ await admin.from("profiles").upsert([
     school: "Stanford University", grad_year: "2026", location: "San Francisco, CA",
     about: "Junior CS student who loves building web apps and ML side-projects. Looking for a summer 2026 internship with a strong engineering team.",
     skills: ["React", "TypeScript", "Python", "SQL", "Figma", "Git"],
-    avatar_url: "https://i.pravatar.cc/200?img=47",
+    avatar_url: "/people/emma.jpg",
   },
   {
     id: bId, full_name: B.name, headline: "Technical Recruiter at Google",
-    location: "Mountain View, CA", avatar_url: "https://i.pravatar.cc/200?img=12",
+    location: "Mountain View, CA", avatar_url: "/people/jordan.jpg",
   },
 ], { onConflict: "id" });
 
