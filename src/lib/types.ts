@@ -81,6 +81,13 @@ export interface CareerEvent {
 
 export type JobWithCompany = Job & { company: Company };
 
+/** A job the user has applied to, with its status and when they applied. */
+export type ApplicationItem = {
+  job: JobWithCompany;
+  status: string;
+  appliedAt: string;
+};
+
 export interface University {
   id: string;
   name: string;

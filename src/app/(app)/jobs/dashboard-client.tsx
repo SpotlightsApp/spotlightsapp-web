@@ -14,9 +14,13 @@ import {
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { CompanyLogo } from "@/components/ui/company-logo";
 import { JobCard } from "@/components/cards/job-card";
+import { useI18n } from "@/lib/i18n/provider";
+import { eventDateBadge, eventDateLong } from "@/lib/utils";
 import type { Dict } from "@/lib/i18n/dictionaries";
-import type { JobWithCompany } from "@/lib/types";
+import type { JobWithCompany, ApplicationItem, CareerEvent } from "@/lib/types";
 
 const stagger = {
   hidden: {},
@@ -43,24 +47,109 @@ function Empty({ icon: Icon, children }: EmptyProps) {
   );
 }
 
+/** Compact saved-job row for the sidebar. */
+function SavedRow({ job }: { job: JobWithCompany }) {
+  return (
+    <Link
+      href={`/jobs/${job.slug}`}
+      className="-mx-2 flex items-center gap-3 rounded-[var(--radius)] px-2 py-2 transition-colors hover:bg-surface-2"
+    >
+      <CompanyLogo
+        name={job.company.name}
+        src={job.company.logoUrl}
+        className="h-9 w-9 shrink-0 text-xs"
+      />
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm font-medium">{job.title}</p>
+        <p className="truncate text-xs text-muted-foreground">
+          {job.company.name}
+        </p>
+      </div>
+    </Link>
+  );
+}
+
+/** Compact upcoming-event row for the sidebar. */
+function EventRow({ event, locale }: { event: CareerEvent; locale: "en" | "th" }) {
+  const { day, month } = eventDateBadge(event.date, locale);
+  return (
+    <Link
+      href={`/events/${event.slug}`}
+      className="-mx-2 flex items-center gap-3 rounded-[var(--radius)] px-2 py-2 transition-colors hover:bg-surface-2"
+    >
+      <span className="flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-[10px] bg-accent-soft text-accent-strong">
+        <span className="text-[9px] font-semibold uppercase leading-none">
+          {month}
+        </span>
+        <span className="text-base font-bold leading-tight">{day}</span>
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm font-medium">{event.title}</p>
+        <p className="truncate text-xs text-muted-foreground">{event.host}</p>
+      </div>
+    </Link>
+  );
+}
+
+/** Application row for the main column. */
+function ApplicationRow({
+  item,
+  statusLabel,
+  locale,
+}: {
+  item: ApplicationItem;
+  statusLabel: string;
+  locale: "en" | "th";
+}) {
+  const { job } = item;
+  return (
+    <Link
+      href={`/jobs/${job.slug}`}
+      className="flex items-center gap-3 rounded-[var(--radius)] border border-border bg-surface/60 p-4 transition-colors hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_10px_30px_-12px_rgb(0,0,0,0.15)]"
+    >
+      <CompanyLogo
+        name={job.company.name}
+        src={job.company.logoUrl}
+        className="h-11 w-11 shrink-0 text-sm"
+      />
+      <div className="min-w-0 flex-1">
+        <p className="truncate font-medium">{job.title}</p>
+        <p className="truncate text-sm text-muted-foreground">
+          {job.company.name} · {job.location}
+        </p>
+      </div>
+      <div className="flex shrink-0 flex-col items-end gap-1 text-right">
+        <Badge variant="success">{statusLabel}</Badge>
+        <span className="whitespace-nowrap text-xs text-muted-foreground">
+          {eventDateLong(item.appliedAt, locale)}
+        </span>
+      </div>
+    </Link>
+  );
+}
+
 export function DashboardClient({
   name,
   completion,
   d,
   featuredJobs = [],
-  applications = 0,
-  saved = 0,
+  savedJobs = [],
+  applications = [],
+  events = [],
 }: {
   name: string;
   completion: number;
   d: Dict["dashboard"];
   featuredJobs?: JobWithCompany[];
-  applications?: number;
-  saved?: number;
+  savedJobs?: JobWithCompany[];
+  applications?: ApplicationItem[];
+  events?: CareerEvent[];
 }) {
+  const { locale } = useI18n();
+
   const stats = [
-    { icon: Send, label: d.applications, value: applications },
-    { icon: Bookmark, label: d.savedJobs, value: saved },
+    { icon: Send, label: d.applications, value: applications.length },
+    { icon: Bookmark, label: d.savedJobs, value: savedJobs.length },
     { icon: Eye, label: d.profileViews, value: 0 },
   ];
 
@@ -127,7 +216,20 @@ export function DashboardClient({
           <motion.section variants={fadeUp}>
             <h2 className="text-xl font-semibold">{d.yourApplications}</h2>
             <div className="mt-4">
-              <Empty icon={Briefcase}>{d.noApplications}</Empty>
+              {applications.length > 0 ? (
+                <div className="space-y-3">
+                  {applications.map((item) => (
+                    <ApplicationRow
+                      key={item.job.id}
+                      item={item}
+                      statusLabel={d.statusApplied}
+                      locale={locale}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <Empty icon={Briefcase}>{d.noApplications}</Empty>
+              )}
             </div>
           </motion.section>
         </motion.div>
@@ -174,21 +276,51 @@ export function DashboardClient({
             </Card>
           </motion.div>
 
+          {/* Saved jobs */}
           <motion.div variants={fadeUp}>
             <Card className="p-6">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">{d.savedJobs}</h3>
-                <span className="text-sm text-muted-foreground">0</span>
+                <span className="text-sm text-muted-foreground">
+                  {savedJobs.length}
+                </span>
               </div>
               <div className="mt-4">
-                <Empty icon={Bookmark}>{d.emptyState}</Empty>
+                {savedJobs.length > 0 ? (
+                  <div className="space-y-1">
+                    {savedJobs.slice(0, 5).map((job) => (
+                      <SavedRow key={job.id} job={job} />
+                    ))}
+                  </div>
+                ) : (
+                  <Empty icon={Bookmark}>{d.emptyState}</Empty>
+                )}
               </div>
             </Card>
           </motion.div>
 
+          {/* Upcoming events */}
           <motion.div variants={fadeUp}>
-            <h3 className="mb-4 font-semibold">{d.upcomingEvents}</h3>
-            <Empty icon={CalendarDays}>{d.emptyState}</Empty>
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="font-semibold">{d.upcomingEvents}</h3>
+              {events.length > 0 && (
+                <Link
+                  href="/events"
+                  className="flex items-center gap-1 text-sm font-medium text-accent-strong hover:underline"
+                >
+                  {d.seeAll} <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
+            </div>
+            {events.length > 0 ? (
+              <Card className="space-y-1 p-3">
+                {events.map((event) => (
+                  <EventRow key={event.id} event={event} locale={locale} />
+                ))}
+              </Card>
+            ) : (
+              <Empty icon={CalendarDays}>{d.emptyState}</Empty>
+            )}
           </motion.div>
         </motion.aside>
       </div>

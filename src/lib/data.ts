@@ -9,6 +9,7 @@ import type {
   Company,
   Job,
   JobWithCompany,
+  ApplicationItem,
   CareerEvent,
   Industry,
   JobType,
@@ -186,6 +187,68 @@ export async function getEventBySlug(slug: string): Promise<CareerEvent | null> 
 
 export async function getUpcomingEvents(limit = 3): Promise<CareerEvent[]> {
   return (await getEvents()).slice(0, limit);
+}
+
+/* --------------------------- user activity -------------------------- */
+
+/** Jobs the signed-in user has saved, most-recent first. */
+export async function getSavedJobs(limit?: number): Promise<JobWithCompany[]> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  let q = supabase
+    .from("saved_jobs")
+    .select("job_id, created_at")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+  if (limit) q = q.limit(limit);
+  const { data: rows } = await q;
+
+  const ids = (rows ?? []).map((r) => r.job_id);
+  if (ids.length === 0) return [];
+  const { data: jobs } = await supabase.from("jobs").select("*").in("id", ids);
+  const list = await jobsWithCompanies((jobs ?? []) as JobRow[]);
+  // Preserve saved-at ordering (the `in` query does not).
+  const order = new Map(ids.map((id, i) => [id, i] as const));
+  return list.sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
+}
+
+/** Jobs the signed-in user has applied to, with status + date, newest first. */
+export async function getApplications(limit?: number): Promise<ApplicationItem[]> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  let q = supabase
+    .from("applications")
+    .select("job_id, status, created_at")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+  if (limit) q = q.limit(limit);
+  const { data: rows } = await q;
+
+  const items = rows ?? [];
+  if (items.length === 0) return [];
+  const { data: jobs } = await supabase
+    .from("jobs")
+    .select("*")
+    .in("id", items.map((r) => r.job_id));
+  const byId = new Map(
+    (await jobsWithCompanies((jobs ?? []) as JobRow[])).map((j) => [j.id, j]),
+  );
+  return items
+    .map((r) => {
+      const job = byId.get(r.job_id);
+      return job
+        ? { job, status: r.status ?? "applied", appliedAt: r.created_at }
+        : null;
+    })
+    .filter((x): x is ApplicationItem => x !== null);
 }
 
 /* ---------------------------- aggregates ---------------------------- */

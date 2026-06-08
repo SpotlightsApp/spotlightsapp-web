@@ -195,7 +195,7 @@ export const en = {
   dashboard: {
     welcome: "Welcome back, {name}", sub: "Here's what's happening with your job search.",
     applications: "Applications", savedJobs: "Saved jobs", profileViews: "Profile views",
-    recommended: "Recommended for you", seeAll: "See all", yourApplications: "Your applications", noApplications: "You haven't applied to anything yet.",
+    recommended: "Recommended for you", seeAll: "See all", yourApplications: "Your applications", noApplications: "You haven't applied to anything yet.", statusApplied: "Applied",
     profileStrength: "Profile strength", completion: "Completion", profileHint: "Add a portfolio link and 2 more skills to reach 100%.", completeProfile: "Complete profile", upcomingEvents: "Upcoming events",
     emptyState: "Nothing here yet.",
   },
@@ -408,7 +408,7 @@ export const th: typeof en = {
   dashboard: {
     welcome: "ยินดีต้อนรับกลับ {name}", sub: "นี่คือความเคลื่อนไหวการหางานของคุณ",
     applications: "ใบสมัคร", savedJobs: "งานที่บันทึก", profileViews: "การเข้าชมโปรไฟล์",
-    recommended: "แนะนำสำหรับคุณ", seeAll: "ดูทั้งหมด", yourApplications: "ใบสมัครของคุณ", noApplications: "คุณยังไม่ได้สมัครงานใด ๆ",
+    recommended: "แนะนำสำหรับคุณ", seeAll: "ดูทั้งหมด", yourApplications: "ใบสมัครของคุณ", noApplications: "คุณยังไม่ได้สมัครงานใด ๆ", statusApplied: "สมัครแล้ว",
     profileStrength: "ความสมบูรณ์ของโปรไฟล์", completion: "ความคืบหน้า", profileHint: "เพิ่มลิงก์ผลงานและทักษะอีก 2 อย่างเพื่อให้ถึง 100%", completeProfile: "กรอกโปรไฟล์ให้ครบ", upcomingEvents: "อีเวนต์ที่กำลังจะมาถึง",
     emptyState: "ยังไม่มีอะไรที่นี่",
   },
