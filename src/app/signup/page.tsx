@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { InviteOnly } from "@/components/auth/invite-only";
+import { isAccessRestricted } from "@/lib/access";
 
 export const metadata: Metadata = { title: "Sign up · Spotlights" };
 
 export default function SignupChooserPage() {
+  if (isAccessRestricted()) {
+    return (
+      <main className="flex min-h-screen items-center justify-center px-6">
+        <InviteOnly />
+      </main>
+    );
+  }
   return (
     <main className="flex min-h-screen items-center justify-center px-6">
       <div className="flex gap-4">

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
@@ -18,6 +18,19 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [attemptedEmail, setAttemptedEmail] = useState("");
   const isSignup = mode === "signup";
   const supabase = createClient();
+
+  // The proxy bounces non-allowlisted sessions here with ?error=not_granted.
+  // Clear any lingering session and explain why access was blocked.
+  useEffect(() => {
+    const err = new URLSearchParams(window.location.search).get("error");
+    if (err === "not_granted") {
+      supabase.auth.signOut().catch(() => {});
+      setError(t.auth.notGranted);
+    } else if (err === "auth_callback") {
+      setError(t.auth.authError);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Carry the email between signup ↔ login (e.g. "log in instead" prefill).
   const prefillEmail =

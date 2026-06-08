@@ -77,6 +77,23 @@ export async function proxy(request: NextRequest) {
     return redirect;
   };
 
+  // Invite-only gate (prod, via ACCESS_RESTRICTED): a signed-in user whose email
+  // isn't on the allowlist is signed out and bounced to login. This blocks
+  // access even for accounts that exist but were never granted.
+  if (process.env.ACCESS_RESTRICTED === "true" && user) {
+    const { data: allowed } = await supabase.rpc("is_email_allowed", {
+      check_email: user.email,
+    });
+    if (allowed !== true) {
+      await supabase.auth.signOut();
+      return redirectTo((u) => {
+        u.pathname = "/login";
+        u.search = "";
+        u.searchParams.set("error", "not_granted");
+      });
+    }
+  }
+
   // Gate the product behind login.
   if (!user && isProtected(pathname)) {
     return redirectTo((u) => {
