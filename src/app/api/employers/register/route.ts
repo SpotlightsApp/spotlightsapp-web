@@ -26,6 +26,16 @@ function optionalStr(value: unknown): string | null {
   return s.length > 0 ? s : null;
 }
 
+function slugify(name: string): string {
+  return (
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 48) || "company"
+  );
+}
+
 function isEmailTakenError(message: string): boolean {
   const m = message.toLowerCase();
   return (
@@ -144,20 +154,32 @@ export async function POST(request: Request) {
 
   const userId = createdUser.data.user.id;
 
-  const companyInsert = await supabaseAdmin
+  // Same companies table the student side reads (size/location/about per the
+  // core schema migration) — slug retried once on collision.
+  const companyPayload = {
+    name: companyName,
+    website,
+    industry,
+    size: companySize,
+    location: headquarters,
+    about: description,
+    created_by: userId,
+  };
+  let companyInsert = await supabaseAdmin
     .from("companies")
-    .insert({
-      name: companyName,
-      website,
-      industry,
-      company_size: companySize,
-      headquarters,
-      description,
-      status: "pending",
-      created_by: userId,
-    })
+    .insert({ ...companyPayload, slug: slugify(companyName) })
     .select("id")
     .single();
+  if (companyInsert.error?.code === "23505") {
+    companyInsert = await supabaseAdmin
+      .from("companies")
+      .insert({
+        ...companyPayload,
+        slug: `${slugify(companyName)}-${Math.random().toString(36).slice(2, 6)}`,
+      })
+      .select("id")
+      .single();
+  }
 
   if (companyInsert.error || !companyInsert.data) {
     const e = companyInsert.error as {
@@ -186,39 +208,47 @@ export async function POST(request: Request) {
 
   const companyId = companyInsert.data.id as string;
 
-  const profileInsert = await supabaseAdmin.from("employer_profiles").insert({
+  // Membership row drives everything employer-side: job-posting rights (jobs
+  // RLS), applicant visibility, and the talent console's company context.
+  const memberInsert = await supabaseAdmin.from("company_members").insert({
     user_id: userId,
     company_id: companyId,
-    full_name: fullName,
-    phone,
     role: "owner",
   });
 
-  if (profileInsert.error) {
-    const e = profileInsert.error as {
+  if (memberInsert.error) {
+    const e = memberInsert.error as {
       message?: string;
       details?: string;
       hint?: string;
       code?: string;
     };
-    console.error("[employer_profiles insert] failed:", {
+    console.error("[company_members insert] failed:", {
       message: e.message,
       details: e.details,
       hint: e.hint,
       code: e.code,
-      error: profileInsert.error,
+      error: memberInsert.error,
     });
     await supabaseAdmin.from("companies").delete().eq("id", companyId);
     await supabaseAdmin.auth.admin.deleteUser(userId);
     return Response.json(
       {
         error:
-          profileInsert.error.message ??
-          "Failed to create employer profile. Please try again.",
+          memberInsert.error.message ??
+          "Failed to link your account to the company. Please try again.",
       },
       { status: 500 },
     );
   }
+
+  // Employers share the same profiles row students use (created on signup by
+  // the handle_new_user trigger) — keep the display name in sync. Contact
+  // phone is not persisted yet.
+  void phone;
+  await supabaseAdmin
+    .from("profiles")
+    .upsert({ id: userId, full_name: fullName }, { onConflict: "id" });
 
   return Response.json({ ok: true } satisfies { ok: true }, { status: 200 });
 }

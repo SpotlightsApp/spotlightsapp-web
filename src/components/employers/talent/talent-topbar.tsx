@@ -1,13 +1,31 @@
 import { Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export function TalentTopbar() {
+function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase())
+    .join("");
+}
+
+export function TalentTopbar({
+  name,
+  avatarUrl,
+  companyName,
+}: {
+  name: string;
+  avatarUrl?: string;
+  companyName?: string;
+}) {
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background/80 px-6 backdrop-blur-md">
       <div className="flex items-center gap-2.5">
         <p className="text-sm font-medium">Talent console</p>
         <Badge variant="neutral" size="sm">
-          Demo workspace
+          {companyName ?? "Private beta"}
         </Badge>
       </div>
       <div className="flex items-center gap-3">
@@ -19,16 +37,14 @@ export function TalentTopbar() {
           <Bell className="h-4 w-4" />
         </button>
         <div className="flex items-center gap-2.5">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/people/jordan.jpg"
-            alt="Jordan Lee"
-            className="h-9 w-9 rounded-full object-cover"
-          />
+          <Avatar className="h-9 w-9">
+            <AvatarImage src={avatarUrl} alt={name} />
+            <AvatarFallback>{initials(name) || "?"}</AvatarFallback>
+          </Avatar>
           <div className="hidden sm:block">
-            <p className="text-sm font-medium leading-tight">Jordan Lee</p>
+            <p className="text-sm font-medium leading-tight">{name}</p>
             <p className="text-xs leading-tight text-muted-foreground">
-              Technical Recruiter
+              {companyName ? `Recruiting · ${companyName}` : "Recruiter"}
             </p>
           </div>
         </div>

@@ -18,7 +18,7 @@ import type {
 
 /* ----------------------------- mappers ------------------------------ */
 
-type CompanyRow = {
+export type CompanyRow = {
   id: string; slug: string; name: string; tagline: string | null;
   about: string | null; industry: string | null; size: string | null;
   location: string | null; website: string | null; logo_url: string | null;
@@ -49,7 +49,7 @@ function pseudoApplicants(seed: string) {
   return 10 + (Math.abs(h) % 71);
 }
 
-function toCompany(r: CompanyRow, openRoles = 0): Company {
+export function toCompany(r: CompanyRow, openRoles = 0): Company {
   return {
     id: r.id, slug: r.slug, name: r.name, tagline: r.tagline ?? "",
     about: r.about ?? "", industry: (r.industry ?? "Software") as Industry,

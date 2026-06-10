@@ -95,10 +95,12 @@ function EventRow({ event, locale }: { event: CareerEvent; locale: "en" | "th" }
 function ApplicationRow({
   item,
   statusLabel,
+  statusVariant,
   locale,
 }: {
   item: ApplicationItem;
   statusLabel: string;
+  statusVariant: "neutral" | "accent" | "success" | "outline";
   locale: "en" | "th";
 }) {
   const { job } = item;
@@ -119,7 +121,7 @@ function ApplicationRow({
         </p>
       </div>
       <div className="flex shrink-0 flex-col items-end gap-1 text-right">
-        <Badge variant="success">{statusLabel}</Badge>
+        <Badge variant={statusVariant}>{statusLabel}</Badge>
         <span className="whitespace-nowrap text-xs text-muted-foreground">
           {eventDateLong(item.appliedAt, locale)}
         </span>
@@ -194,14 +196,27 @@ export function DashboardClient({
             <div className="mt-4">
               {applications.length > 0 ? (
                 <div className="space-y-3">
-                  {applications.map((item) => (
-                    <ApplicationRow
-                      key={item.job.id}
-                      item={item}
-                      statusLabel={d.statusApplied}
-                      locale={locale}
-                    />
-                  ))}
+                  {applications.map((item) => {
+                    const statusMeta: Record<
+                      string,
+                      { label: string; variant: "neutral" | "accent" | "success" | "outline" }
+                    > = {
+                      applied: { label: d.statusApplied, variant: "success" },
+                      interview: { label: d.statusInterview, variant: "accent" },
+                      offer: { label: d.statusOffer, variant: "success" },
+                      rejected: { label: d.statusRejected, variant: "outline" },
+                    };
+                    const meta = statusMeta[item.status] ?? statusMeta.applied;
+                    return (
+                      <ApplicationRow
+                        key={item.job.id}
+                        item={item}
+                        statusLabel={meta.label}
+                        statusVariant={meta.variant}
+                        locale={locale}
+                      />
+                    );
+                  })}
                 </div>
               ) : (
                 <Empty icon={Briefcase}>{d.noApplications}</Empty>

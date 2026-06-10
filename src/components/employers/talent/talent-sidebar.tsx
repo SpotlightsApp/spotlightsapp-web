@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Network, Users, PlusCircle, ArrowLeft } from "lucide-react";
+import { Network, Users, Briefcase, Inbox, ArrowLeft } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 
@@ -54,15 +54,29 @@ export function TalentSidebar() {
           Hiring
         </p>
         <ul className="mt-2 flex flex-col gap-1">
-          <li>
-            <Link
-              href="/employers/register"
-              className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
-            >
-              <PlusCircle className="h-4 w-4" />
-              Post a job
-            </Link>
-          </li>
+          {[
+            { label: "My jobs", href: "/employers/talent/jobs", icon: Briefcase },
+            { label: "Applicants", href: "/employers/talent/applicants", icon: Inbox },
+          ].map((l) => {
+            const active = pathname === l.href || pathname.startsWith(`${l.href}/`);
+            const Icon = l.icon;
+            return (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className={cn(
+                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    active
+                      ? "bg-accent-soft text-accent-strong"
+                      : "text-muted-foreground hover:bg-surface-2 hover:text-foreground",
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                  {l.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
       <div className="border-t border-border px-3 py-3">
