@@ -17,15 +17,7 @@ import { CandidateActions } from "@/components/employers/talent/candidate-action
 import { CvDocument } from "@/components/employers/talent/cv-document";
 import { ScorePanel } from "@/components/employers/talent/score-panel";
 import { UniversityLogo } from "@/components/employers/talent/university-logo";
-import {
-  getCandidate,
-  getRankedCandidates,
-  getUniversity,
-} from "@/lib/talent";
-
-export function generateStaticParams() {
-  return getRankedCandidates().map((c) => ({ id: c.id }));
-}
+import { getTalentCandidate, getTalentCandidates } from "@/lib/talent/data";
 
 export async function generateMetadata({
   params,
@@ -33,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const c = getCandidate(id);
+  const c = await getTalentCandidate(id);
   return { title: c ? `${c.name} — Spotlights for Employers` : "Candidate" };
 }
 
@@ -43,14 +35,14 @@ export default async function CandidatePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const candidate = getCandidate(id);
+  const candidate = await getTalentCandidate(id);
   if (!candidate) notFound();
 
-  const ranked = getRankedCandidates();
+  const ranked = await getTalentCandidates();
   const idx = ranked.findIndex((c) => c.id === candidate.id);
   const prev = idx > 0 ? ranked[idx - 1] : null;
   const next = idx < ranked.length - 1 ? ranked[idx + 1] : null;
-  const uni = getUniversity(candidate.universityId);
+  const uni = candidate.university;
   const added =
     candidate.addedDaysAgo === 0
       ? "today"

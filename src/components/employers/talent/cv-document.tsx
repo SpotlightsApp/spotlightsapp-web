@@ -1,8 +1,4 @@
-import {
-  candidateEmail,
-  getUniversity,
-  type RankedCandidate,
-} from "@/lib/talent";
+import { candidateEmail, type RankedCandidate } from "@/lib/talent";
 
 function Section({
   title,
@@ -23,7 +19,7 @@ function Section({
 
 /** Renders the candidate's structured profile as a clean résumé document. */
 export function CvDocument({ candidate }: { candidate: RankedCandidate }) {
-  const uni = getUniversity(candidate.universityId);
+  const uni = candidate.university;
   return (
     <div className="flex flex-col gap-7">
       <Section title="Summary">

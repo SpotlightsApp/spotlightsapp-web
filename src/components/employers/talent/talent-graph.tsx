@@ -6,7 +6,6 @@ import { Search } from "lucide-react";
 import {
   TALENT_DOMAINS,
   TIER_META,
-  getUniversity,
   type RankedCandidate,
   type TalentTier,
 } from "@/lib/talent";
@@ -145,7 +144,7 @@ export function TalentGraph({ candidates }: { candidates: RankedCandidate[] }) {
     matchesRef.current = new Set(
       nodes
         .filter((n) => {
-          const uni = getUniversity(n.c.universityId);
+          const uni = n.c.university;
           return (
             n.c.name.toLowerCase().includes(q) ||
             n.c.major.toLowerCase().includes(q) ||
@@ -359,7 +358,7 @@ export function TalentGraph({ candidates }: { candidates: RankedCandidate[] }) {
     };
   }, [nodes, edges, router]);
 
-  const hoveredUni = hovered ? getUniversity(hovered.node.c.universityId) : null;
+  const hoveredUni = hovered ? hovered.node.c.university : null;
 
   return (
     <div className="flex h-full flex-col">

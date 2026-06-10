@@ -19,7 +19,6 @@ import { UniversityLogo } from "@/components/employers/talent/university-logo";
 import {
   TALENT_DOMAINS,
   TIER_META,
-  getUniversity,
   talentUniversities,
   type RankedCandidate,
   type TalentTier,
@@ -48,7 +47,7 @@ const STATUS_BADGE: Record<string, { label: string; variant: "neutral" | "accent
 const TIERS: TalentTier[] = ["exceptional", "strong", "promising", "developing"];
 
 function CandidateRow({ c }: { c: RankedCandidate }) {
-  const uni = getUniversity(c.universityId);
+  const uni = c.university;
   const status = STATUS_BADGE[c.status];
   return (
     <li className="group relative transition-colors hover:bg-surface">
@@ -106,7 +105,7 @@ export function CandidatesBrowser({ candidates }: { candidates: RankedCandidate[
       if (tier !== "all" && c.tier !== tier) return false;
       if (status !== "all" && c.status !== status) return false;
       if (!q) return true;
-      const uni = getUniversity(c.universityId);
+      const uni = c.university;
       return (
         c.name.toLowerCase().includes(q) ||
         c.headline.toLowerCase().includes(q) ||

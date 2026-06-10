@@ -1,12 +1,14 @@
 import { OverviewClient } from "@/components/employers/talent/overview-client";
-import { domainCounts, getRankedCandidates, talentStats } from "@/lib/talent";
+import { getTalentCandidates } from "@/lib/talent/data";
+import { domainCounts, talentStats } from "@/lib/talent";
 
-export default function TalentOverviewPage() {
+export default async function TalentOverviewPage() {
+  const candidates = await getTalentCandidates();
   return (
     <OverviewClient
-      candidates={getRankedCandidates()}
-      stats={talentStats()}
-      domains={domainCounts()}
+      candidates={candidates}
+      stats={talentStats(candidates)}
+      domains={domainCounts(candidates)}
     />
   );
 }

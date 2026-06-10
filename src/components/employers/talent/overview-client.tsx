@@ -14,7 +14,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TalentGraph } from "@/components/employers/talent/talent-graph";
 import { ScorePill } from "@/components/employers/talent/score-pill";
-import { getUniversity, type RankedCandidate } from "@/lib/talent";
+import type { RankedCandidate } from "@/lib/talent";
 
 const stagger = {
   hidden: {},
@@ -71,7 +71,7 @@ function StatCard({
 }
 
 function TopCandidateRow({ c }: { c: RankedCandidate }) {
-  const uni = getUniversity(c.universityId);
+  const uni = c.university;
   return (
     <Link
       href={`/employers/talent/candidates/${c.id}`}

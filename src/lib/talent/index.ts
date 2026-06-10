@@ -1,5 +1,5 @@
 import { talentCandidates } from "./candidates";
-import { talentUniversities, universityById } from "./universities";
+import { universityById } from "./universities";
 import type {
   TalentCandidate,
   TalentDomain,
@@ -58,24 +58,32 @@ export const TIER_META: Record<
   },
 };
 
-export type RankedCandidate = TalentCandidate & { rank: number; tier: TalentTier };
+export type RankedCandidate = TalentCandidate & {
+  rank: number;
+  tier: TalentTier;
+  university: TalentUniversity;
+};
+
+export function rankCandidates(list: TalentCandidate[]): RankedCandidate[] {
+  return [...list]
+    .sort(
+      (a, b) =>
+        b.scores.overall - a.scores.overall || a.name.localeCompare(b.name),
+    )
+    .map((c, i) => ({
+      ...c,
+      rank: i + 1,
+      tier: tierOf(c.scores.overall),
+      university: getUniversity(c.universityId),
+    }));
+}
 
 let rankedCache: RankedCandidate[] | null = null;
 
+/** Bundled seed dataset, ranked — dev fallback for src/lib/talent/data.ts. */
 export function getRankedCandidates(): RankedCandidate[] {
-  if (!rankedCache) {
-    rankedCache = [...talentCandidates]
-      .sort(
-        (a, b) =>
-          b.scores.overall - a.scores.overall || a.name.localeCompare(b.name),
-      )
-      .map((c, i) => ({ ...c, rank: i + 1, tier: tierOf(c.scores.overall) }));
-  }
+  if (!rankedCache) rankedCache = rankCandidates(talentCandidates);
   return rankedCache;
-}
-
-export function getCandidate(id: string): RankedCandidate | undefined {
-  return getRankedCandidates().find((c) => c.id === id);
 }
 
 export function getUniversity(id: string): TalentUniversity {
@@ -91,29 +99,26 @@ export function getUniversity(id: string): TalentUniversity {
   );
 }
 
-export function candidateEmail(c: TalentCandidate): string {
-  const uni = getUniversity(c.universityId);
+export function candidateEmail(c: RankedCandidate): string {
   const slug = c.name
     .toLowerCase()
     .replace(/[^a-z ]/g, "")
     .trim()
     .split(/\s+/)
     .join(".");
-  return `${slug}@${uni.emailDomain}`;
+  return `${slug}@${c.university.emailDomain}`;
 }
 
-export function talentStats() {
-  const ranked = getRankedCandidates();
+export function talentStats(ranked: RankedCandidate[]) {
   const total = ranked.length;
   const exceptional = ranked.filter((c) => c.tier === "exceptional").length;
   const shortlisted = ranked.filter((c) => c.status === "shortlisted").length;
   const advanced = ranked.filter((c) => c.status === "advanced").length;
   const newThisWeek = ranked.filter((c) => c.addedDaysAgo <= 7).length;
-  const median =
-    ranked[Math.floor(total / 2)]?.scores.overall ?? 0;
+  const median = ranked[Math.floor(total / 2)]?.scores.overall ?? 0;
   return {
     total,
-    universities: talentUniversities.length,
+    universities: new Set(ranked.map((c) => c.universityId)).size,
     exceptional,
     shortlisted,
     advanced,
@@ -122,8 +127,7 @@ export function talentStats() {
   };
 }
 
-export function domainCounts() {
-  const ranked = getRankedCandidates();
+export function domainCounts(ranked: RankedCandidate[]) {
   return TALENT_DOMAINS.map((d) => ({
     domain: d,
     count: ranked.filter((c) => c.domain === d).length,
