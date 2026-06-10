@@ -1,11 +1,15 @@
 /**
- * Invite-only access flag for the private testing phase.
+ * Invite-only access for the private beta.
  *
- * Set ACCESS_RESTRICTED="true" in the production environment to limit the app to
- * emails in the public.access_allowlist table. Leave it unset locally so dev
- * stays open. Enforcement lives in src/proxy.ts (sessions) and the DB trigger
- * (signups); this flag only drives prod-side UI/redirect behaviour.
+ * Always-on by design (no env flag) so local and prod behave identically with
+ * zero Vercel configuration: only emails in public.access_allowlist may create
+ * an account or reach the product — student pages and the employer talent
+ * console alike. Enforcement lives in src/proxy.ts (sessions), the DB trigger
+ * on auth.users (signups), and RLS on the talent tables (data). Manage testers
+ * with `node grant-access.mjs <email>` or by inserting into access_allowlist.
+ *
+ * When the beta opens up, flip this to false (or delete the gate call sites).
  */
 export function isAccessRestricted() {
-  return process.env.ACCESS_RESTRICTED === "true";
+  return true;
 }

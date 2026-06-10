@@ -1,12 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { isAccessRestricted } from "@/lib/access";
 
 /**
  * Next.js 16 Proxy (formerly "middleware").
  *
  * Routes that require an authenticated session. The marketing landing page,
- * /employers, and the auth pages stay public — the landing promotes the
- * product, the product itself lives behind login.
+ * /employers (marketing + register), and the auth pages stay public — the
+ * landing promotes the product, the product itself (student app and the
+ * employer talent console) lives behind login.
  */
 const PROTECTED_PREFIXES = [
   "/jobs",
@@ -15,6 +17,8 @@ const PROTECTED_PREFIXES = [
   "/dashboard",
   "/profile",
   "/inbox",
+  "/explore",
+  "/employers/talent",
 ];
 
 function isProtected(pathname: string) {
@@ -77,10 +81,11 @@ export async function proxy(request: NextRequest) {
     return redirect;
   };
 
-  // Invite-only gate (prod, via ACCESS_RESTRICTED): a signed-in user whose email
-  // isn't on the allowlist is signed out and bounced to login. This blocks
-  // access even for accounts that exist but were never granted.
-  if (process.env.ACCESS_RESTRICTED === "true" && user) {
+  // Invite-only gate (private beta, always-on — see src/lib/access.ts): a
+  // signed-in user whose email isn't on the allowlist is signed out and
+  // bounced to login. This blocks access even for accounts that exist but
+  // were never granted.
+  if (isAccessRestricted() && user) {
     const { data: allowed } = await supabase.rpc("is_email_allowed", {
       check_email: user.email,
     });
