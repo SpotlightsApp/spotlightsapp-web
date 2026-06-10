@@ -114,6 +114,18 @@ export async function POST(request: Request) {
         { status: 409 },
       );
     }
+    // The auth.users trigger rejects non-allowlisted emails during the private
+    // beta; GoTrue surfaces that as a generic "Database error creating new
+    // user". Translate it into the real reason.
+    if (/database error|invite-only/i.test(message)) {
+      return Response.json(
+        {
+          error:
+            "Employer sign-ups are invite-only during the private beta. Reach out to the Spotlights team at pippinkantakom@gmail.com to get your company onboarded.",
+        },
+        { status: 403 },
+      );
+    }
     const e = createdUser.error as {
       message?: string;
       details?: string;

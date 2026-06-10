@@ -5,7 +5,7 @@ import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/provider";
 
-/** Shown on the auth screens while the app is invite-only (private testing). */
+/** Shown on the auth screens while the app is invite-only (private beta). */
 export function InviteOnly() {
   const { t } = useI18n();
   return (
@@ -19,9 +19,14 @@ export function InviteOnly() {
       <p className="mx-auto mt-3 max-w-sm text-sm text-muted-foreground">
         {t.auth.inviteOnlyBody}
       </p>
-      <Button asChild variant="outline" className="mt-6">
-        <Link href="/login">{t.auth.loginLink}</Link>
-      </Button>
+      <div className="mt-6 flex items-center justify-center gap-3">
+        <Button asChild>
+          <Link href="/waitlist">{t.auth.inviteOnlyWaitlistCta}</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href="/login">{t.auth.loginLink}</Link>
+        </Button>
+      </div>
     </div>
   );
 }
