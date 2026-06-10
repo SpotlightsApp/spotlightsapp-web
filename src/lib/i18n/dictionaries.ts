@@ -187,6 +187,7 @@ export const en = {
   jobCard: { applied: "{n} applied", today: "Today", daysAgo: "{n}d ago" },
   jobDetail: {
     back: "Back to jobs", estComp: "Estimated compensation", applyNow: "Apply now", appSent: "Application sent", save: "Save", saved: "Saved",
+    closed: "No longer accepting applications",
     about: "About the role", responsibilities: "What you'll do", requirements: "What we're looking for", skills: "Skills",
     type: "Type", workMode: "Work mode", location: "Location", posted: "Posted", applicants: "Applicants",
     today: "Today", daysAgo: "{n} days ago", aboutCompany: "About {name}", viewCompany: "View company →", similar: "Similar roles",
@@ -405,6 +406,7 @@ export const th: typeof en = {
   jobCard: { applied: "สมัครแล้ว {n} คน", today: "วันนี้", daysAgo: "{n} วันก่อน" },
   jobDetail: {
     back: "กลับไปหน้างาน", estComp: "ค่าตอบแทนโดยประมาณ", applyNow: "สมัครเลย", appSent: "ส่งใบสมัครแล้ว", save: "บันทึก", saved: "บันทึกแล้ว",
+    closed: "ปิดรับสมัครแล้ว",
     about: "เกี่ยวกับตำแหน่งนี้", responsibilities: "สิ่งที่คุณจะได้ทำ", requirements: "คุณสมบัติที่เรามองหา", skills: "ทักษะ",
     type: "ประเภท", workMode: "รูปแบบการทำงาน", location: "สถานที่", posted: "ประกาศเมื่อ", applicants: "ผู้สมัคร",
     today: "วันนี้", daysAgo: "{n} วันก่อน", aboutCompany: "เกี่ยวกับ {name}", viewCompany: "ดูบริษัท →", similar: "ตำแหน่งที่คล้ายกัน",

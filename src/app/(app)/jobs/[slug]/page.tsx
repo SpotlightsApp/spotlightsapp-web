@@ -155,6 +155,7 @@ export default async function JobDetailPage({
                 title={job.title}
                 initialApplied={activity.applied}
                 initialSaved={activity.saved}
+                closed={job.status === "closed"}
               />
             </div>
             <dl className="space-y-3 border-t border-border pt-5">

@@ -16,6 +16,17 @@ export async function applyToJob(
   } = await supabase.auth.getUser();
   if (!user) return { ok: false, error: "Please sign in to apply." };
 
+  // Closed roles stay viewable but stop accepting applications.
+  const { data: job } = await supabase
+    .from("jobs")
+    .select("status")
+    .eq("id", jobId)
+    .maybeSingle();
+  if (!job) return { ok: false, error: "This job no longer exists." };
+  if (job.status === "closed") {
+    return { ok: false, error: "This role is no longer accepting applications." };
+  }
+
   const { error } = await supabase
     .from("applications")
     .insert({ user_id: user.id, job_id: jobId, status: "applied" });

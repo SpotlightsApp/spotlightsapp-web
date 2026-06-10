@@ -61,6 +61,7 @@ export interface Job {
   requirements: string[];
   skills: string[];
   featured?: boolean;
+  status?: "open" | "closed";
 }
 
 export interface CareerEvent {

@@ -31,6 +31,7 @@ type JobRow = {
   salary_period: string | null; description: string | null;
   responsibilities: string[] | null; requirements: string[] | null;
   skills: string[] | null; featured: boolean; posted_at: string;
+  status: string | null;
 };
 type EventRow = {
   id: string; slug: string; title: string; host: string | null;
@@ -70,6 +71,7 @@ function toJob(r: JobRow): Job {
     description: r.description ?? "", responsibilities: r.responsibilities ?? [],
     requirements: r.requirements ?? [], skills: r.skills ?? [],
     featured: r.featured,
+    status: (r.status ?? "open") as Job["status"],
   };
 }
 function toEvent(r: EventRow): CareerEvent {
@@ -127,7 +129,9 @@ async function jobsWithCompanies(rows: JobRow[]): Promise<JobWithCompany[]> {
 
 export async function getJobs(filters: JobFilters = {}): Promise<JobWithCompany[]> {
   const supabase = await createClient();
-  const { data } = await supabase.from("jobs").select("*").order("posted_at", { ascending: false });
+  const { data } = await supabase
+    .from("jobs").select("*").eq("status", "open")
+    .order("posted_at", { ascending: false });
   let jobs = await jobsWithCompanies((data ?? []) as JobRow[]);
   const q = filters.q?.trim().toLowerCase();
   if (q)
@@ -151,23 +155,31 @@ export async function getJobBySlug(slug: string): Promise<JobWithCompany | null>
 export async function getFeaturedJobs(limit = 6): Promise<JobWithCompany[]> {
   const supabase = await createClient();
   const { data } = await supabase
-    .from("jobs").select("*").eq("featured", true)
+    .from("jobs").select("*").eq("featured", true).eq("status", "open")
     .order("posted_at", { ascending: false }).limit(limit);
   return jobsWithCompanies((data ?? []) as JobRow[]);
 }
 
-export async function getJobsByCompany(companyId: string): Promise<JobWithCompany[]> {
+/** Student surfaces hide closed roles; the employer console passes
+ *  includeClosed to manage its full posting history. */
+export async function getJobsByCompany(
+  companyId: string,
+  { includeClosed = false }: { includeClosed?: boolean } = {},
+): Promise<JobWithCompany[]> {
   const supabase = await createClient();
-  const { data } = await supabase
+  let query = supabase
     .from("jobs").select("*").eq("company_id", companyId)
     .order("posted_at", { ascending: false });
+  if (!includeClosed) query = query.eq("status", "open");
+  const { data } = await query;
   return jobsWithCompanies((data ?? []) as JobRow[]);
 }
 
 export async function getRelatedJobs(job: JobWithCompany, limit = 3): Promise<JobWithCompany[]> {
   const supabase = await createClient();
   const { data } = await supabase
-    .from("jobs").select("*").eq("industry", job.industry).neq("id", job.id).limit(limit);
+    .from("jobs").select("*").eq("industry", job.industry).neq("id", job.id)
+    .eq("status", "open").limit(limit);
   return jobsWithCompanies((data ?? []) as JobRow[]);
 }
 

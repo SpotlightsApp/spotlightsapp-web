@@ -16,11 +16,13 @@ export function JobActions({
   title,
   initialApplied = false,
   initialSaved = false,
+  closed = false,
 }: {
   jobId: string;
   title: string;
   initialApplied?: boolean;
   initialSaved?: boolean;
+  closed?: boolean;
 }) {
   const { t } = useI18n();
   const [applied, setApplied] = useState(initialApplied);
@@ -54,13 +56,15 @@ export function JobActions({
         <Button
           size="lg"
           className="flex-1"
-          disabled={applied || isApplying}
+          disabled={applied || isApplying || closed}
           onClick={handleApply}
         >
           {applied ? (
             <>
               <Check className="h-5 w-5" /> {t.jobDetail.appSent}
             </>
+          ) : closed ? (
+            t.jobDetail.closed
           ) : (
             t.jobDetail.applyNow
           )}
