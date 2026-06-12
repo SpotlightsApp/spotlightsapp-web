@@ -40,7 +40,7 @@ export async function joinWaitlist(input: {
     try {
       const resend = new Resend(apiKey);
       const from =
-        process.env.RESEND_FROM ?? "Spotlights <onboarding@resend.dev>";
+        process.env.RESEND_FROM ?? "Spotlights <noreply@spotlightsapp.com>";
       const { error: sendError } = await resend.emails.send({
         from,
         to: email,

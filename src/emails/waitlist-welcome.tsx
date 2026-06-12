@@ -44,16 +44,10 @@ const styles = {
   } as const,
   header: {
     padding: "28px 32px 0",
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
+    textAlign: "center" as const,
   } as const,
-  brandName: {
-    margin: 0,
-    fontSize: "18px",
-    fontWeight: 600,
-    color: brand.text,
-    letterSpacing: "-0.01em",
+  logo: {
+    margin: "0 auto",
   } as const,
   body_section: { padding: "8px 32px 28px" } as const,
   eyebrow: {
@@ -121,8 +115,7 @@ const styles = {
   footerLink: { color: brand.blueDark, textDecoration: "none" } as const,
 };
 
-export function WaitlistWelcome({ name }: { name?: string }) {
-  const first = (name?.trim().split(" ")[0]) || "there";
+export function WaitlistWelcome(_props: { name?: string } = {}) {
   return (
     <Html>
       <Head />
@@ -131,51 +124,31 @@ export function WaitlistWelcome({ name }: { name?: string }) {
         <Container style={styles.container}>
           <Section style={styles.header}>
             <Img
-              src={`${ORIGIN}/Spotlightslogo.png`}
-              alt=""
-              width="28"
-              height="28"
-              style={{ borderRadius: "8px" }}
+              src="https://spotlightsapp.com/Spotlightslogo.png"
+              width={140}
+              alt="Spotlights"
+              style={styles.logo}
             />
-            <Text style={styles.brandName}>Spotlights</Text>
           </Section>
 
           <Section style={styles.body_section}>
-            <Text style={styles.eyebrow}>Launching soon</Text>
             <Heading as="h1" style={styles.heading}>
-              You&apos;re on the list, {first} 🎉
+              You&apos;re on the list.
             </Heading>
 
             <Text style={styles.paragraph}>
-              Thanks for signing up. We&apos;re building Spotlights, Thailand&apos;s
-              home for early-career talent. One profile, every internship and
-              new-grad role, and the companies that are actually hiring you next.
+              Thanks for joining the Spotlights waitlist — Thailand&apos;s home
+              for connecting university students with employers.
             </Text>
-
-            <Text style={styles.paragraph}>Here&apos;s what to expect:</Text>
-            <Section style={styles.bullets}>
-              <Text style={styles.bullet}>
-                ✦ We&apos;ll email you the moment access opens up.
-              </Text>
-              <Text style={styles.bullet}>
-                ✦ Waitlist members get in <strong>first</strong>, before public
-                launch.
-              </Text>
-              <Text style={styles.bulletLast}>
-                ✦ No spam, only launch news and a few product updates.
-              </Text>
-            </Section>
-
-            <Link href={ORIGIN} style={styles.cta}>
-              Visit Spotlights
-            </Link>
-
-            <Hr style={styles.hr} />
 
             <Text style={styles.paragraph}>
-              Have a friend who&apos;s job-hunting? Forward this email. Early
-              access has limited seats.
+              We&apos;ll email you the moment early access opens up. Keep an eye
+              on your inbox.
             </Text>
+
+            <Text style={styles.paragraph}>— The Spotlights team</Text>
+
+            <Hr style={styles.hr} />
           </Section>
 
           <Section style={styles.footer}>
