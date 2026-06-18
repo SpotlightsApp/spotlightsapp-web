@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { InviteOnly } from "@/components/auth/invite-only";
 import { isAccessRestricted } from "@/lib/access";
 
-export const metadata: Metadata = { title: "Sign up · Spotlights" };
+export const metadata: Metadata = { title: "Sign up · Spotlight" };
 
 export default function SignupChooserPage() {
   if (isAccessRestricted()) {

@@ -5,9 +5,9 @@ import { getEmployerCompany } from "@/lib/employer/data";
 import { getDisplayUser } from "@/lib/user";
 
 export const metadata: Metadata = {
-  title: "Talent console — Spotlights for Employers",
+  title: "Talent console — Spotlight for Employers",
   description:
-    "Explore, rank, and review student talent across the Spotlights network.",
+    "Explore, rank, and review student talent across the Spotlight network.",
 };
 
 export default async function TalentConsoleLayout({

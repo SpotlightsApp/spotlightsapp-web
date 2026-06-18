@@ -125,7 +125,7 @@ export function OverviewClient({
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
               {stats.total} candidates across {stats.universities} universities,
-              ranked by Spotlights’ overall signal score.
+              ranked by Spotlight’s overall signal score.
             </p>
           </div>
           <Button asChild>

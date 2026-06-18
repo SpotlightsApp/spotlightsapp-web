@@ -4,7 +4,7 @@ import { CompaniesBrowser } from "@/components/companies/companies-browser";
 import { getCompanies } from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
 
-export const metadata: Metadata = { title: "Companies · Spotlights" };
+export const metadata: Metadata = { title: "Companies · Spotlight" };
 
 export default async function CompaniesPage() {
   const [companies, t] = await Promise.all([getCompanies(), getDict()]);

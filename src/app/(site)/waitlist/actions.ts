@@ -40,11 +40,11 @@ export async function joinWaitlist(input: {
     try {
       const resend = new Resend(apiKey);
       const from =
-        process.env.RESEND_FROM ?? "Spotlights <noreply@spotlightsapp.com>";
+        process.env.RESEND_FROM ?? "Spotlight <noreply@spotlightsapp.com>";
       const { error: sendError } = await resend.emails.send({
         from,
         to: email,
-        subject: "You're on the Spotlights waitlist 🎉",
+        subject: "You're on the Spotlight waitlist 🎉",
         react: WaitlistWelcome({ name }),
       });
       if (sendError) console.error("resend send failed:", sendError);

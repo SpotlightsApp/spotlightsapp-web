@@ -26,7 +26,7 @@ export async function generateMetadata({
 }) {
   const { id } = await params;
   const c = await getTalentCandidate(id);
-  return { title: c ? `${c.name} — Spotlights for Employers` : "Candidate" };
+  return { title: c ? `${c.name} — Spotlight for Employers` : "Candidate" };
 }
 
 export default async function CandidatePage({

@@ -9,7 +9,7 @@ import {
 } from "@/lib/employer/data";
 
 export const metadata = {
-  title: "My jobs — Spotlights for Employers",
+  title: "My jobs — Spotlight for Employers",
 };
 
 export default async function EmployerJobsPage() {

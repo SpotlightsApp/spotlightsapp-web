@@ -19,7 +19,7 @@ export function TalentSidebar() {
       <div className="flex h-16 items-center gap-2.5 px-5">
         <Logo href="/employers/talent" showWord={false} />
         <div className="leading-tight">
-          <p className="text-sm font-semibold tracking-tight">Spotlights</p>
+          <p className="text-sm font-semibold tracking-tight">Spotlight</p>
           <p className="text-[10px] font-semibold uppercase tracking-wider text-accent-strong">
             Employers
           </p>

@@ -4,7 +4,7 @@ import { JobsBrowser } from "@/components/jobs/jobs-browser";
 import { getJobs } from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
 
-export const metadata: Metadata = { title: "Explore · Spotlights" };
+export const metadata: Metadata = { title: "Explore · Spotlight" };
 
 export default async function ExplorePage() {
   const [jobs, t] = await Promise.all([getJobs(), getDict()]);

@@ -112,7 +112,7 @@ export async function listConversations(): Promise<ConversationSummary[]> {
     const lastMessageAt = preview?.createdAt ?? lastAtByConvo.get(id) ?? null;
     return {
       id,
-      name: profile?.full_name?.trim() || "Spotlights member",
+      name: profile?.full_name?.trim() || "Spotlight member",
       avatarUrl: profile?.avatar_url ?? null,
       preview: preview?.body ?? null,
       lastMessageAt,

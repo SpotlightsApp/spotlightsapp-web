@@ -2,7 +2,7 @@ import { CandidatesBrowser } from "@/components/employers/talent/candidates-brow
 import { getTalentCandidates } from "@/lib/talent/data";
 
 export const metadata = {
-  title: "Candidates — Spotlights for Employers",
+  title: "Candidates — Spotlight for Employers",
 };
 
 export default async function CandidatesPage() {

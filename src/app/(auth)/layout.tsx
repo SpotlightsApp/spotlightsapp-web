@@ -30,7 +30,7 @@ export default async function AuthLayout({
               style={{ height: "32px", width: "auto" }}
             />
             <span className="text-lg font-semibold tracking-tight text-white">
-              Spotlights
+              Spotlight
             </span>
           </span>
         </Link>

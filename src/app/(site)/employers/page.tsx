@@ -7,7 +7,7 @@ import { Reveal } from "@/components/marketing/reveal";
 import { getDict } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
-  title: "For employers · Hire early-career talent in Thailand | Spotlights",
+  title: "For employers · Hire early-career talent in Thailand | Spotlight",
 };
 
 export default async function EmployersPage() {

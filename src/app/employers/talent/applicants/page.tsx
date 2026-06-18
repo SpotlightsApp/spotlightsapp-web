@@ -10,7 +10,7 @@ import {
 } from "@/lib/employer/data";
 
 export const metadata = {
-  title: "Applicants — Spotlights for Employers",
+  title: "Applicants — Spotlight for Employers",
 };
 
 function initials(name: string) {

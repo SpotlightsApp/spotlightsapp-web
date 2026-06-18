@@ -4,7 +4,7 @@ import { listConversations } from "./actions";
 import { InboxClient } from "./inbox-client";
 import { EmptyState } from "./empty-state";
 
-export const metadata: Metadata = { title: "Inbox · Spotlights" };
+export const metadata: Metadata = { title: "Inbox · Spotlight" };
 
 export default async function InboxPage() {
   const supabase = await createClient();

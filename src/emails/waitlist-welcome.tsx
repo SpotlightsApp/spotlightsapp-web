@@ -119,14 +119,14 @@ export function WaitlistWelcome(_props: { name?: string } = {}) {
   return (
     <Html>
       <Head />
-      <Preview>You&apos;re on the Spotlights waitlist. We&apos;ll be in touch.</Preview>
+      <Preview>You&apos;re on the Spotlight waitlist. We&apos;ll be in touch.</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
             <Img
               src="https://spotlightsapp.com/Spotlightslogo.png"
               width={140}
-              alt="Spotlights"
+              alt="Spotlight"
               style={styles.logo}
             />
           </Section>
@@ -137,7 +137,7 @@ export function WaitlistWelcome(_props: { name?: string } = {}) {
             </Heading>
 
             <Text style={styles.paragraph}>
-              Thanks for joining the Spotlights waitlist — Thailand&apos;s home
+              Thanks for joining the Spotlight waitlist — Thailand&apos;s home
               for connecting university students with employers.
             </Text>
 
@@ -146,13 +146,13 @@ export function WaitlistWelcome(_props: { name?: string } = {}) {
               on your inbox.
             </Text>
 
-            <Text style={styles.paragraph}>— The Spotlights team</Text>
+            <Text style={styles.paragraph}>— The Spotlight team</Text>
 
             <Hr style={styles.hr} />
           </Section>
 
           <Section style={styles.footer}>
-            Spotlights · Bangkok, Thailand ·{" "}
+            Spotlight · Bangkok, Thailand ·{" "}
             <Link href={ORIGIN} style={styles.footerLink}>
               spotlightsapp.com
             </Link>

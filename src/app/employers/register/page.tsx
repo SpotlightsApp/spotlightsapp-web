@@ -6,7 +6,7 @@ import { EmployerRegisterForm } from "@/components/employers/employer-register-f
 import { isAccessRestricted } from "@/lib/access";
 
 export const metadata: Metadata = {
-  title: "Employer registration · Spotlights",
+  title: "Employer registration · Spotlight",
 };
 
 export default function EmployerRegisterPage() {
@@ -18,11 +18,11 @@ export default function EmployerRegisterPage() {
             <Lock className="h-6 w-6" />
           </span>
           <h1 className="font-display mt-5 text-2xl text-foreground">
-            Spotlights for employers is in private beta
+            Spotlight for employers is in private beta
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
             Employer onboarding is invite-only right now. Reach out to the
-            Spotlights team at{" "}
+            Spotlight team at{" "}
             <a
               href="mailto:pippinkantakom@gmail.com"
               className="font-medium text-accent-strong hover:underline"
@@ -34,7 +34,7 @@ export default function EmployerRegisterPage() {
           </p>
           <div className="mt-6 flex items-center justify-center gap-3">
             <Button asChild variant="outline">
-              <Link href="/employers">See Spotlights for employers</Link>
+              <Link href="/employers">See Spotlight for employers</Link>
             </Button>
             <Button asChild variant="ghost">
               <Link href="/login">Log in</Link>

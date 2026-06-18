@@ -12,7 +12,7 @@ export function NoCompany() {
         <p className="font-semibold">No company workspace yet</p>
         <p className="max-w-md text-sm text-muted-foreground">
           Your account isn&apos;t linked to a company. Reach out to the
-          Spotlights team at{" "}
+          Spotlight team at{" "}
           <a
             href="mailto:pippinkantakom@gmail.com"
             className="font-medium text-accent-strong hover:underline"

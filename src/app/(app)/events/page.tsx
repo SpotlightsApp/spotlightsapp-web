@@ -4,7 +4,7 @@ import { EventCard } from "@/components/cards/event-card";
 import { getEvents } from "@/lib/data";
 import { getDict } from "@/lib/i18n/server";
 
-export const metadata: Metadata = { title: "Events · Spotlights" };
+export const metadata: Metadata = { title: "Events · Spotlight" };
 
 export default async function EventsPage() {
   const [events, t] = await Promise.all([getEvents(), getDict()]);

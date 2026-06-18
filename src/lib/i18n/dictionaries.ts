@@ -32,7 +32,7 @@ export const en = {
     eyebrow: "Our product",
     heading: "Your whole job search, in one place",
     subhead:
-      "From discovery to offer, here's how Spotlights works for students.",
+      "From discovery to offer, here's how Spotlight works for students.",
     tabs: {
       dashboard: "Your dashboard",
       jobs: "Find jobs",
@@ -63,7 +63,7 @@ export const en = {
       "Directional estimates from Thai labour-market and graduate-employment research.",
   },
   positioning: {
-    eyebrow: "Why Spotlights",
+    eyebrow: "Why Spotlight",
     heading: "Built for students, not the already-employed",
     subhead:
       "LinkedIn, JobsDB and JobThai were made for people already in the workforce. We're building the opposite: a level playing field for the people just starting out.",
@@ -74,7 +74,7 @@ export const en = {
       "Opportunity flows to whoever already has connections",
       "Employers can't filter for early-career potential",
     ],
-    spotlightTitle: "The Spotlights way",
+    spotlightTitle: "The Spotlight way",
     spotlightWay: [
       "Built only for students and new grads, everyone's at the same stage",
       "A verified university community (.ac.th), no gatekeeping",
@@ -85,7 +85,7 @@ export const en = {
   how: {
     heading: "Your career, three steps away",
     subhead:
-      "Spotlights makes it simple to go from student to hired, across every field.",
+      "Spotlight makes it simple to go from student to hired, across every field.",
     steps: [
       {
         title: "Build your profile",
@@ -148,7 +148,7 @@ export const en = {
       terms: "Terms",
       contact: "Contact",
     },
-    madeIn: "Spotlights. Made in Bangkok 🇹🇭",
+    madeIn: "Spotlight. Made in Bangkok 🇹🇭",
   },
   heroChips: {
     floats: ["Internship", "Software", "UX Designer", "New Grad", "Remote", "Startups", "Bangkok", "Data Analyst", "Fintech", "Hiring now"],
@@ -158,15 +158,15 @@ export const en = {
   appNav: { home: "Home", explore: "Explore", jobs: "Jobs", inbox: "Inbox", companies: "Companies", events: "Events", profile: "My profile", logout: "Log out", menu: "Menu" },
   auth: {
     loginTitle: "Welcome back", loginSub: "Log in to pick up where you left off.", loginSubmit: "Log in",
-    signupTitle: "Create your account", signupSub: "Start your career journey on Spotlights.", signupSubmit: "Create account",
+    signupTitle: "Create your account", signupSub: "Start your career journey on Spotlight.", signupSubmit: "Create account",
     google: "Continue with Google (coming soon)", or: "OR", name: "Full name", email: "Email", password: "Password",
     acThError: "Please use your university email address ending in .ac.th",
     confirm: "Check your university email to confirm your account.",
-    haveAccount: "Already have an account? ", noAccount: "New to Spotlights? ", loginLink: "Log in", createLink: "Create one",
+    haveAccount: "Already have an account? ", noAccount: "New to Spotlight? ", loginLink: "Log in", createLink: "Create one",
     existing: "An account with this email already exists.", goToLogin: "Log in instead", existingLogin: "Already have an account? Log in.",
-    notGranted: "This account doesn't have beta access yet. Students can join the waitlist — employers, reach out to the Spotlights team.",
+    notGranted: "This account doesn't have beta access yet. Students can join the waitlist — employers, reach out to the Spotlight team.",
     authError: "We couldn't complete sign-in. Please try again.",
-    inviteOnlyTitle: "Invite-only access", inviteOnlyBody: "Spotlights is in private beta. New sign-ups are limited to invited accounts right now — join the waitlist and we'll let you in as spots open.",
+    inviteOnlyTitle: "Invite-only access", inviteOnlyBody: "Spotlight is in private beta. New sign-ups are limited to invited accounts right now — join the waitlist and we'll let you in as spots open.",
     inviteOnlyWaitlistCta: "Join the waitlist",
     panelTitle: "Find what's next.",
     panelBullets: ["One profile, hundreds of roles", "Internships & new-grad jobs from top Thai companies", "Apply in one click, track everything"],
@@ -192,11 +192,11 @@ export const en = {
     type: "Type", workMode: "Work mode", location: "Location", posted: "Posted", applicants: "Applicants",
     today: "Today", daysAgo: "{n} days ago", aboutCompany: "About {name}", viewCompany: "View company →", similar: "Similar roles",
   },
-  companiesPage: { heading: "Companies on Spotlights", sub: "Discover the teams building Thailand's future, and the roles they're hiring for.", searchPlaceholder: "Search companies", all: "All", count: "{n} companies" },
+  companiesPage: { heading: "Companies on Spotlight", sub: "Discover the teams building Thailand's future, and the roles they're hiring for.", searchPlaceholder: "Search companies", all: "All", count: "{n} companies" },
   companyProfile: { back: "All companies", hiring: "Actively hiring", about: "About", openRoles: "Open roles", noRoles: "No open roles right now, check back soon.", facts: "Company facts", perks: "Perks", employees: "{size} employees", founded: "Founded {year}", openRolesShort: "{n} open roles" },
   eventsPage: { heading: "Career events & fairs", sub: "Meet recruiters, learn from industry talks, and level up your job search, online and across Thailand." },
   eventCard: { going: "{n} going" },
-  eventDetail: { back: "All events", hostedBy: "Hosted by {host}", about: "About this event", register: "Register to attend", registered: "You're registered", free: "Free for Spotlights members", attending: "{n} attending" },
+  eventDetail: { back: "All events", hostedBy: "Hosted by {host}", about: "About this event", register: "Register to attend", registered: "You're registered", free: "Free for Spotlight members", attending: "{n} attending" },
   dashboard: {
     welcome: "Welcome back, {name}", sub: "Here's what's happening with your job search.",
     applications: "Applications", savedJobs: "Saved jobs", profileViews: "Profile views",
@@ -253,7 +253,7 @@ export const th: typeof en = {
   demo: {
     eyebrow: "ผลิตภัณฑ์ของเรา",
     heading: "ทุกการหางานของคุณ ในที่เดียว",
-    subhead: "ตั้งแต่ค้นหาจนถึงได้งาน นี่คือวิธีที่ Spotlights ช่วยนักศึกษา",
+    subhead: "ตั้งแต่ค้นหาจนถึงได้งาน นี่คือวิธีที่ Spotlight ช่วยนักศึกษา",
     tabs: {
       dashboard: "แดชบอร์ดของคุณ",
       jobs: "หางาน",
@@ -282,7 +282,7 @@ export const th: typeof en = {
     footnote: "ค่าประมาณการจากงานวิจัยตลาดแรงงานและการจ้างงานบัณฑิตของไทย",
   },
   positioning: {
-    eyebrow: "ทำไมต้อง Spotlights",
+    eyebrow: "ทำไมต้อง Spotlight",
     heading: "สร้างมาเพื่อนักศึกษา ไม่ใช่คนที่มีงานทำอยู่แล้ว",
     subhead:
       "LinkedIn, JobsDB และ JobThai ถูกสร้างมาเพื่อคนที่อยู่ในตลาดแรงงานอยู่แล้ว เรากำลังสร้างสิ่งที่ตรงกันข้าม: สนามที่เท่าเทียมสำหรับคนที่เพิ่งเริ่มต้น",
@@ -293,7 +293,7 @@ export const th: typeof en = {
       "โอกาสไหลไปหาคนที่มีคอนเนกชันอยู่แล้ว",
       "ผู้ว่าจ้างคัดกรองศักยภาพของคนเริ่มต้นอาชีพไม่ได้",
     ],
-    spotlightTitle: "แบบฉบับ Spotlights",
+    spotlightTitle: "แบบฉบับ Spotlight",
     spotlightWay: [
       "สร้างมาเพื่อนักศึกษาและบัณฑิตจบใหม่เท่านั้น ทุกคนอยู่ในจุดเริ่มต้นเดียวกัน",
       "คอมมูนิตี้มหาวิทยาลัยที่ยืนยันตัวตน (.ac.th) ไม่มีการกีดกัน",
@@ -304,7 +304,7 @@ export const th: typeof en = {
   how: {
     heading: "อาชีพของคุณ ห่างแค่สามขั้นตอน",
     subhead:
-      "Spotlights ทำให้การก้าวจากนักศึกษาสู่การได้งานเป็นเรื่องง่าย ในทุกสาขา",
+      "Spotlight ทำให้การก้าวจากนักศึกษาสู่การได้งานเป็นเรื่องง่าย ในทุกสาขา",
     steps: [
       {
         title: "สร้างโปรไฟล์ของคุณ",
@@ -367,7 +367,7 @@ export const th: typeof en = {
       terms: "ข้อกำหนด",
       contact: "ติดต่อ",
     },
-    madeIn: "Spotlights สร้างในกรุงเทพฯ 🇹🇭",
+    madeIn: "Spotlight สร้างในกรุงเทพฯ 🇹🇭",
   },
   heroChips: {
     floats: ["ฝึกงาน", "ซอฟต์แวร์", "นักออกแบบ UX", "จบใหม่", "ทำงานทางไกล", "สตาร์ทอัพ", "กรุงเทพฯ", "นักวิเคราะห์ข้อมูล", "ฟินเทค", "กำลังรับสมัคร"],
@@ -377,15 +377,15 @@ export const th: typeof en = {
   appNav: { home: "หน้าหลัก", explore: "สำรวจ", jobs: "งาน", inbox: "กล่องข้อความ", companies: "บริษัท", events: "อีเวนต์", profile: "โปรไฟล์ของฉัน", logout: "ออกจากระบบ", menu: "เมนู" },
   auth: {
     loginTitle: "ยินดีต้อนรับกลับ", loginSub: "เข้าสู่ระบบเพื่อทำต่อจากที่ค้างไว้", loginSubmit: "เข้าสู่ระบบ",
-    signupTitle: "สร้างบัญชีของคุณ", signupSub: "เริ่มต้นเส้นทางอาชีพของคุณบน Spotlights", signupSubmit: "สร้างบัญชี",
+    signupTitle: "สร้างบัญชีของคุณ", signupSub: "เริ่มต้นเส้นทางอาชีพของคุณบน Spotlight", signupSubmit: "สร้างบัญชี",
     google: "ดำเนินการต่อด้วย Google (เร็ว ๆ นี้)", or: "หรือ", name: "ชื่อ-นามสกุล", email: "อีเมล", password: "รหัสผ่าน",
     acThError: "กรุณาใช้อีเมลมหาวิทยาลัยที่ลงท้ายด้วย .ac.th",
     confirm: "ตรวจสอบอีเมลมหาวิทยาลัยของคุณเพื่อยืนยันบัญชี",
-    haveAccount: "มีบัญชีอยู่แล้ว? ", noAccount: "เพิ่งเริ่มใช้ Spotlights? ", loginLink: "เข้าสู่ระบบ", createLink: "สร้างบัญชี",
+    haveAccount: "มีบัญชีอยู่แล้ว? ", noAccount: "เพิ่งเริ่มใช้ Spotlight? ", loginLink: "เข้าสู่ระบบ", createLink: "สร้างบัญชี",
     existing: "มีบัญชีที่ใช้อีเมลนี้อยู่แล้ว", goToLogin: "เข้าสู่ระบบแทน", existingLogin: "มีบัญชีอยู่แล้ว? เข้าสู่ระบบ",
-    notGranted: "บัญชีนี้ยังไม่มีสิทธิ์เข้าใช้ช่วงทดสอบ นักศึกษาสามารถลงชื่อรอใช้งานได้ ส่วนบริษัทโปรดติดต่อทีมงาน Spotlights",
+    notGranted: "บัญชีนี้ยังไม่มีสิทธิ์เข้าใช้ช่วงทดสอบ นักศึกษาสามารถลงชื่อรอใช้งานได้ ส่วนบริษัทโปรดติดต่อทีมงาน Spotlight",
     authError: "ไม่สามารถเข้าสู่ระบบได้ กรุณาลองใหม่อีกครั้ง",
-    inviteOnlyTitle: "เข้าถึงเฉพาะผู้ได้รับเชิญ", inviteOnlyBody: "ขณะนี้ Spotlights อยู่ในช่วงทดสอบแบบส่วนตัว การสมัครใหม่จำกัดเฉพาะบัญชีที่ได้รับเชิญเท่านั้น — ลงชื่อรอใช้งานแล้วเราจะติดต่อกลับเมื่อมีที่ว่าง",
+    inviteOnlyTitle: "เข้าถึงเฉพาะผู้ได้รับเชิญ", inviteOnlyBody: "ขณะนี้ Spotlight อยู่ในช่วงทดสอบแบบส่วนตัว การสมัครใหม่จำกัดเฉพาะบัญชีที่ได้รับเชิญเท่านั้น — ลงชื่อรอใช้งานแล้วเราจะติดต่อกลับเมื่อมีที่ว่าง",
     inviteOnlyWaitlistCta: "ลงชื่อรอใช้งาน",
     panelTitle: "ค้นหาก้าวต่อไปของคุณ",
     panelBullets: ["โปรไฟล์เดียว งานนับร้อย", "งานฝึกงานและงานจบใหม่จากบริษัทชั้นนำของไทย", "สมัครในคลิกเดียว ติดตามได้ทุกอย่าง"],
@@ -411,11 +411,11 @@ export const th: typeof en = {
     type: "ประเภท", workMode: "รูปแบบการทำงาน", location: "สถานที่", posted: "ประกาศเมื่อ", applicants: "ผู้สมัคร",
     today: "วันนี้", daysAgo: "{n} วันก่อน", aboutCompany: "เกี่ยวกับ {name}", viewCompany: "ดูบริษัท →", similar: "ตำแหน่งที่คล้ายกัน",
   },
-  companiesPage: { heading: "บริษัทบน Spotlights", sub: "ค้นพบทีมที่กำลังสร้างอนาคตของไทย และตำแหน่งที่พวกเขากำลังรับสมัคร", searchPlaceholder: "ค้นหาบริษัท", all: "ทั้งหมด", count: "{n} บริษัท" },
+  companiesPage: { heading: "บริษัทบน Spotlight", sub: "ค้นพบทีมที่กำลังสร้างอนาคตของไทย และตำแหน่งที่พวกเขากำลังรับสมัคร", searchPlaceholder: "ค้นหาบริษัท", all: "ทั้งหมด", count: "{n} บริษัท" },
   companyProfile: { back: "บริษัททั้งหมด", hiring: "กำลังรับสมัคร", about: "เกี่ยวกับ", openRoles: "ตำแหน่งที่เปิดรับ", noRoles: "ยังไม่มีตำแหน่งเปิดรับในขณะนี้ กลับมาดูใหม่เร็ว ๆ นี้", facts: "ข้อมูลบริษัท", perks: "สวัสดิการ", employees: "พนักงาน {size} คน", founded: "ก่อตั้งปี {year}", openRolesShort: "{n} ตำแหน่งเปิดรับ" },
   eventsPage: { heading: "อีเวนต์และมหกรรมอาชีพ", sub: "พบกับผู้สรรหา เรียนรู้จากคนในวงการ และยกระดับการหางานของคุณ ทั้งออนไลน์และทั่วไทย" },
   eventCard: { going: "{n} คนเข้าร่วม" },
-  eventDetail: { back: "อีเวนต์ทั้งหมด", hostedBy: "จัดโดย {host}", about: "เกี่ยวกับอีเวนต์นี้", register: "ลงทะเบียนเข้าร่วม", registered: "คุณลงทะเบียนแล้ว", free: "ฟรีสำหรับสมาชิก Spotlights", attending: "{n} คนเข้าร่วม" },
+  eventDetail: { back: "อีเวนต์ทั้งหมด", hostedBy: "จัดโดย {host}", about: "เกี่ยวกับอีเวนต์นี้", register: "ลงทะเบียนเข้าร่วม", registered: "คุณลงทะเบียนแล้ว", free: "ฟรีสำหรับสมาชิก Spotlight", attending: "{n} คนเข้าร่วม" },
   dashboard: {
     welcome: "ยินดีต้อนรับกลับ {name}", sub: "นี่คือความเคลื่อนไหวการหางานของคุณ",
     applications: "ใบสมัคร", savedJobs: "งานที่บันทึก", profileViews: "การเข้าชมโปรไฟล์",

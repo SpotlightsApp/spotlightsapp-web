@@ -131,7 +131,7 @@ export async function POST(request: Request) {
       return Response.json(
         {
           error:
-            "Employer sign-ups are invite-only during the private beta. Reach out to the Spotlights team at pippinkantakom@gmail.com to get your company onboarded.",
+            "Employer sign-ups are invite-only during the private beta. Reach out to the Spotlight team at pippinkantakom@gmail.com to get your company onboarded.",
         },
         { status: 403 },
       );

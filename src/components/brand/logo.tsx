@@ -21,7 +21,7 @@ export function Logo({
       />
       {showWord && (
         <span className="text-lg font-semibold tracking-tight text-foreground">
-          Spotlights
+          Spotlight
         </span>
       )}
     </span>
